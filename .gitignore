@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# environment
+.env
+.env.*
+!.env.example
+
+# build output
+.next/
+dist/
+build/
+out/
+
+# logs & OS
+*.log
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
