@@ -1,0 +1,16 @@
+{
+  "name": "buildyourvalue",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Build Your Value: AI-assisted career platform for Nigerian job seekers. A SoundTechWorks solution.",
+  "workspaces": ["core", "api", "frontend", "admin"],
+  "scripts": {
+    "dev": "concurrently -n api,web,admin -c blue,green,magenta \"npm run dev -w api\" \"npm run dev -w frontend\" \"npm run dev -w admin\"",
+    "build": "npm run build -w core && npm run build -w api && npm run build -w frontend && npm run build -w admin",
+    "test": "npm run test -w core",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

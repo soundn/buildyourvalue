@@ -1,0 +1,82 @@
+[
+  {
+    "id": "customer_support",
+    "title": "Customer Support Representative",
+    "family": "Customer service and BPO",
+    "coreSkills": ["customer service", "communication", "crm", "email support", "problem solving"],
+    "niceToHave": ["zendesk", "freshdesk", "live chat", "excel", "conflict resolution"],
+    "keywords": ["customer", "tickets", "resolution", "csat", "support", "escalation", "clients"]
+  },
+  {
+    "id": "virtual_assistant",
+    "title": "Virtual Assistant",
+    "family": "Remote operations",
+    "coreSkills": ["calendar management", "email management", "communication", "google workspace", "data entry"],
+    "niceToHave": ["canva", "notion", "trello", "bookkeeping", "social media"],
+    "keywords": ["scheduling", "inbox", "executive", "remote", "coordination", "reports"]
+  },
+  {
+    "id": "data_analyst",
+    "title": "Data Analyst",
+    "family": "Data",
+    "coreSkills": ["excel", "sql", "data visualization", "power bi", "statistics"],
+    "niceToHave": ["python", "tableau", "google sheets", "dashboards", "reporting"],
+    "keywords": ["analysis", "insights", "dashboard", "kpi", "dataset", "trend", "report"]
+  },
+  {
+    "id": "frontend_developer",
+    "title": "Frontend Developer",
+    "family": "Software engineering",
+    "coreSkills": ["javascript", "react", "html", "css", "git"],
+    "niceToHave": ["typescript", "next.js", "tailwind", "testing", "rest apis"],
+    "keywords": ["components", "responsive", "performance", "ui", "deployed", "users"]
+  },
+  {
+    "id": "digital_marketer",
+    "title": "Digital Marketing Specialist",
+    "family": "Marketing",
+    "coreSkills": ["social media", "content creation", "seo", "google analytics", "meta ads"],
+    "niceToHave": ["email marketing", "canva", "copywriting", "google ads", "wordpress"],
+    "keywords": ["campaign", "engagement", "followers", "leads", "conversion", "roi", "reach"]
+  },
+  {
+    "id": "accountant",
+    "title": "Accountant",
+    "family": "Finance",
+    "coreSkills": ["bookkeeping", "excel", "financial reporting", "reconciliation", "accounting software"],
+    "niceToHave": ["ican", "acca", "quickbooks", "sage", "tax", "audit"],
+    "keywords": ["ledger", "reconciled", "statements", "receivables", "payables", "budget", "variance"]
+  },
+  {
+    "id": "sales_executive",
+    "title": "Sales Executive",
+    "family": "Sales",
+    "coreSkills": ["sales", "negotiation", "communication", "crm", "lead generation"],
+    "niceToHave": ["b2b", "cold calling", "presentations", "excel", "account management"],
+    "keywords": ["revenue", "targets", "pipeline", "closed", "clients", "quota", "growth"]
+  },
+  {
+    "id": "product_designer",
+    "title": "Product Designer (UI/UX)",
+    "family": "Design",
+    "coreSkills": ["figma", "user research", "wireframing", "prototyping", "ui design"],
+    "niceToHave": ["design systems", "usability testing", "html", "css", "accessibility"],
+    "keywords": ["users", "flows", "prototype", "research", "iteration", "shipped"]
+  },
+  {
+    "id": "cybersecurity_analyst",
+    "title": "Cybersecurity Analyst",
+    "family": "Security",
+    "coreSkills": ["networking", "security monitoring", "linux", "incident response", "risk assessment"],
+    "niceToHave": ["siem", "comptia security+", "iso 27001", "python", "cloud security"],
+    "keywords": ["threats", "vulnerabilities", "monitoring", "incidents", "compliance", "controls"]
+  },
+  {
+    "id": "project_coordinator",
+    "title": "Project Coordinator",
+    "family": "Operations",
+    "coreSkills": ["project management", "communication", "excel", "scheduling", "stakeholder management"],
+    "niceToHave": ["jira", "trello", "ms project", "pmp", "reporting"],
+    "keywords": ["delivered", "timeline", "budget", "milestones", "stakeholders", "coordinated"]
+  }
+]
