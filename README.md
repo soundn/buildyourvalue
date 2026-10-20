@@ -16,6 +16,7 @@ Research and planning. No application code yet.
 
 | Document | What it is |
 |---|---|
+| [docs/BRD.md](docs/BRD.md) | Business Requirements Document: objectives and KPIs, scope by phase, stakeholders and RACI, 60 numbered business requirements, functional and non-functional requirements, compliance, integrations, business rules, financials, risks, milestones, go/no-go gates, open questions and traceability matrix. |
 | [docs/PLAN.md](docs/PLAN.md) | The research-backed product, business and launch plan (positioning, name, pricing, MVP scope, phased roadmap, architecture, learning-path design, go-to-market, compliance, risks, metrics, and a list of what still needs verifying). |
 | [docs/research/nigeria_job_seeker_market.md](docs/research/nigeria_job_seeker_market.md) | Labour-market data, job-seeker segments, channels, pain points, device and data access, willingness to pay. |
 | [docs/research/competitor_landscape.md](docs/research/competitor_landscape.md) | Nigerian and global job boards, AI CV tools, learning products, alert channels, user complaints, and the gap to own. |
@@ -30,7 +31,7 @@ Research and planning. No application code yet.
 - **Price the core tier at ₦1,999/month**, under Paystack's ₦2,500 fee cliff and inside the band Spotify and YouTube have proven Nigerians pay. Offer a ₦1,999 one-off 7-day "Finished CV" pass, a ₦4,999 Pro tier, and employer and course-affiliate revenue from day one.
 - **Ship a mobile PWA, not a native app**, on Next.js + Supabase/pgvector, fed by Google-for-Jobs aggregators and Remotive. Do not scrape LinkedIn or Indeed.
 - **Validate before building.** Phase 0 is an eight-week paid pilot: hand-served CVs, manually curated email digests, and Paystack pre-orders. Proceed to the MVP only if 10%+ pre-pay and 40%+ open the digests.
-- **Register with the NDPC before the 200th CV**, confirm SoundTechWorks' CAC registration covers the product, and display both as trust signals.
+- **Register with the NDPC before the 200th CV**, confirm SoundTechWorks is (or the product sits under) a CAC-registered limited company whose objects cover the product, and display both as trust signals.
 
 ## Caveat on sources
 
