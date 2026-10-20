@@ -1,11 +1,12 @@
 # Build Your Value
 
-An AI-assisted career platform for Nigerian job seekers. Members get a CV built or
+A SoundTechWorks solution. An AI-assisted career platform for Nigerian job seekers. Members get a CV built or
 improved by AI, a personalised digest of fit-scored jobs delivered by email, and,
 when the CV is weak, a curated learning path that measurably closes the gap.
 
-> Working name. The research recommends **Ladda** as the brand with
-> "Build your value" as the tagline, pending domain, CAC and trademark checks.
+> Working name. The research recommends **Ladda** as the product brand, with
+> "Build your value" as the tagline and "a SoundTechWorks solution" as the
+> parent line, pending domain, CAC and trademark checks.
 
 ## Status
 
@@ -29,7 +30,7 @@ Research and planning. No application code yet.
 - **Price the core tier at ₦1,999/month**, under Paystack's ₦2,500 fee cliff and inside the band Spotify and YouTube have proven Nigerians pay. Offer a ₦1,999 one-off 7-day "Finished CV" pass, a ₦4,999 Pro tier, and employer and course-affiliate revenue from day one.
 - **Ship a mobile PWA, not a native app**, on Next.js + Supabase/pgvector, fed by Google-for-Jobs aggregators and Remotive. Do not scrape LinkedIn or Indeed.
 - **Validate before building.** Phase 0 is an eight-week paid pilot: hand-served CVs, manually curated email digests, and Paystack pre-orders. Proceed to the MVP only if 10%+ pre-pay and 40%+ open the digests.
-- **Register with the NDPC and incorporate at the CAC before the 200th CV**, and display both as trust signals.
+- **Register with the NDPC before the 200th CV**, confirm SoundTechWorks' CAC registration covers the product, and display both as trust signals.
 
 ## Caveat on sources
 
