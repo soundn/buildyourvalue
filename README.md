@@ -59,6 +59,7 @@ overrides the default model.
 
 | Document | What it is |
 |---|---|
+| [docs/TOOLING.md](docs/TOOLING.md) | State-of-the-art stack and tooling report: feature bar set by leading career products, AI capability stack with per-user costs, application stack layer by layer, developer tooling (plugins, skills, MCP, hooks), adoption plan and run-rate, unverified items. |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Service boundaries, the plan for splitting into separate repositories, API endpoints, and what is stubbed in the prototype versus the MVP. |
 | [docs/BRD.md](docs/BRD.md) | Business Requirements Document: objectives and KPIs, scope by phase, stakeholders and RACI, 60 numbered business requirements, functional and non-functional requirements, compliance, integrations, business rules, financials, risks, milestones, go/no-go gates, open questions and traceability matrix. |
 | [docs/PLAN.md](docs/PLAN.md) | The research-backed product, business and launch plan (positioning, name, pricing, MVP scope, phased roadmap, architecture, learning-path design, go-to-market, compliance, risks, metrics, and a list of what still needs verifying). |
