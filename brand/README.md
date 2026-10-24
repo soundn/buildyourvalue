@@ -61,8 +61,9 @@ names are free for Ladda: `joinladda.com`, `useladda.com`, `tryladda.com`, `myla
 `laddajobs.com`, `laddahq.com`. Cloudflare Registrar also shows `ladda.org`, `.net`, `.dev`,
 `.work`, `.me`, `.cc` free and `.app`, `.io`, `.ai`, `.co`, `.xyz`, `.us`, `.info` taken.
 
-Recommendation: `ladda.ng` as the primary domain, `ladda.com.ng` and `ladda.africa` as
-defensive registrations, `laddahq.com` for email and the international mirror. Afara is no
+Bought on 24 October 2026: `useladda.com` on Cloudflare Registrar, the first production and
+email domain (ADR-0015). Still to buy once CAC and trademark are clean: `ladda.ng` as the
+primary, with `ladda.com.ng` and `ladda.africa` as defensive registrations. Afara is no
 longer a viable fallback.
 
 If the CAC or trademark search fails, pick a new name and re-run the table. Do not buy

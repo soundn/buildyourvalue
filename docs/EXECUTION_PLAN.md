@@ -26,11 +26,11 @@ That is the next six weeks.
 
 ## Step 1: brand, domain and identity (week 1, F)
 
-1. Run the five checks in `brand/README.md` for Ladda (`.ng`, `.com.ng`, `.com/.app/.africa`, CAC, trademark classes 35/41/42, handles). If `.ng` or CAC fails, run them for Afara.
-2. Buy the domains at Cloudflare Registrar where available (at-cost pricing, no markup) and the `.ng` ones at a NiRA registrar. Point every domain's nameservers at Cloudflare.
-3. Reserve the handles. Create a `hello@` and a `security@` mailbox on the domain (Cloudflare Email Routing forwards them to Gmail for free).
+1. Done on 24 October 2026: domain availability checked (results in `brand/README.md`) and `useladda.com` bought on Cloudflare Registrar as the first production and email domain (ADR-0015). Still to run: the CAC name search and the trademark search in classes 35, 41 and 42, then the handle checks. Afara is no longer a fallback; its `.ng`, `.com` and `.africa` are taken.
+2. Once CAC and trademark are clean, buy `ladda.ng` and `ladda.com.ng` at a NiRA registrar (Whogohost or QServers) and `ladda.africa` at Cloudflare or Namecheap, and point their nameservers at Cloudflare. `useladda.com` then redirects to `ladda.ng` and stays the email domain.
+3. Reserve the handles. Create `hello@useladda.com` and `security@useladda.com` with Cloudflare Email Routing (forwards to Gmail for free) and turn on WHOIS redaction, auto-renew and DNSSEC on the domain.
 4. File the trademark in classes 35, 41 and 42 at the Nigerian registry. It is slow; start it now.
-5. Hand C the result: the chosen domain, and confirmation that nameservers are on Cloudflare. C then renames the product in code and docs (manifest, footer, app ids, README, BRD title) in one commit.
+5. Hand C the result: confirmation that `useladda.com` is on Cloudflare DNS (done) and, later, that `ladda.ng` is. C then renames the product in code and docs (manifest, footer, app ids, README, BRD title) in one commit. No Cloudflare token is needed until the first deploy; when it is, create one scoped to Zone:DNS:Edit on the one zone and store it as an environment secret, never in chat.
 
 ## Step 2: accounts and access hand-over (week 1 to 2, F creates, C configures)
 
@@ -43,7 +43,7 @@ Create each account in SoundTechWorks' name with the founder's email, enable two
 | Vercel | Hobby now, Pro ($20) at launch | Frontend and admin hosting for Phase 0 and 1 (ADR-0008) | Team invite; `VERCEL_TOKEN` as a GitHub Actions secret |
 | Fly.io | Pay as you go | Hono API in London (ADR-0008); no free tier, about $5 a month | `FLY_API_TOKEN` as a GitHub Actions secret |
 | Supabase | Free now, Pro ($25) before real users | Postgres, Auth, Storage in London (ADR-0004, 0009) | Project URL, anon key and service role key as environment secrets; a read-only database branch for the Supabase MCP |
-| Resend | Free | Transactional and digest email (ADR-0012) | API key; verify the digest subdomain (`mail.ladda.ng`) with SPF, DKIM, DMARC |
+| Resend | Free | Transactional and digest email (ADR-0012) | API key; verify the digest subdomain (`mail.useladda.com`, ADR-0015) with SPF, DKIM, DMARC |
 | Anthropic | API, pay as you go | CV writing and bulk routes (ADR-0003) | `ANTHROPIC_API_KEY` with a monthly spend limit set in the console |
 | Voyage AI | Free tier (200M tokens) | Embeddings (ADR-0013) | API key |
 | Paystack | Test mode | Payments; live keys only after CAC and bank verification | Test secret key; later the official Paystack MCP in test mode |
