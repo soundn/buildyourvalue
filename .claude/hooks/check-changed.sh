@@ -15,7 +15,7 @@ root="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 rel="${file#"$root"/}"
 ws="${rel%%/*}"
 case "$ws" in
-  core|api|frontend|admin) ;;
+  core|api|frontend|admin|mobile) ;;
   *) exit 0 ;;
 esac
 
