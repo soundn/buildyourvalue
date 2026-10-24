@@ -25,6 +25,7 @@ move to its own repository (`buildyourvalue-core`, `-api`, `-frontend`, `-admin`
 | `api/` | HTTP API (Node + Hono). Only service that scores, matches or calls Claude. | 4000 |
 | `frontend/` | Job-seeker PWA (Next.js; manifest today, service worker and Web Push arrive in Phase 1 via Serwist, Turbopack compatibility unverified): onboarding, dashboard, CV, digest preview, pricing. | 3000 |
 | `admin/` | Staff console (Next.js): listing review queue. | 3001 |
+| `mobile/` | Job-seeker mobile app (Expo, React Native, Expo Router). Android first in Phase 2. | Expo |
 
 ## Run it
 
@@ -59,6 +60,9 @@ overrides the default model.
 
 | Document | What it is |
 |---|---|
+| [docs/EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md) | The ordered steps from today to a paying pilot: decisions, brand and domain, account hand-over, repository delivery, Phase 0, the Phase 1 build order, Phase 2 and the mobile app, known blockers. |
+| [docs/COST_ANALYSIS.md](docs/COST_ANALYSIS.md) | One-time launch costs, monthly run-rate by phase, cost at scale by user tier, unit economics against the ₦1,999 price, break-even scenarios, cost controls and triggers. |
+| [brand/README.md](brand/README.md) | Ladda brand guide: name rationale, availability checks to run, logo files, colour and type tokens, voice, app-store identity. |
 | [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) | Vercel + Supabase + Resend versus Cloudflare's equivalents versus a mix, with monthly cost at 1,000 to 50 million users, Nigeria fit, trigger points for switching, and the ADRs it would amend. |
 | [docs/TOOLING.md](docs/TOOLING.md) | State-of-the-art stack and tooling report: feature bar set by leading career products, AI capability stack with per-user costs, application stack layer by layer, developer tooling (plugins, skills, MCP, hooks), adoption plan and run-rate, unverified items. |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Service boundaries, the plan for splitting into separate repositories, API endpoints, and what is stubbed in the prototype versus the MVP. |
