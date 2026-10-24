@@ -7,6 +7,9 @@ export function TrustFooter() {
         <p>
           A SoundTechWorks solution. CAC RC: <span className="font-mono">[pending]</span>. NDPC registration: <span className="font-mono">[pending]</span>. Prototype build; sample listings are fictional.
         </p>
+        <p>
+          Help: <a className="underline" href="mailto:help@useladda.com">help@useladda.com</a>. Security reports: <a className="underline" href="mailto:security@useladda.com">security@useladda.com</a>.
+        </p>
       </div>
     </footer>
   );

@@ -1,0 +1,5 @@
+# Build Your Value (Ladda), a SoundTechWorks solution
+Contact: mailto:security@useladda.com
+Expires: 2027-10-24T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://useladda.com/.well-known/security.txt

@@ -50,7 +50,7 @@ export default function DigestPreview() {
             </>
           )}
           <p className="text-xs text-[var(--muted)] border-t border-[var(--line)] pt-3">
-            Every listing above passed our fee, contact and impersonation screen. We never charge you to apply. Reply to report a listing. Unsubscribe in one click. SoundTechWorks, Lagos, Nigeria.
+            Every listing above passed our fee, contact and impersonation screen. We never charge you to apply. Reply to report a listing or write to help@useladda.com. Unsubscribe in one click. SoundTechWorks, Lagos, Nigeria.
           </p>
         </div>
       </div>

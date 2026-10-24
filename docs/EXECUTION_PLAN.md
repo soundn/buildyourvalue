@@ -28,7 +28,7 @@ That is the next six weeks.
 
 1. Done on 24 October 2026: domain availability checked (results in `brand/README.md`) and `useladda.com` bought on Cloudflare Registrar as the first production and email domain (ADR-0015). Still to run: the CAC name search and the trademark search in classes 35, 41 and 42, then the handle checks. Afara is no longer a fallback; its `.ng`, `.com` and `.africa` are taken.
 2. Once CAC and trademark are clean, buy `ladda.ng` and `ladda.com.ng` at a NiRA registrar (Whogohost or QServers) and `ladda.africa` at Cloudflare or Namecheap, and point their nameservers at Cloudflare. `useladda.com` then redirects to `ladda.ng` and stays the email domain.
-3. Reserve the handles. Create `hello@useladda.com` and `security@useladda.com` with Cloudflare Email Routing (forwards to Gmail for free) and turn on WHOIS redaction, auto-renew and DNSSEC on the domain.
+3. Done on 24 October 2026: WHOIS redaction, transfer lock and DNSSEC are on, and `hello@`, `help@` and `security@useladda.com` forward to the founder's Gmail through Cloudflare Email Routing (catch-all stays off). Still to do: reserve the handles, and confirm auto-renew with a card on file.
 4. File the trademark in classes 35, 41 and 42 at the Nigerian registry. It is slow; start it now.
 5. Hand C the result: confirmation that `useladda.com` is on Cloudflare DNS (done) and, later, that `ladda.ng` is. C then renames the product in code and docs (manifest, footer, app ids, README, BRD title) in one commit. No Cloudflare token is needed until the first deploy; when it is, create one scoped to Zone:DNS:Edit on the one zone and store it as an environment secret, never in chat.
 
