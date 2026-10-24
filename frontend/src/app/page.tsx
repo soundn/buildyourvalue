@@ -11,7 +11,7 @@ export default function Home() {
     <div className="space-y-10">
       <section className="pt-4 space-y-4">
         <p className="inline-block text-xs font-semibold tracking-wide uppercase text-[var(--brand)] bg-green-50 px-2 py-1 rounded">A SoundTechWorks solution</p>
-        <h1 className="text-3xl sm:text-4xl font-bold leading-tight">Get shortlisted, not scammed.</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold leading-tight">Build a higher value from the very place you are</h1>
         <p className="text-lg text-[var(--muted)]">
           An AI-assisted CV, verified job matches sent to your inbox, and a learning path that measurably lifts your chances. Built for Nigerian job seekers.
         </p>
