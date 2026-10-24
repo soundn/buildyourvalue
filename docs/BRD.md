@@ -604,7 +604,7 @@ Condensed from the plan's verification table (PLAN.md, Verification) to the twel
 
 | # | Item | Why it matters | How to verify | Owner |
 |---|---|---|---|---|
-| 1 | Whether SoundTechWorks' CAC registration is a company (RC) or business name (BN), and whether its objects cover an AI career platform | Decides trading entity, Startup Act eligibility and investability; the plan is split between "business name under SoundTechWorks" (Naming) and "incorporate as Ltd" (Compliance) | CAC certificate and MEMART; search.cac.gov.ng; counsel | Counsel |
+| 1 | Whether SoundTechWorks' CAC registration is a company (RC) or business name (BN), and whether its objects cover an AI career platform | Decides Startup Act eligibility and investability. Entity decided: SoundTechWorks builds and owns the product (ADR-0002); what remains is confirming it is a Ltd whose objects cover the product | CAC certificate and MEMART; search.cac.gov.ng; counsel | Counsel |
 | 2 | Willingness to pay of Nigerian job seekers | The consumer model rests on it; only a 12-person sample exists | 300+ respondent survey; Phase 0 pre-orders | Sponsor |
 | 3 | Availability of Ladda and alternates as .com, .ng, .com.ng, .africa, CAC name, Class 35/41/42 trademark, X, Instagram, TikTok | All registrar and social endpoints were blocked | Namecheap; NiRA registrar; search.cac.gov.ng; iponigeria.com; handle checks | Counsel/Product |
 | 4 | NDPC thresholds (200 vs 1,000 vs 5,000 subjects), fees, CAR fees, DPO and AI provisions of GAID 2025 | Registration tier and cost | NDPC Guidance Notice and GAID text; counsel | DPO |
