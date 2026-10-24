@@ -12,9 +12,13 @@ import {
   buildLearningPath,
   improveProfile,
   totalExperienceYears,
+  intakePreferences,
+  intakeProgress,
+  nextIntakeQuestion,
+  normalizeIntakeAnswers,
   type Profile,
 } from "@byv/core";
-import { aiEnabled, improveWithClaude, applyAiImprovement } from "./ai.js";
+import { aiEnabled, improveWithClaude, applyAiImprovement, phraseIntakeQuestion } from "./ai.js";
 import { decide, listReviewItems, publishableJobs, reportJob, reportsFor } from "./review.js";
 
 const ProfileSchema = z.object({
@@ -26,6 +30,27 @@ const ProfileSchema = z.object({
   skills: z.array(z.string()),
   certifications: z.array(z.string()),
   nyscStatus: z.enum(["completed", "serving", "exempted", "not_yet", "na"]),
+  preferences: z
+    .object({
+      targetRoles: z.array(z.string()),
+      helpChoosing: z.boolean(),
+      interests: z.array(z.string()),
+      workPreference: z.enum(["onsite", "hybrid", "remote", "any"]),
+      remoteAbroad: z.boolean(),
+      experienceBand: z.enum(["none", "under_1", "1_3", "3_5", "5_plus"]),
+      minSalaryNgn: z.number().nullable(),
+      wantsDollarPay: z.boolean(),
+      dealBreakers: z.array(z.string()),
+      mustHaves: z.array(z.string()),
+      startWithinDays: z.number().nullable(),
+    })
+    .optional(),
+});
+
+// Guided intake (BR-064): the answers so far, keyed by question id. Values are option values
+// or short free text; anything unknown is dropped by normalizeIntakeAnswers in core.
+const IntakeSchema = z.object({
+  answers: z.record(z.string(), z.array(z.string().max(80)).max(6)).default({}),
 });
 
 const app = new Hono();
@@ -100,6 +125,29 @@ app.post("/v1/jobs/:id/report", async (c) => {
 });
 
 // Admin surface. The MVP puts this behind staff authentication; the prototype keeps it open on localhost.
+// Guided intake: returns the next of up to seven fixed questions for the answers so far,
+// rephrased by Claude on the bulk model when a key is set (fixed copy otherwise), plus the
+// structured preferences the answers map to. The model never changes options or ranks jobs.
+app.post("/v1/intake/next", async (c) => {
+  const parsed = IntakeSchema.safeParse(await c.req.json().catch(() => ({})));
+  if (!parsed.success) return c.json({ error: "invalid_intake", issues: parsed.error.issues }, 400);
+  const answers = normalizeIntakeAnswers(parsed.data.answers);
+  const question = nextIntakeQuestion(answers);
+  const progress = intakeProgress(answers);
+  const preferences = intakePreferences(answers);
+  if (!question) return c.json({ done: true, engine: "rules", question: null, progress, preferences });
+  let engine: "claude" | "rules" = "rules";
+  let phrased = { prompt: question.prompt, help: question.help ?? "" };
+  if (aiEnabled() && Object.keys(answers).length > 0) {
+    const ai = await phraseIntakeQuestion(question, answers);
+    if (ai) {
+      phrased = ai;
+      engine = "claude";
+    }
+  }
+  return c.json({ done: false, engine, question: { ...question, ...phrased }, progress, preferences });
+});
+
 app.get("/v1/admin/review", (c) => c.json(listReviewItems()));
 app.post("/v1/admin/review/:id", async (c) => {
   const body = z.object({ decision: z.enum(["approved", "rejected"]), decidedBy: z.string().default("admin"), note: z.string().optional() }).safeParse(await c.req.json());

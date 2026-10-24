@@ -32,6 +32,21 @@ export type Profile = {
   skills: string[];
   certifications: string[];
   nyscStatus: "completed" | "serving" | "exempted" | "not_yet" | "na";
+  preferences?: IntakePreferences; // from the guided intake; the matcher honours the salary floor
+};
+
+export type IntakePreferences = {
+  targetRoles: string[];
+  helpChoosing: boolean;
+  interests: string[];
+  workPreference: "onsite" | "hybrid" | "remote" | "any";
+  remoteAbroad: boolean;
+  experienceBand: "none" | "under_1" | "1_3" | "3_5" | "5_plus";
+  minSalaryNgn: number | null;
+  wantsDollarPay: boolean;
+  dealBreakers: string[];
+  mustHaves: string[];
+  startWithinDays: number | null;
 };
 
 export type Job = {

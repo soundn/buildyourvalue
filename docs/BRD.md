@@ -25,7 +25,7 @@ Citation convention: figures taken from the plan are cited by short section name
 |---|---|---|---|
 | 0.1 | 2026-10-20 | Product team | Initial draft derived from PLAN.md and research notes |
 | 0.2 | 2026-10-24 | Product team | Consistency pass after tooling research; ADR-0001 and ADR-0002 recorded |
-| 0.3 | 2026-10-24 | Product team | Open board for every job seeker; Nigeria remote-eligibility filter (BR-062, BR-063, BRL-017, BRL-018, INT-11); Remote tier replaces Pro; new tagline; first domain registered (ADR-0015, ADR-0017; the developer-only narrowing in ADR-0016 rejected) |
+| 0.3 | 2026-10-24 | Product team | Guided intake (BR-064); open board for every job seeker; Nigeria remote-eligibility filter (BR-062, BR-063, BRL-017, BRL-018, INT-11); Remote tier replaces Pro; new tagline; first domain registered (ADR-0015, ADR-0017; the developer-only narrowing in ADR-0016 rejected) |
 
 ### 1.2 Approvals
 
@@ -263,6 +263,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-013 | The platform shall flex thresholds by seniority so fresh graduates are not penalised for missing leadership signals. | Seniority-adaptive rubric (Weakness score) | M | 1 | Same content scores differently by documented seniority rules |
 | BR-014 | The platform shall apply Nigeria-specific checks: NYSC status, ICAN/ACCA for accounting targets, recognised certificates for cybersecurity targets, Pidgin role synonyms. | Discharge certificate and Big Four preferences (Weakness score) | M | 1 | Checks documented in the rubric and visible to users |
 | BR-015 | The platform shall offer posting-specific tailoring metered by tier (Free none; Pass and Remote unlimited; Core 5 per month) and cover letters on Core and above. | Tier definitions (Pricing) | M | 1; Remote 2 | Quotas enforced; counter visible |
+| BR-064 | The platform shall run a guided intake of at most seven tappable questions (roles or "help me choose", where to work from and whether abroad, experience, salary floor, deal-breakers, must-haves, start date) whose answers populate the structured preferences the matcher uses; the model may rephrase a question but never adds options, ranks jobs or decides what a user sees, and the fixed copy serves when no model is available. | A short conversation beats a blank form on a low-end Android and makes the first digest personal; keeps matching deterministic and explainable (ADR-0003; GAID profiling disclosure) | M | 1 | `core/src/intake.ts` with tests; `POST /v1/intake/next`; onboarding step live with form fallback; salary floor honoured by the matcher |
 | BR-016 | The platform shall route CV writing to a stronger model and all other tasks to a cheaper model, with cached profile prefixes. | CV writing dominates LLM cost (Architecture; Sonnet 5.5 and Haiku 5.5, ADR-0003) | S | 1 | Routing configurable; per-task cost logged |
 
 ### 8.3 Job matching and digest
@@ -353,9 +354,9 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 
 | ID | Feature | Functional behaviour | Traces to |
 |---|---|---|---|
-| FR-001 | Onboarding | Phone-first sign-up; OTP by SMS with automatic WhatsApp and voice fallback; rate limits; Google sign-in as second path. | BR-055 |
+| FR-001 | Onboarding | Phone-first sign-up; OTP by SMS with automatic WhatsApp and voice fallback; rate limits; Google sign-in as second path; guided intake of up to seven tappable questions with the form as fallback. | BR-055, BR-064 |
 | FR-002 | Consent capture | Three separate unticked checkboxes: CV processing and matching; job-alert emails as contracted service; promotional and partner emails. | BR-024, BR-045 |
-| FR-003 | Preferences | Target roles, locations, country of residence (drives remote eligibility), local or remote or both, seniority, naira salary expectation, NYSC status. | BR-010, BR-014, BR-062 |
+| FR-003 | Preferences | Target roles, locations, country of residence (drives remote eligibility), local or remote or both, seniority, naira salary expectation, NYSC status. | BR-010, BR-014, BR-062, BR-064 |
 | FR-004 | CV from form | Guided sections with LLM rewriting of bullets into results-first language. | BR-010, BR-012 |
 | FR-005 | CV from upload | PDF/DOCX text extraction; LLM structured output to extended JSON Resume; user confirms fields. | BR-010 |
 | FR-006 | CV export | PDF via headless Chromium; DOCX via the `docx` library; ATS-safe templates. | BR-011 |
@@ -681,7 +682,7 @@ Inconsistencies between PLAN.md and the research notes, to resolve in version 0.
 |---|---|
 | BO-01 Prove demand | BR-009, BR-033, BR-034, BR-038 (Phase 0 manual equivalents) |
 | BO-02 Prove the digest | BR-008, BR-020, BR-021, BR-022, BR-062, BR-063 (Phase 0 manual equivalents) |
-| BO-03 Activation 60%+ | BR-009 to BR-012, BR-055 |
+| BO-03 Activation 60%+ | BR-009 to BR-012, BR-055, BR-064 |
 | BO-04 Digest open 35%+ | BR-008, BR-018, BR-020, BR-021, BR-023, BR-056 |
 | BO-05 Free-to-paid 2%+ then 4%+ | BR-015, BR-021, BR-033, BR-035, BR-039, BR-040, BR-058, BR-061 |
 | BO-06 Churn under 10% then 7% | BR-030, BR-036, BR-037, BR-040, BR-041, BR-058 |

@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Profile } from "@byv/core";
-import { roles } from "@byv/core";
+import type { IntakePreferences, Profile } from "@byv/core";
+import { applyIntake, roles } from "@byv/core";
+import { GuidedIntake } from "@/components/GuidedIntake";
 import { emptyProfile, loadProfile, saveProfile } from "@/lib/storage";
 import { API_URL } from "@/lib/api";
 
@@ -15,6 +16,7 @@ export default function Onboard() {
   const [p, setP] = useState<Profile>(emptyProfile);
   const [skillsText, setSkillsText] = useState("");
   const [certsText, setCertsText] = useState("");
+  const [intake, setIntake] = useState<"ask" | "done" | "form">("ask");
 
   useEffect(() => {
     const saved = loadProfile();
@@ -49,7 +51,7 @@ export default function Onboard() {
     router.push("/dashboard");
   }
 
-  const steps = ["About you", "Target role", "Experience", "Education and skills"];
+  const steps = ["About you", "What you want", "Experience", "Education and skills"];
 
   return (
     <div className="space-y-6">
@@ -78,8 +80,27 @@ export default function Onboard() {
         </section>
       )}
 
-      {step === 1 && (
+      {step === 1 && intake === "ask" && (
+        <GuidedIntake
+          onComplete={(prefs: IntakePreferences) => {
+            setP((prev) => applyIntake(prev, prefs));
+            setIntake("done");
+          }}
+          onUnavailable={() => setIntake("form")}
+        />
+      )}
+      {step === 1 && intake === "done" && (
         <section className="space-y-3">
+          <p className="rounded-md bg-green-50 px-3 py-2 text-sm">Noted. We will score your CV against <strong>{roles.find((r) => r.id === p.targetRole)?.title ?? p.targetRole}</strong>{p.preferences?.minSalaryNgn ? ` and hide roles paying under \u20a6${p.preferences.minSalaryNgn.toLocaleString("en-NG")}` : ""}. <button type="button" className="underline" onClick={() => setIntake("ask")}>Change answers</button></p>
+          <div>
+            <label className={label}>Professional summary (optional, we can draft it)</label>
+            <textarea className={input} rows={3} value={p.basics.summary} onChange={(e) => updateBasics("summary", e.target.value)} />
+          </div>
+        </section>
+      )}
+      {step === 1 && intake === "form" && (
+        <section className="space-y-3">
+          <p className="text-sm text-[var(--muted)]">The guided questions are unavailable right now, so pick your role directly.</p>
           <div>
             <label className={label}>What role are you targeting?</label>
             <select className={input} value={p.targetRole} onChange={(e) => update({ targetRole: e.target.value })}>
@@ -140,7 +161,9 @@ export default function Onboard() {
 
       <div className="flex justify-between pt-2">
         <button type="button" disabled={step === 0} onClick={() => setStep((s) => s - 1)} className="px-4 py-2 rounded-md border border-[var(--line)] bg-white disabled:opacity-40">Back</button>
-        {step < steps.length - 1 ? (
+        {step === 1 && intake === "ask" ? (
+          <button type="button" onClick={() => setIntake("form")} className="px-4 py-2 rounded-md border border-[var(--line)] bg-white text-sm">Skip the questions</button>
+        ) : step < steps.length - 1 ? (
           <button type="button" onClick={() => setStep((s) => s + 1)} className="px-4 py-2 rounded-md bg-[var(--brand)] text-white font-medium">Next</button>
         ) : (
           <button type="button" onClick={finish} className="px-4 py-2 rounded-md bg-[var(--brand)] text-white font-medium">See my score and matches</button>

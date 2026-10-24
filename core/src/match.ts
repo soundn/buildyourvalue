@@ -26,6 +26,9 @@ export function matchJobs(profile: Profile, role: Role, jobs: Job[], opts: Match
     const scam = screenJob(job);
     if (scam.status === "fail") continue;
     if (scam.status === "review" && !includeFlagged) continue;
+    // Guided-intake salary floor: a listing that states a maximum below the floor is not shown (BR-064).
+    const floor = profile.preferences?.minSalaryNgn;
+    if (floor && job.salaryMax !== undefined && job.salaryMax < floor) continue;
 
     const wanted = normalizeSkills(job.skills);
     const have = wanted.filter((s) => hasSkill(cvSkills, s));

@@ -8,7 +8,7 @@ pieces can be developed and run together today and split without rewrites later.
 
 | Folder | Future repository | What it is | Runtime |
 |---|---|---|---|
-| `core/` | `buildyourvalue-core` (published as a private package `@byv/core`) | Shared domain logic and types: six-component CV weakness score, scam screen, Nigeria remote-eligibility classifier (`remote.ts`, ADR-0017), matching, learning-path builder, deterministic CV rewrite rules, sample data. No framework dependencies. | Node library (ESM) |
+| `core/` | `buildyourvalue-core` (published as a private package `@byv/core`) | Shared domain logic and types: six-component CV weakness score, scam screen, Nigeria remote-eligibility classifier (`remote.ts`, ADR-0017), guided intake questions and preference mapping (`intake.ts`, BR-064), matching, learning-path builder, deterministic CV rewrite rules, sample data. No framework dependencies. | Node library (ESM) |
 | `api/` | `buildyourvalue-api` | HTTP API: evaluate a profile (score + matches + path), improve a CV (Claude with rules fallback), job listings, user reports, admin review queue. | Node + Hono |
 | `frontend/` | `buildyourvalue-frontend` | Job-seeker progressive web app: onboarding, dashboard, CV preview and print, digest preview, pricing. Mobile-first, installable. | Next.js |
 | `admin/` | `buildyourvalue-admin` | Staff console: listing review queue with approve and reject, audit trail. Employer verification joins it in Phase 2. | Next.js |
@@ -52,6 +52,7 @@ flowchart LR
 | `GET /v1/roles`, `GET /v1/courses`, `GET /v1/sample-profile` | Reference data |
 | `GET /v1/jobs` | Publishable listings (automatic pass or human approved) |
 | `POST /v1/evaluate` | Profile in; role, weakness report, top matches and learning path out |
+| `POST /v1/intake/next` | Guided intake: answers so far in, next of up to seven fixed questions out (rephrased by Claude on the bulk model when a key is set), with progress and the structured preferences the answers map to (BR-064) |
 | `POST /v1/cv/improve` | Profile in; improved profile, change list, before and after scores out |
 | `POST /v1/jobs/:id/report` | User report with a reporter id; one report suppresses a listing pending human review, a verified employer's listing needs two, and each reporter is capped at three reports a day (ADR-0010) |
 | `GET /v1/admin/review` | Review queue: every listing that did not pass cleanly or was reported |
