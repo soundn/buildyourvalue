@@ -32,7 +32,8 @@ are never edited after merge. Forward-only: a mistake gets a new migration, neve
 because the file may already have run on someone's database.
 
 Pair every migration with a Drizzle schema update in `api/src/db/schema.ts` (create it on
-first use) so the API has typed access. Drizzle is the chosen query layer (docs/TOOLING.md).
+first use) so the API has typed access. Drizzle is the proposed query layer (ADR-0004): `drizzle-kit pull` regenerates the schema
+after a migration has run, and drizzle-kit never generates or applies migrations.
 
 ## Rules for the SQL
 
@@ -44,8 +45,10 @@ first use) so the API has typed access. Drizzle is the chosen query layer (docs/
   Admin and service access goes through the service role in the API, never through a
   permissive policy.
 - Sensitive text (phone, email, CV body) is encrypted in the API before insert and stored
-  in `bytea` or `text` columns named `*_enc`. Supabase is deprecating pgsodium, so do not
-  rely on column encryption in the database.
+  in `bytea` or `text` columns named `*_enc` (ADR-0009, proposed, narrows this to phone, email
+  and any national ID or bank detail with a keyed `*_hash` column for lookups, and keeps the
+  CV body in plaintext under RLS so the `tsvector` rule below can hold). Supabase is
+  deprecating pgsodium, so do not rely on column encryption in the database.
 - Every foreign key gets an index. Every column used in a `where` by the digest job gets an
   index. State the expected query beside the index in a comment.
 - Vectors: `halfvec(<dims>)` with an HNSW index, dims matching the embedding model in

@@ -25,6 +25,8 @@ later" when the first of these happens: a second regular contributor joins, or t
 production deploy is set up. Until then the boundary rules in CLAUDE.md ("Rules that keep the
 split clean") are what keep the split cheap.
 
+Amended 2026-10-24 (ADR-0008): "a second regular contributor" means a regular contributor beyond the two founders; Philip is one of the two founders and his first commit does not trigger the split.
+
 ## Alternatives considered
 | Option | Why not (or why not yet) |
 |---|---|
