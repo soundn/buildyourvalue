@@ -1,6 +1,6 @@
 # ADR-0016: Lead with a developer-first Remote tier at ₦4,999 over a free domestic base
 
-- Status: Proposed (founder's position in the co-founder brief; becomes Accepted when both founders agree)
+- Status: Rejected (superseded the same day by ADR-0017: the founders chose an open board for every job seeker)
 - Date: 2026-10-24
 - Deciders: Founders
 - Related: PLAN.md §Price at ₦1,999, §Phases; BRD BR-017, BR-031, pricing table; docs/research/remote_eligibility_audit.md; ADR-0010, ADR-0015
