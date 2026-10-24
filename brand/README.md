@@ -1,6 +1,8 @@
 # Ladda brand guide (v0.1, 24 October 2026)
 
-Product brand: **Ladda**. Tagline: **Build your value**. Parent line: **a SoundTechWorks
+Product brand: **Ladda**. Tagline: **Build a higher value from the very place you are**
+(changed from "Build your value" on 24 October 2026; the short form survives as the working
+product name and the repository name). Parent line: **a SoundTechWorks
 solution**. "Build Your Value" stays the working name in code and documents until the
 domain, CAC, trademark and social-handle checks below pass; the brand files here are ready
 to switch over the moment they do.

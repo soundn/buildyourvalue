@@ -13,7 +13,7 @@ async function render(svgPath, outPath, w, h, bg = "transparent") {
   await page.screenshot({ path: outPath, omitBackground: bg === "transparent" });
 }
 for (const s of [1024, 512, 192, 48]) await render(`${root}/logo/ladda-mark.svg`, `${root}/exports/ladda-mark-${s}.png`, s, s);
-await render(`${root}/logo/ladda-lockup.svg`, `${root}/exports/ladda-lockup-1440.png`, 1440, 400, "#ffffff");
-await render(`${root}/logo/ladda-lockup-dark.svg`, `${root}/exports/ladda-lockup-dark-1440.png`, 1440, 400, "#14211B");
+await render(`${root}/logo/ladda-lockup.svg`, `${root}/exports/ladda-lockup-1440.png`, 1440, 327, "#ffffff");
+await render(`${root}/logo/ladda-lockup-dark.svg`, `${root}/exports/ladda-lockup-dark-1440.png`, 1440, 327, "#14211B");
 await browser.close();
 console.log("rendered");
