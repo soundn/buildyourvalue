@@ -38,7 +38,25 @@ not reach one.
 | Trademark classes 35, 41, 42 | Nigerian Trademarks Registry (iponigeria.com) | No live mark "Ladda" or confusingly similar in those classes; then file |
 | Handles | x.com/ladda, instagram.com/ladda, tiktok.com/@ladda, plus `laddahq` and `getladda` variants | One consistent handle available across all three |
 
-If `.ng` or the CAC search fails, fall back to Afara and re-run the table. Do not buy
+Registry results on 24 October 2026 (RDAP at rdap.verisign.com, whois.nic.net.ng and
+rdap.nic.africa; `.app` could not be reached from the research environment):
+
+| Name | Result |
+|---|---|
+| `ladda.ng`, `ladda.com.ng` | Available |
+| `ladda.africa` | Available |
+| `ladda.com` | Taken since 1999, renewed to June 2029, Japanese registrar (Onamae.com). Not for sale that we know of. |
+| `getladda.com` | Taken since 2020, renewed to April 2027 at Namecheap, on Cloudflare DNS |
+| `laddahq.com`, `useladda.com`, `ladda-africa.com` | Available |
+| `getladda.ng`, `laddahq.ng`, `getladda.africa`, `laddahq.africa` | Available |
+| `ladda.app`, `getladda.app` | Unchecked (Google Registry RDAP unreachable); check in Cloudflare Registrar |
+| Fallback Afara | `afara.ng`, `afara.com` and `afara.africa` are taken; only `afara.com.ng` and `getafara.com` are free |
+
+Recommendation: `ladda.ng` as the primary domain, `ladda.com.ng` and `ladda.africa` as
+defensive registrations, `laddahq.com` for email and the international mirror. Afara is no
+longer a viable fallback.
+
+If the CAC or trademark search fails, pick a new name and re-run the table. Do not buy
 anything until the CAC and trademark searches are clean; a domain is cheap to lose, a
 rebrand after launch is not.
 
