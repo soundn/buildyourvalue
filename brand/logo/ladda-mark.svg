@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Ladda mark: a ladder climbing to the right">
+  <defs>
+    <clipPath id="r"><rect width="256" height="256" rx="56"/></clipPath>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="#0F6B3A"/>
+  <g clip-path="url(#r)">
+    <!-- rails -->
+    <path d="M70 212 L120 44" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <path d="M136 212 L186 44" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <!-- rungs -->
+    <path d="M84 170 L150 170" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+    <path d="M96 128 L162 128" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+    <path d="M108 86 L174 86" stroke="#F2B418" stroke-width="14" stroke-linecap="round"/>
+  </g>
+</svg>
