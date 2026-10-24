@@ -98,7 +98,7 @@ Exit criteria (BRD §18): 60% of sign-ups finish a CV, 35% digest open rate, 2% 
 
 ## Step 6: Phase 2, growth and the mobile app (months 5 to 10)
 
-Learning paths on ESCO, employer listings, campus and NYSC growth, Pro tier with WhatsApp utility notifications, and the Expo app (ADR-0014): Android first through EAS Build to the Play Store internal track, push notifications for digest and match alerts, share-sheet CV capture; iOS follows when there is demand. The web move to Cloudflare Workers happens when the Vercel bill passes $150 or users pass 200,000 (ADR-0011).
+Learning paths on ESCO, employer listings, campus and NYSC growth, Remote tier (ADR-0017) with WhatsApp utility notifications, and the Expo app (ADR-0014): Android first through EAS Build to the Play Store internal track, push notifications for digest and match alerts, share-sheet CV capture; iOS follows when there is demand. The web move to Cloudflare Workers happens when the Vercel bill passes $150 or users pass 200,000 (ADR-0011).
 
 ## Mobile recommendation, in one paragraph
 

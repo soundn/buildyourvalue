@@ -8,7 +8,7 @@ pieces can be developed and run together today and split without rewrites later.
 
 | Folder | Future repository | What it is | Runtime |
 |---|---|---|---|
-| `core/` | `buildyourvalue-core` (published as a private package `@byv/core`) | Shared domain logic and types: six-component CV weakness score, scam screen, matching, learning-path builder, deterministic CV rewrite rules, sample data. No framework dependencies. | Node library (ESM) |
+| `core/` | `buildyourvalue-core` (published as a private package `@byv/core`) | Shared domain logic and types: six-component CV weakness score, scam screen, Nigeria remote-eligibility classifier (`remote.ts`, ADR-0017), matching, learning-path builder, deterministic CV rewrite rules, sample data. No framework dependencies. | Node library (ESM) |
 | `api/` | `buildyourvalue-api` | HTTP API: evaluate a profile (score + matches + path), improve a CV (Claude with rules fallback), job listings, user reports, admin review queue. | Node + Hono |
 | `frontend/` | `buildyourvalue-frontend` | Job-seeker progressive web app: onboarding, dashboard, CV preview and print, digest preview, pricing. Mobile-first, installable. | Next.js |
 | `admin/` | `buildyourvalue-admin` | Staff console: listing review queue with approve and reject, audit trail. Employer verification joins it in Phase 2. | Next.js |
@@ -62,7 +62,7 @@ flowchart LR
 | Area | Prototype | MVP replacement (docs/PLAN.md, Phase 1) |
 |---|---|---|
 | Profile storage | Browser localStorage | Supabase Postgres behind phone-OTP and Google auth, accessed through Drizzle with SQL-first migrations (ADR-0004); phone and email encrypted at the application level (ADR-0009) |
-| Job listings | 28 fictional sample listings, 4 of them scam fixtures (ids s001–s004) | Nightly ingestion from JSearch/SerpApi and Remotive with dedup |
+| Job listings | 28 fictional sample listings, 4 of them scam fixtures (ids s001–s004) | Nightly ingestion from JSearch/SerpApi (Nigeria) and from public employer job boards plus remote feeds (remote) with dedup and the eligibility classifier; the audit script in `api/scripts/` already reads the remote feeds (ADR-0017) |
 | Matching | Deterministic skill coverage, role alignment, experience, location | pgvector recall (voyage-4-lite `halfvec(1024)` plus tsvector; ADR-0007; only the live job corpus is indexed, profile vectors are stored unindexed until reverse search exists, ADR-0013) then LLM rerank of the top 30 (Haiku 5.5; ADR-0003), scheduled by pg_cron and pgmq (ADR-0006) |
 | CV improvement | Rules by default; Claude structured output when `ANTHROPIC_API_KEY` is set | Same, with cost telemetry and model selection per tier |
 | Digest | On-screen preview | Resend send (ADR-0005) behind an `EmailProvider` interface with suppressions in Postgres, moving the digest stream to SES between 100,000 and 500,000 users (ADR-0012); SPF, DKIM, DMARC and one-click unsubscribe |

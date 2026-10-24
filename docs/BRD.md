@@ -178,7 +178,7 @@ R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
 ## 7. Proposed solution overview
 
-The platform is a mobile-first progressive web app that takes a job seeker from sign-up to a downloadable CV and weakness score in one session. A nightly pipeline ingests, deduplicates and scam-screens postings, embeds them into pgvector, recalls the top 300 per user by hard filters and similarity, reranks the top 30 with a cheap LLM against a rubric that emits a 0-100 fit score and a one-line "why you fit", and emails the result with one-click unsubscribe. When the score shows a skills gap, the platform assembles a three-step learning path from a curated catalogue; module completion triggers a re-match that visibly lifts the fit score. Billing runs through Paystack web checkout on a pass, Core and Pro, with dunning and transfer fallbacks. Employers post verified roles and buy fit-scored shortlists; course providers pay affiliate commissions (PLAN.md, Phases; Architecture; Weakness score).
+The platform is a mobile-first progressive web app that takes a job seeker from sign-up to a downloadable CV and weakness score in one session. A nightly pipeline ingests, deduplicates and scam-screens postings, embeds them into pgvector, recalls the top 300 per user by hard filters and similarity, reranks the top 30 with a cheap LLM against a rubric that emits a 0-100 fit score and a one-line "why you fit", and emails the result with one-click unsubscribe. When the score shows a skills gap, the platform assembles a three-step learning path from a curated catalogue; module completion triggers a re-match that visibly lifts the fit score. Billing runs through Paystack web checkout on a pass, Core and Remote, with dunning and transfer fallbacks. Employers post verified roles and buy fit-scored shortlists; course providers pay affiliate commissions (PLAN.md, Phases; Architecture; Weakness score).
 
 ### 7.1 User journey
 
@@ -581,6 +581,8 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 | R-14 | SoundTechWorks' CAC objects do not cover the product | Medium | Medium | Confirm in Phase 0; extend SoundTechWorks' objects or restructure it as a Ltd (ADR-0002 rules out a separate entity or business name) | Phases |
 | R-15 | Ladda unavailable as domain, CAC name, trademark or handle | Medium | Low | Five checks before commitment; Afara and CareerPadi as alternates | Naming |
 | R-16 | Catalogue outcomes misrepresented | Low | Medium | Provider-reported labelling | Weakness score |
+| R-17 | The eligibility classifier misclassifies a country-limited remote role as open | Medium | High | Structured fields before text; humans on "unclear"; report button on every listing; weekly 50-row precision check at or above 80% | remote_eligibility_audit.md; ADR-0017 |
+| R-18 | The remote shelf stays thin outside engineering (18 non-engineering open roles in a month) | High | Medium | Honest per-sector counts (BRL-018); employer list curated by sector (BR-063); local roles carry the digest where remote is thin | remote_eligibility_audit.md |
 
 ---
 
@@ -627,6 +629,7 @@ Condensed from the plan's verification table (PLAN.md, Verification) to the thir
 | 11 | Email open rates and email-checking frequency among young Nigerians | Email-first delivery is an assumption | Phase 0 tracked digests | Product |
 | 12 | Startup Act incentive terms in 2026; small-company CIT threshold under the Nigeria Tax Act 2025 | Tax planning and incorporation | NITDA portal; Nigeria Revenue Service | Finance |
 | 13 | Whether an Ordinary High Level controller must file the annual Compliance Audit Return (PLAN.md says higher tiers only; TOOLING.md says every controller of major importance, within 15 months then annually) | Compliance calendar and cost | GAID 2025 text and NDPC guidance; counsel | Counsel |
+| 14 | Precision of the remote-eligibility classifier and the weekly count of eligible remote roles per sector | Decides what the remote shelf can promise in each sector | 50-row hand-check of docs/research/remote_eligibility_audit.csv; re-run `npm run audit:remote -w api` weekly | Product |
 
 Inconsistencies between PLAN.md and the research notes, to resolve in version 0.2:
 
