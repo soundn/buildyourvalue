@@ -59,6 +59,7 @@ overrides the default model.
 
 | Document | What it is |
 |---|---|
+| [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) | Vercel + Supabase + Resend versus Cloudflare's equivalents versus a mix, with monthly cost at 1,000 to 50 million users, Nigeria fit, trigger points for switching, and the ADRs it would amend. |
 | [docs/TOOLING.md](docs/TOOLING.md) | State-of-the-art stack and tooling report: feature bar set by leading career products, AI capability stack with per-user costs, application stack layer by layer, developer tooling (plugins, skills, MCP, hooks), adoption plan and run-rate, unverified items. |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Service boundaries, the plan for splitting into separate repositories, API endpoints, and what is stubbed in the prototype versus the MVP. |
 | [docs/BRD.md](docs/BRD.md) | Business Requirements Document: objectives and KPIs, scope by phase, stakeholders and RACI, 61 numbered business requirements, functional and non-functional requirements, compliance, integrations, business rules, financials, risks, milestones, go/no-go gates, open questions and traceability matrix. |
