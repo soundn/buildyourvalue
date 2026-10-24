@@ -22,6 +22,8 @@ Rules that keep the split clean:
 
 ## How to split later
 
+We split when the first of these happens: a second regular contributor joins, or the first production deploy is set up ([ADR-0001](adr/0001-keep-one-npm-workspace-until-split-trigger.md)).
+
 1. Publish `core` to a private registry (GitHub Packages or npm) as `@byv/core` and pin a version.
 2. Create the three service repositories and move each folder's contents to the root of its repository.
 3. Replace the workspace reference `"@byv/core": "0.1.0"` with the published version.

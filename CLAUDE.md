@@ -3,7 +3,9 @@
 AI-assisted career platform for Nigerian job seekers: AI CV building, scam-screened and
 fit-scored job matching delivered by email digest, skill-gap learning paths. Two-person team.
 Read `docs/PLAN.md` for product decisions and `docs/ARCHITECTURE.md` for service boundaries
-before changing behaviour.
+before changing behaviour. Decisions with lasting consequences are recorded in `docs/adr/`
+(use the `adr` skill). Project skills: `add-endpoint`, `new-migration`, `email-template`,
+`adr`, and the user-invoked `release`.
 
 ## Workspace
 
