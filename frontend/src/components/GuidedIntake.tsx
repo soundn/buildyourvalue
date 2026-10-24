@@ -80,7 +80,7 @@ export function GuidedIntake({ onComplete, onUnavailable }: Props) {
         <input className="w-full rounded-md border border-[var(--line)] bg-white px-3 py-2 text-base" placeholder="Or type your own" value={free} onChange={(e) => setFree(e.target.value)} />
       )}
       <div className="flex justify-between">
-        <button type="button" onClick={back} disabled={busy || !Object.keys(answers).length} className="px-4 py-2 rounded-md border border-[var(--line)] bg-white disabled:opacity-40">Back</button>
+        <button type="button" onClick={back} disabled={busy || !Object.keys(answers).length} className="px-4 py-2 rounded-md border border-[var(--line)] bg-white disabled:opacity-40">Previous question</button>
         <button type="button" onClick={submit} disabled={busy || (!picked.length && !free.trim())} className="px-4 py-2 rounded-md bg-[var(--brand)] text-white font-medium disabled:opacity-40">
           {busy ? "One moment" : "Continue"}
         </button>
