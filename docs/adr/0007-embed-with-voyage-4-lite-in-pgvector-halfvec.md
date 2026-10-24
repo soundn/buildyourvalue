@@ -1,6 +1,6 @@
 # ADR-0007: Embed with Voyage voyage-4-lite at 1,024 dimensions in pgvector halfvec, hybrid with tsvector
 
-- Status: Accepted
+- Status: Accepted; amended by ADR-0013
 - Date: 2026-10-24
 - Deciders: Founders
 - Related: PLAN.md §Run matching on pgvector (embedding paragraph, "Embeddings" cost row); BRD INT-05, NFR-016; ARCHITECTURE.md §What is real and what is stubbed (Matching row); TOOLING.md §Three Claude tiers (Embeddings row); `.claude/skills/new-migration/SKILL.md` (vector rule)

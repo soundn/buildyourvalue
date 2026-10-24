@@ -17,6 +17,7 @@ npm workspaces, Node 22+. Each folder is a future standalone repository.
 | `api/` | Hono HTTP API. The only service that scores, matches or calls Claude. | `npm run dev -w api`, `npm run typecheck -w api` |
 | `frontend/` | Job-seeker Next.js PWA on port 3000 (manifest today; service worker and Web Push arrive in Phase 1 via Serwist, Turbopack compatibility unverified) | `npm run dev -w frontend`, `npm run build -w frontend` |
 | `admin/` | Staff console (Next.js) on port 3001 | `npm run dev -w admin` |
+| `mobile/` | Job-seeker Expo (React Native) app with Expo Router, Phase 2, future repository `buildyourvalue-mobile` (ADR-0014) | `npm run start -w mobile`, `npm run typecheck -w mobile` |
 
 `npm run dev` at the root starts all three services. After editing `core/`, rebuild it
 (`npm run build -w core`) before running the other workspaces; the PostToolUse hook already
@@ -26,6 +27,7 @@ typechecks the workspace you edited and runs core's tests when core changes.
 
 - `frontend` and `admin` call `api` over HTTP only, through `NEXT_PUBLIC_API_URL`. They may
   import `@byv/core` for types and static reference data (roles), never for scoring.
+- `mobile` follows the same rule as `frontend`: HTTP to `api`, `@byv/core` for types only.
 - Anything needing a database, network or secret lives in `api`. `core` stays pure.
 - Scoring, matching, scam screening and learning-path logic are deterministic in `core` and
   covered by `core/tests/`. Add or update a test when you change them.

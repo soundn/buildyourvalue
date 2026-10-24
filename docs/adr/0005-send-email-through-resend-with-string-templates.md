@@ -1,6 +1,6 @@
 # ADR-0005: Send transactional and digest email through Resend with plain TypeScript templates
 
-- Status: Accepted
+- Status: Accepted; amended by ADR-0012
 - Date: 2026-10-24
 - Deciders: Founders
 - Related: PLAN.md §Ship a PWA (Phase 1 row), §Run matching (delivery paragraph, cost table); BRD INT-06, §7.2, NFR-013, CR-04, CR-15; ARCHITECTURE.md §What is real and what is stubbed; TOOLING.md §The application stack; `.claude/skills/email-template/SKILL.md`
