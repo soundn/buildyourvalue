@@ -52,6 +52,15 @@ rdap.nic.africa; `.app` could not be reached from the research environment):
 | `ladda.app`, `getladda.app` | Unchecked (Google Registry RDAP unreachable); check in Cloudflare Registrar |
 | Fallback Afara | `afara.ng`, `afara.com` and `afara.africa` are taken; only `afara.com.ng` and `getafara.com` are free |
 
+Alternative names checked the same day, in case Ladda is dropped: laddr, ladderup, nextrung,
+rungly, rung, klimb, klimbr, worthi, worthly, valura, goodfit, jobfit, fitjob, upbound,
+stepup, risewise, stepwise, pathrung, oru, kazi, ise, jobpadi, careerpadi. Every `.com`
+except `pathrung.com` is taken; nearly every `.ng` and `.africa` is free. The scarcity is in
+`.com`, not in the name, so changing the name does not buy a `.com`. Verb-prefixed `.com`
+names are free for Ladda: `joinladda.com`, `useladda.com`, `tryladda.com`, `myladda.com`,
+`laddajobs.com`, `laddahq.com`. Cloudflare Registrar also shows `ladda.org`, `.net`, `.dev`,
+`.work`, `.me`, `.cc` free and `.app`, `.io`, `.ai`, `.co`, `.xyz`, `.us`, `.info` taken.
+
 Recommendation: `ladda.ng` as the primary domain, `ladda.com.ng` and `ladda.africa` as
 defensive registrations, `laddahq.com` for email and the international mirror. Afara is no
 longer a viable fallback.
