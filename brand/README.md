@@ -5,6 +5,11 @@ solution**. "Build Your Value" stays the working name in code and documents unti
 domain, CAC, trademark and social-handle checks below pass; the brand files here are ready
 to switch over the moment they do.
 
+Shareable brand reference (tokens, logo files, voice, app-store identity): the Ladda design
+system artifact at https://claude.ai/artifact/5JMKVKc6hSg3CKf5NuBUFV (private until shared
+from its Share menu). This folder stays the source of truth; regenerate the artifact when the
+files here change.
+
 ## Why Ladda
 
 Ladda is the phonetic spelling of "ladder": the product's whole promise is a next rung
