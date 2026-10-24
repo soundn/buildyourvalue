@@ -61,10 +61,10 @@ flowchart LR
 | Area | Prototype | MVP replacement (docs/PLAN.md, Phase 1) |
 |---|---|---|
 | Profile storage | Browser localStorage | Supabase Postgres behind phone-OTP and Google auth |
-| Job listings | 28 fictional sample listings, 4 of them scam fixtures | Nightly ingestion from JSearch/SerpApi and Remotive with dedup |
+| Job listings | 28 fictional sample listings, 4 of them scam fixtures (ids s001–s004) | Nightly ingestion from JSearch/SerpApi and Remotive with dedup |
 | Matching | Deterministic skill coverage, role alignment, experience, location | pgvector recall then LLM rerank of the top 30 |
 | CV improvement | Rules by default; Claude structured output when `ANTHROPIC_API_KEY` is set | Same, with cost telemetry and model selection per tier |
-| Digest | On-screen preview | SES or Resend send with SPF, DKIM, DMARC and one-click unsubscribe |
+| Digest | On-screen preview | Resend send (proposed; see ADR when accepted) with SPF, DKIM, DMARC and one-click unsubscribe |
 | Payments | Pricing page only | Paystack one-off pass and Core plan with dunning |
 | Admin auth | None, localhost only | Staff SSO |
 | Review decisions and user reports | In-memory | Postgres tables with audit log |

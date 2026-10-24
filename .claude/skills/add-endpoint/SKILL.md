@@ -39,7 +39,7 @@ does not use; CVs are personal data and the less the API accepts, the less it mu
   in the MVP. Keep that comment honest.
 - Return JSON only. Use `c.json(body, status)`.
 - User-facing listing endpoints must pass through `publishableJobs()` from `./review.js`
-  so review-flagged and rejected listings never reach users (BR-005).
+  so review-flagged and rejected listings never reach users (BR-003 and BRL-004).
 - Never put raw user text into a prompt string. If the endpoint calls Claude, add the call
   in `api/src/ai.ts` with a structured output schema and a rules fallback, as
   `improveWithClaude` does.

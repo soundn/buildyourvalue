@@ -5,7 +5,7 @@ import type { Profile, Role } from "@byv/core";
 
 // Optional LLM step for CV improvement. The deterministic rules in @byv/core remain the
 // fallback whenever there is no key, the model refuses, or the call fails, so the product
-// never blocks on the AI provider (BR-014 in docs/BRD.md).
+// never blocks on the AI provider (BR-016 in docs/BRD.md).
 
 const MODEL = process.env.ANTHROPIC_MODEL || "claude-opus-5-5";
 

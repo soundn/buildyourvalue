@@ -15,12 +15,12 @@ npm workspaces, Node 22+. Each folder is a future standalone repository.
 |---|---|---|
 | `core/` | Shared domain logic and types (`@byv/core`). No I/O, no framework imports. | `npm run build -w core`, `npm test` |
 | `api/` | Hono HTTP API. The only service that scores, matches or calls Claude. | `npm run dev -w api`, `npm run typecheck -w api` |
-| `frontend/` | Job-seeker Next.js PWA on port 3000 | `npm run dev -w frontend`, `npm run build -w frontend` |
+| `frontend/` | Job-seeker Next.js PWA on port 3000 (manifest today; service worker and Web Push arrive in Phase 1 via Serwist, Turbopack compatibility unverified) | `npm run dev -w frontend`, `npm run build -w frontend` |
 | `admin/` | Staff console (Next.js) on port 3001 | `npm run dev -w admin` |
 
 `npm run dev` at the root starts all three services. After editing `core/`, rebuild it
 (`npm run build -w core`) before running the other workspaces; the PostToolUse hook already
-typechecks and tests the workspace you edited.
+typechecks the workspace you edited and runs core's tests when core changes.
 
 ## Rules that keep the split clean
 

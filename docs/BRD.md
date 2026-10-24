@@ -10,8 +10,8 @@
 |---|---|
 | Document title | Business Requirements Document: Build Your Value (Ladda) |
 | Document ID | STW-BYV-BRD-001 |
-| Version | 0.1 Draft |
-| Date | 2026-10-20 |
+| Version | 0.2 Draft |
+| Date | 2026-10-24 |
 | Owner | SoundTechWorks (product sponsor) |
 | Status | Draft for review. Not approved for build. |
 | Primary source | `docs/PLAN.md` and the six research notes in `docs/research/` |
@@ -24,7 +24,7 @@ Citation convention: figures taken from the plan are cited by short section name
 | Version | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 2026-10-20 | Product team | Initial draft derived from PLAN.md and research notes |
-| | | | |
+| 0.2 | 2026-10-24 | Product team | Consistency pass after tooling research; ADR-0001 and ADR-0002 recorded |
 
 ### 1.2 Approvals
 
@@ -42,7 +42,7 @@ Citation convention: figures taken from the plan are cited by short section name
 
 SoundTechWorks intends to build and operate "Build Your Value", an AI-assisted career platform for Nigerian job seekers, under the recommended consumer brand **Ladda**, tagline "Build your value", parent line "a SoundTechWorks solution" (PLAN.md, Naming). The platform shall build or improve a job seeker's CV with an LLM, score the CV's weakness on six measurable components, match the seeker against a deduplicated, scam-screened corpus of Nigerian and remote postings, and email a curated digest of fit-scored jobs with a one-line explanation each. When the CV is weak for the target role, the platform recommends a curated three-step learning path whose completion triggers a re-match. Revenue comes from three lines from launch: a naira subscription (Free, a ₦1,999 one-off 7-day pass, Core at ₦1,999/month, Pro at ₦4,999/month), employer fees of ₦15,000-30,000 per featured role or shortlist, and course-affiliate commissions, with institutional (B2G/B2B2C) contracts targeted in Phase 3 (PLAN.md, Pricing; Phases).
 
-The research concludes that the product sells trust and relevance rather than the CV document: a reputable Nigerian vacancy draws 200-2,400 applications, 84% of adults met a scam in the past year, and no incumbent closes the CV-to-match-to-learn loop under a transparent naira price (PLAN.md, Summary; Competitors). The largest unverified assumption is that unemployed Nigerians will pay anything for job help. Delivery is therefore sequenced into four phases, beginning with an eight-week paid pilot gated on 10%+ waitlist pre-payment and 40%+ of hand-served users opening three of four digests. This BRD specifies 11 business objectives, 60 business requirements, 30 functional requirements, 22 non-functional requirements, 14 compliance requirements, 15 integrations and 16 business rules, plus financial framing, risks, milestones, gate criteria and the items to verify before money is committed.
+The research concludes that the product sells trust and relevance rather than the CV document: a reputable Nigerian vacancy draws 200-2,400 applications, 84% of adults met a scam in the past year, and no incumbent closes the CV-to-match-to-learn loop under a transparent naira price (PLAN.md, Summary; Competitors). The largest unverified assumption is that unemployed Nigerians will pay anything for job help. Delivery is therefore sequenced into four phases, beginning with an eight-week paid pilot gated on 10%+ waitlist pre-payment and 40%+ of hand-served users opening three of four digests. This BRD specifies 11 business objectives, 61 business requirements, 30 functional requirements, 22 non-functional requirements, 15 compliance requirements, 15 integrations and 16 business rules, plus financial framing, risks, milestones, gate criteria and the items to verify before money is committed.
 
 ---
 
@@ -73,7 +73,7 @@ Nigeria's headline unemployment rate of 4.3% (NBS, Q2 2024) conceals a market in
 | Global tools ($19-50/month) | ₦28,000-70,000/month in USD; trial traps; Nigerian card FX caps make charges fail silently |
 | Free ChatGPT | Produces a document but no verified, fit-scored distribution to real employers |
 
-The gap to own is the combined loop (CV, fit-scored matches, learning path, re-match) wrapped in a trust layer (verified employers, listing freshness, "no fee before interview", public scam watch) at a transparent naira price with cancel-anytime billing.
+The gap to own is the combined loop (CV, fit-scored matches, learning path, re-match) wrapped in a trust layer (verified employers, listing freshness, "no fee to candidates", public scam watch) at a transparent naira price with cancel-anytime billing.
 
 ---
 
@@ -90,7 +90,7 @@ Targets are drawn from the plan's exit criteria and metrics (PLAN.md, Phases; Ri
 | BO-05 | Convert free to paid | Free-to-paid conversion | 2%+ Phase 1; 4%+ by Phase 2 exit | Phase 1 |
 | BO-06 | Retain payers | Monthly churn | Under 10% Phase 1; under 7% by Phase 3 | Phase 1 |
 | BO-07 | Publish outcomes | Quarterly shortlist rate (active users reporting at least one interview) | Published each quarter; external bar 44-50% (LSETF pilots) | Phase 2 |
-| BO-08 | Positive unit economics | Variable cost per active user | Under ₦400 per month | Phase 1 |
+| BO-08 | Positive unit economics | Variable cost per active user (the per-user cost unit used throughout this document) | Under ₦400 per month | Phase 1 |
 | BO-09 | Diversify revenue | Employer, affiliate and institutional revenue | 20 paying employers and affiliate above 5% by Phase 2 exit; B2G/B2B2C above 25% by Phase 3 exit | Phase 2 |
 | BO-10 | Acquire efficiently | Blended CAC per activated user; payback | ₦700-1,500; within 3 subscription months | Phase 2 |
 | BO-11 | Operate lawfully and safely | NDPC registration; fee-requesting listings in paid digests; Gmail spam rate | Before 200th data subject; zero; under 0.1% | Phase 1 |
@@ -103,7 +103,7 @@ Targets are drawn from the plan's exit criteria and metrics (PLAN.md, Phases; Ri
 
 | Phase | Timing | In scope |
 |---|---|---|
-| 0: Validate | Months 0-2 | CAC status confirmation; name, domain, trademark and handle checks; 300-respondent willingness-to-pay survey; landing page and waitlist; 50 CVs rebuilt by hand with an LLM; manually curated weekly email digests with tracking; Paystack pre-orders of the ₦1,999 pass |
+| 0: Validate | Months 0-2 | CAC status confirmation; name, domain, trademark and handle checks; 300-respondent willingness-to-pay survey; landing page and waitlist; 50 CVs rebuilt by hand with an LLM; manually curated weekly email digests with tracking, sent from a separate digest subdomain with SPF, DKIM, DMARC and RFC 8058 headers from the first send; Paystack pre-orders of the ₦1,999 pass; Termii sender-ID registration (telco whitelisting takes weeks); Transfer Impact Assessment for offshore hosting and inference (CR-15); hand-labelling of 300-500 Nigerian listings for the scam classifier and 200 profile/job pairs for matching evals |
 | 1: MVP | Months 2-5 | Next.js mobile PWA; Supabase Auth with Termii phone OTP and Google sign-in; CV builder on JSON Resume with PDF/DOCX export; six-component weakness score; nightly ingestion from JSearch/SerpApi and Remotive with dedup and rules-based scam filter; pgvector recall plus cheap-LLM rerank; email digest with one-click unsubscribe; Paystack pass and Core with dunning; NDPC registration; privacy notice disclosing automated profiling; trust cues |
 | 2: Loop and growth | Months 5-10 | ESCO skill extraction; demand weights from own corpus; ~500-course curated catalogue with Impact/Awin links; three-step learning paths; re-match on completion; Pro tier with WhatsApp utility notifications and opt-in digest; verified-employer badge and ₦15,000-30,000 featured roles; referral rewards in premium months; campus scholar-ambassadors; NYSC batch campaigns |
 | 3: Scale and institutions | Months 10-18 | Jobberman or MyJobMag data partnership; LSETF-type B2G pilot; 3MTT credential import; cohort-dated paths with reviewer feedback; women-in-tech track; NCC zero-rating application; Ghana/Kenya and native-app evaluation |
@@ -115,7 +115,7 @@ Targets are drawn from the plan's exit criteria and metrics (PLAN.md, Phases; Ri
 | Native app before Phase 3 | Android ~82% of traffic; PWA is installable and push-capable; app stores take 15% (Phases; Pricing) |
 | Scraping LinkedIn, Indeed or Glassdoor | hiQ v. LinkedIn: $500,000 and a permanent injunction on contract grounds (Phases; Compliance) |
 | App-store billing for Nigerian subscriptions | 15% versus Paystack's 1.5% (Pricing) |
-| WhatsApp marketing digests below Pro | ~₦84 per message, ~₦340-370 per user per month, erases Core margin (Pricing; Architecture) |
+| WhatsApp marketing digests below Pro | $0.03-0.062 per message (₦84 upper bound), ~₦340-370 per user per month at the upper bound, erases Core margin (Pricing; Architecture; INT-07) |
 | Charging users to apply or access a specific job | Charge for tools, never access; "pay to apply" is the recognised scam pattern (Launch; Compliance) |
 | Storing recruiter personal data from third-party listings | Metadata only (Compliance) |
 | Human CV-writing service | Automation undercuts ₦10,000-80,000 rewrites (Market) |
@@ -260,7 +260,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-012 | The platform shall compute a six-component weakness score (skill coverage, achievement quality, completeness, tenure and gaps, parse-ability, missing credentials) with one explanation per component. | Weakness must be measurable (Weakness score) | M | 1 | Six scores and six explanations on every CV |
 | BR-013 | The platform shall flex thresholds by seniority so fresh graduates are not penalised for missing leadership signals. | Seniority-adaptive rubric (Weakness score) | M | 1 | Same content scores differently by documented seniority rules |
 | BR-014 | The platform shall apply Nigeria-specific checks: NYSC status, ICAN/ACCA for accounting targets, recognised certificates for cybersecurity targets, Pidgin role synonyms. | Discharge certificate and Big Four preferences (Weakness score) | M | 1 | Checks documented in the rubric and visible to users |
-| BR-015 | The platform shall offer posting-specific tailoring metered by tier (Free none; Pass and Pro unlimited; Core 5 per month) and cover letters on Core and above. | Tier definitions (Pricing) | M | 1 | Quotas enforced; counter visible |
+| BR-015 | The platform shall offer posting-specific tailoring metered by tier (Free none; Pass and Pro unlimited; Core 5 per month) and cover letters on Core and above. | Tier definitions (Pricing) | M | 1; Pro 2 | Quotas enforced; counter visible |
 | BR-016 | The platform shall route CV writing to a stronger model and all other tasks to a cheaper model, with cached profile prefixes. | CV writing dominates LLM cost (Architecture) | S | 1 | Routing configurable; per-task cost logged |
 
 ### 8.3 Job matching and digest
@@ -271,7 +271,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-018 | The platform shall deduplicate with MinHash/LSH recall, embedding and field-agreement confirmation, and clustering that keeps the earliest complete record with all source URLs. | True duplicates may share only 37% text (Architecture) | M | 1 | Duplicate rate in sampled digests under 5% |
 | BR-019 | The platform shall show Remotive listings attributed and linked, outside any sign-up wall, and never use them to collect sign-ups. | Remotive terms (Architecture; Compliance) | M | 1 | Public attributed page; compliance sign-off |
 | BR-020 | The platform shall match in two stages: hard filters and pgvector recall of 300, then LLM rerank of 30 in batches of ten against a rubric yielding a 0-100 score and one-line explanation. | Explainability at one tenth the cost (Architecture) | M | 1 | Every digest job has score and "why"; rerank cost logged |
-| BR-021 | The platform shall send digests by tier: Free weekly (5 jobs), Pass daily, Core three times weekly (30 reranked per week), Pro as Core plus WhatsApp. | Tier definitions and free throttle (Pricing; Architecture) | M | 1 | Scheduler enforces cadence and counts |
+| BR-021 | The platform shall send digests by tier: Free weekly (5 jobs), Pass daily, Core three times weekly (30 reranked per week), Pro as Core plus WhatsApp. | Tier definitions and free throttle (Pricing; Architecture) | M | 1; Pro 2 | Scheduler enforces cadence and counts |
 | BR-022 | The platform shall link every job to its original posting with provenance and shall not host applications. | Metadata only; link out (Compliance) | M | 1 | Outbound link and source label on every card |
 | BR-023 | The platform shall let users mark jobs relevant or not and record applied, interviewed or shortlisted. | Precision and shortlist rate depend on it (Risks and metrics) | M | 1 | Feedback stored per job per user |
 | BR-024 | The platform shall offer human review of any match decision on request. | GAID profiling disclosure (Compliance) | M | 1 | Response within 5 business days logged |
@@ -288,6 +288,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-030 | The platform shall re-match on module completion and show the fit-score change. | The loop must visibly close (Weakness score) | M | 2 | Delta shown within 24 hours |
 | BR-031 | The platform shall pair remote, BPO and virtual-assistant paths with a "getting paid" module. | PayPal unusable; 2025 tax reform (Weakness score) | S | 2 | Module on all remote-track paths |
 | BR-032 | The platform shall support cohort-dated paths with reviewer feedback and a women-in-tech track. | Cohorts and mentorship lift completion (Weakness score; Launch) | C | 3 | One cohort path and the track live |
+| BR-061 | The platform shall offer Pro subscribers a text mock interview generated from a target posting, graded against a STAR rubric with written feedback; voice mode is future scope. | Pro tier sells a mock interview (Pricing); text first, voice after a Nigerian-English STT test (TOOLING.md) | S | 2 | Eight-question session with per-answer feedback; no fabricated facts about the candidate |
 
 ### 8.5 Subscription and payments
 
@@ -301,7 +302,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-038 | The platform shall refund any first purchase within 7 days. | Trust cue (Launch) | M | 1 | Refund within 5 business days of request |
 | BR-039 | The platform shall prompt pass holders to upgrade on expiry and report pass-to-subscription conversion. | Monetisation metric (Risks and metrics) | M | 1 | Prompt shown; metric in dashboard |
 | BR-040 | The platform shall allow two-tap cancellation without dark patterns and show the next charge on every billing page. | Cancel-anytime positioning (Competitors) | M | 1 | Cancellation audit passes |
-| BR-041 | The platform shall review naira prices at least annually against inflation and FX. | ~16% inflation, ₦1,380/$ (Market) | S | 1 | Annual review documented |
+| BR-041 | The platform shall review naira prices at least annually against inflation and FX. | ~16% inflation; naira near ₦1,380/$ when observed (Market), against the §14 anchor of ₦1,400/$ | S | 1 | Annual review documented |
 
 ### 8.6 Employer side
 
@@ -385,12 +386,12 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 
 | ID | Category | Requirement | Target | Source |
 |---|---|---|---|---|
-| NFR-001 | Performance | Usable on a low-end Android device over 3G. | First contentful paint under 3 s on a 3G profile; initial JavaScript under 200 KB | PLAN.md, Architecture |
+| NFR-001 | Performance | Usable on a low-end Android device over 3G. | First contentful paint under 3 s on a 3G profile; initial JavaScript under 150 KB gzipped, enforced by a CI budget file | PLAN.md, Architecture |
 | NFR-002 | Data budget | First session from landing to CV download consumes a few megabytes at most. | Under 3 MB, TBD (verify in Phase 1) | PLAN.md, Launch |
 | NFR-003 | Media | WebP/AVIF images; no autoplay media; plain-text MIME alternative in digests. | 100% | PLAN.md, Architecture |
-| NFR-004 | Installability | PWA installable and push-capable on Android Chrome. | Lighthouse PWA checks pass | PLAN.md, Phases |
+| NFR-004 | Installability | PWA installable and push-capable on Android Chrome (manifest today; service worker and Web Push arrive in Phase 1 via Serwist, Turbopack compatibility unverified). | Lighthouse PWA checks pass | PLAN.md, Phases |
 | NFR-005 | Availability | User-facing services available monthly; nightly pipeline completes before 06:00 WAT. | 99.5%; SLA met 95% of nights, TBD (verify in Phase 1) | Derived |
-| NFR-006 | Latency | Database in Frankfurt, London or Cape Town after measuring Lagos round trips; CDN with Lagos point of presence. | Region decision documented with measurements | PLAN.md, Architecture |
+| NFR-006 | Latency | Database in London (eu-west-2) by default, Frankfurt only if measured Lagos round trips say so (Cape Town is not a Supabase region, per an unverified snippet); CDN with Lagos point of presence. | Region decision documented with measurements | PLAN.md, Architecture |
 | NFR-007 | Security: transport and storage | TLS 1.2+ in transit; CVs and personal data encrypted at rest; secrets in a managed vault. | Configuration audit | Standard practice |
 | NFR-008 | Security: authentication | 5-minute OTP expiry; rate limits; Google OAuth; session revocation. | No high-severity auth finding | gtm_and_naming.md |
 | NFR-009 | Security: application | Assessed against OWASP Top 10 before each gate. | No open high or critical findings | Standard practice |
@@ -401,7 +402,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | NFR-014 | Accessibility | WCAG 2.1 AA for onboarding, CV, digest settings and checkout. | Audit passes | Standard practice |
 | NFR-015 | Localisation | English first in standard Nigerian English; documented Pidgin tone guide for creator content and optional hints; ₦ formatting. | Tone guide approved | PLAN.md, Launch |
 | NFR-016 | Scalability | Serve 1,000, 10,000 and 100,000 registered users within the plan's envelope on Supabase Pro, Vercel or VPS, and a durable job runner. | ≈ $100-200, $500-900 and $3,500-6,000 per month (cheap-model variant) | PLAN.md, Architecture |
-| NFR-017 | Cost ceiling: variable | Variable cost per registered user per month without WhatsApp. | $0.10-0.30; under ₦400 per active user | PLAN.md, Architecture; Risks and metrics |
+| NFR-017 | Cost ceiling: variable | Variable cost per active user per month without WhatsApp; "per active user" is the unit for every per-user cost figure in this document. | Under ₦400 per active user (PLAN.md quotes $0.10-0.30 per registered user at 60% weekly active) | PLAN.md, Architecture; Risks and metrics |
 | NFR-018 | Cost ceiling: free tier | Free users receive the throttled pipeline (weekly digest, 20-50 scored jobs). | ≈ $0.03 per user per month | PLAN.md, Pricing; Architecture |
 | NFR-019 | Observability | Pipeline runs, tokens per CV and per job, API quotas, delivery and payment events logged and alertable. | Dashboards and alerts live | PLAN.md, Verification |
 | NFR-020 | Resilience | Ingestion degrades gracefully and retries with backoff; no empty digest is sent. | Failures alerted | Derived |
@@ -415,12 +416,12 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | ID | Area | Requirement | Timing | Source (PLAN.md) |
 |---|---|---|---|---|
 | CR-01 | NDPA 2023 and GAID 2025 | Operate as a data controller with a documented lawful basis per purpose. | Before Phase 1 launch | Compliance |
-| CR-02 | NDPC registration | Register as a Data Controller of Major Importance, expected Ordinary High Level (₦10,000 per year), before the 200th data subject's CV is stored; re-tier with counsel (EHL ₦100,000; UHL ₦250,000, with annual Compliance Audit Return). | Before 200th CV | Compliance |
+| CR-02 | NDPC registration | Register as a Data Controller of Major Importance, expected Ordinary High Level (₦10,000 per year), before the 200th data subject is recorded; re-tier with counsel (EHL ₦100,000; UHL ₦250,000, with annual Compliance Audit Return). | Before 200th data subject | Compliance |
 | CR-03 | DPO | Appoint and name a data protection officer. | Phase 1 | Compliance |
 | CR-04 | Marketing consent | Separate unticked consent for promotional and partner email under GAID Art. 18(1)(a); objection suppresses immediately (Araka v. Jumia). | Phase 0 onward | Compliance |
 | CR-05 | Automated profiling | Disclose profiling, explain match scores, offer human review. | Phase 1 | Compliance |
 | CR-06 | Breach and retention | Documented and tested breach procedure, retention schedule and deletion policy. | Phase 1 | Compliance |
-| CR-07 | CAC coverage | Confirm whether SoundTechWorks' registration is a company or business name and whether its objects cover the product; otherwise register the brand as a business name under SoundTechWorks or incorporate a Ltd; display the RC or BN number. | Phase 0 | Naming; Phases; Compliance |
+| CR-07 | CAC coverage | SoundTechWorks builds and owns the product and the brand is its trading name (ADR-0002). Confirm that SoundTechWorks is a CAC limited company and that its registered objects cover the product; restructure or extend the objects first if not; display its RC number. | Phase 0 | Naming; Phases; Compliance |
 | CR-08 | Startup Act 2022 | If held by a Nigerian Ltd under 10 years old with at least one-third Nigerian shareholding, apply for the NITDA Startup Label; verify reported incentives before relying on them. | After incorporation decision | Compliance |
 | CR-09 | VAT | Prices VAT-inclusive at 7.5% under the Nigeria Tax Act 2025; register when turnover exceeds the small-company exemption (turnover ≤₦100 million and fixed assets ≤₦250 million). | Phase 1 | Compliance |
 | CR-10 | Labour Act licence | Obtain a written opinion before launch on whether an AI matching marketplace is a "private employment agency" (ss. 23, 25, 71); keep the stance "tools and information, never placement fees"; obtain the state licence if advised. | Before Phase 1 launch | Compliance |
@@ -428,6 +429,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | CR-12 | Employer data | Store job metadata only; share candidate data with employers only on per-role consent. | Phase 1-2 | Compliance |
 | CR-13 | AI governance | Log model decisions; monitor NITDA AI guidance; review GAID "emerging technologies" provisions with counsel. | Phase 1 onward | Compliance |
 | CR-14 | Marketing claims | No use of "85% of graduates lack digital skills" without the ~100-person sample caveat; provider outcomes labelled provider-reported. | Phase 0 onward | Weakness score |
+| CR-15 | Cross-border transfers | Transfer Impact Assessment and cross-border transfer basis under GAID 2025 for Supabase (London), Vercel, Resend, PostHog, Sentry and Anthropic inference; owner counsel. | Phase 0 | Compliance; TOOLING.md |
 
 ---
 
@@ -441,7 +443,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | INT-04 | LLM provider (Haiku-class for rerank and classification; Sonnet-class or small model for CV writing) | Rerank, scam classification, CV generation, path assembly | 1 | Indicative $0.10/$0.50 per million tokens; batch 50% off; verify (Architecture; Verification) | Second provider behind an abstraction |
 | INT-05 | text-embedding-3-small and pgvector | Recall; course retrieval | 1 | $0.02 per million tokens; HNSW with halfvec (Architecture) | Alternative embedding model |
 | INT-06 | Amazon SES or Resend | Digest and transactional email | 1 | SES ~$0.10 per 1,000; Resend Pro 50,000 for $20; SPF/DKIM/DMARC (Architecture) | Switch provider; dedicated IPs at scale |
-| INT-07 | WhatsApp Cloud API via Meta or a BSP | Pro digest and utility notifications | 2 | Per-message billing since 1 July 2025; utility ~₦14, marketing ~₦84, unverified (Architecture; Verification) | Email only; SMS for critical notices |
+| INT-07 | WhatsApp Cloud API via Meta or a BSP | Pro digest and utility notifications | 2 | Per-message billing since 1 July 2025; a separate charge on service replies after 1,000 free per number from 1 October 2026 (single vendor source); utility ~₦14, marketing $0.03-0.062 (₦84 upper bound), unverified (Architecture; Verification) | Email only; SMS for critical notices |
 | INT-08 | Termii | SMS OTP with WhatsApp and voice fallback | 1 | Prepaid naira wallet; SMS ₦5.62-7.00 per page; unit prices dashboard-only (Architecture) | Second OTP provider; Google sign-in |
 | INT-09 | Paystack | Checkout, recurring charges, direct debit, transfer, USSD, refunds | 1 | 1.5% + ₦100 capped at ₦2,000; ₦100 waived under ₦2,500 (Pricing) | Flutterwave or Monnify (rates disputed) |
 | INT-10 | Supabase | Postgres, pgvector, Auth, Storage | 1 | Pro $25/month to ~100,000 MAU (Architecture) | Self-hosted Postgres on Hetzner |
@@ -460,7 +462,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BRL-001 | The platform never charges a user to apply for, view or be considered for a specific job; charges apply only to tools. | Launch; Compliance |
 | BRL-002 | No employer may request any payment from a candidate; breach means removal and a scam-watch entry. | Launch |
 | BRL-003 | A listing is not sent if older than 30 days from datePosted or past validThrough, whichever is earlier; the 30-day default is TBD (verify in Phase 1). | Risks and metrics |
-| BRL-004 | A listing fails the scam screen if it requests any fee, uses only a webmail address, requires WhatsApp-only application, lacks a resolvable company domain, or pairs "no experience needed" with pay far above market; borderline cases go to review. | Architecture |
+| BRL-004 | A listing fails the scam screen outright if it requests any fee or uses a well-known company name without a verifiable domain (impersonation). A missing company domain, webmail-only contact, a contact domain that does not match the company domain, WhatsApp-only application, "no experience needed" with pay far above market, urgency language or an implausible entry-level salary each raise a review flag; one or two flags send the listing to human review, three or more fail it without review. | Architecture; core/src/scam.ts |
 | BRL-005 | Consumer price points avoid ₦2,500-4,000 because Paystack's ₦100 flat fee applies from ₦2,500; fee-efficient points are under ₦2,500 or at ₦5,000 and above. | Pricing |
 | BRL-006 | NIBSS direct debit is offered only on quarterly and annual plans. | Pricing |
 | BRL-007 | A first purchase is refundable in full within 7 days. | Launch |
@@ -490,7 +492,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 
 ### 14.2 Illustrative revenue scenario
 
-An illustration, not a forecast. Assumptions: 100,000 registered free users; 3% conversion; blended ARPU ₦2,500; ₦1,400/$ (PLAN.md, Pricing).
+An illustration, not a forecast. Assumptions: 100,000 registered free users; 3% conversion; blended ARPU ₦2,500; FX anchor ₦1,400 per US dollar (October 2026), the single dated rate used for every dollar conversion in this document and in PLAN.md (PLAN.md, Pricing).
 
 | Line | Value |
 |---|---|
@@ -508,9 +510,10 @@ An illustration, not a forecast. Assumptions: 100,000 registered free users; 3% 
 | Fixed plus variable, cheap-model variant | ≈ 100-200 | ≈ 500-900 | ≈ 3,500-6,000 |
 | Sonnet-class CV-writing variant | ≈ 200-300 | ≈ 1,400-1,800 | ≈ 12,000-15,000 |
 | Optional weekly WhatsApp marketing digest | +160 | +1,600 | +16,000 |
+| Developer tooling (two Claude subscriptions, plugins; fixed) | ≈ 200 | ≈ 200 | ≈ 200 |
 | Variable cost per registered user (no WhatsApp) | $0.10-0.30 | $0.10-0.30 | $0.10-0.30 |
 
-The model assumes 60% weekly active users, 300 candidates and 30 reranked jobs per active user per week, and unit prices observed on 20 October 2026. The technical note's own totals run higher at the top end (~$6,000-15,000 at 100,000 users; technical_architecture.md).
+This is the reconciled cost table; PLAN.md's cost table is its source and points here (resolves I-2). The model assumes 60% weekly active users, 300 candidates and 30 reranked jobs per active user per week, and unit prices observed on 20 October 2026. The technical note's own totals run higher at the top end (~$6,000-15,000 at 100,000 users; technical_architecture.md).
 
 ### 14.4 Break-even framing (illustration)
 
@@ -533,8 +536,8 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 |---|---|
 | C-01 | APIs, partner feeds and authorised postings only; no scraping of LinkedIn, Indeed or Glassdoor. |
 | C-02 | Web checkout only; no app-store billing. |
-| C-03 | First-session budget of a few megabytes; initial JavaScript under 200 KB. |
-| C-04 | NDPC registration before the 200th stored CV. |
+| C-03 | First-session budget of a few megabytes; initial JavaScript under 150 KB gzipped, enforced by a CI budget file. |
+| C-04 | NDPC registration before the 200th data subject. |
 | C-05 | WhatsApp marketing confined to Pro. |
 | C-06 | Permissive open-source licences only for embedded components. |
 | C-07 | VAT-inclusive naira pricing with annual review. |
@@ -561,14 +564,14 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 | R-04 | WhatsApp marketing at ~₦84 per message erases Core margin | High if bundled | High | Pro and utility-only; email-first | Risks and metrics |
 | R-05 | Payment failure: 8-14% involuntary churn per cycle | High | Medium | Dunning, transfer and wallet fallbacks, prepaid passes, chosen charge date | Risks and metrics |
 | R-06 | Episodic retention: users leave when hired | High | Medium | Weekly value; NYSC and exam-cycle re-activation; 90-day re-subscription metric | Risks and metrics |
-| R-07 | Macro: ~16% inflation, ₦1,380/$ | Medium | Medium | Annual price review | Risks and metrics |
+| R-07 | Macro: ~16% inflation; naira near ₦1,380/$ when observed, against the §14 anchor of ₦1,400/$ | Medium | Medium | Annual price review | Risks and metrics |
 | R-08 | A fake listing in a paid digest | Medium | Critical | Verification, scam filter, public scam watch, user reporting | Risks and metrics |
 | R-09 | 3MTT as free quasi-competitor | Medium | Medium | Treat 3MTT as partner; convert its fellows into matches | Risks and metrics |
 | R-10 | Digests land in spam; Gmail bulk-sender rules breached | Medium | High | Dedicated subdomain, SPF/DKIM/DMARC, warm-up, RFC 8058, spam under 0.1% | Architecture |
 | R-11 | SMS OTP failure to Nigerian numbers | Medium | Medium | WhatsApp and voice fallback; Google sign-in; drop-off under 15% | Phases |
 | R-12 | LLM cost overrun from untested token counts | Medium | Medium | Instrument tokens in Phase 1; batch APIs; cheap-model default | Verification |
 | R-13 | NDPC tier or Labour Act licence misjudged | Medium | High | Register early as OHL; written opinion before launch | Compliance |
-| R-14 | SoundTechWorks' CAC objects do not cover the product | Medium | Medium | Confirm in Phase 0; register business name or incorporate | Phases |
+| R-14 | SoundTechWorks' CAC objects do not cover the product | Medium | Medium | Confirm in Phase 0; extend SoundTechWorks' objects or restructure it as a Ltd (ADR-0002 rules out a separate entity or business name) | Phases |
 | R-15 | Ladda unavailable as domain, CAC name, trademark or handle | Medium | Low | Five checks before commitment; Afara and CareerPadi as alternates | Naming |
 | R-16 | Catalogue outcomes misrepresented | Low | Medium | Provider-reported labelling | Weakness score |
 
@@ -578,7 +581,7 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 
 | Phase | Timing | Key milestones | Exit criteria (PLAN.md, Phases) |
 |---|---|---|---|
-| 0: Validate | Months 0-2 | CAC confirmation; name checks; 300-respondent survey; landing page and waitlist; 50 hand-built CVs; four curated weekly digests; Paystack pre-orders | 40%+ of hand-served users open 3 of 4 digests; at least 10% of waitlist pre-pays |
+| 0: Validate | Months 0-2 | CAC confirmation; name checks; 300-respondent survey; landing page and waitlist; 50 hand-built CVs; four curated weekly digests from a separate digest subdomain with SPF/DKIM/DMARC and RFC 8058 headers from the first send; Paystack pre-orders; Termii sender-ID registration (telco whitelisting takes weeks); Transfer Impact Assessment (CR-15); hand-labelling of 300-500 listings and 200 profile/job pairs. The survey and pilot may themselves cross 200 data subjects, so NDPC registration is assessed at Phase 0 start | 40%+ of hand-served users open 3 of 4 digests; at least 10% of waitlist pre-pays |
 | 1: MVP | Months 2-5 | PWA live; OTP and Google auth; CV builder and score; nightly ingestion; matcher; email digest; pass and Core billing; NDPC registration; privacy notice | 60% finish a CV and set preferences; open rate 35%+; free-to-paid 2%+; churn under 10% |
 | 2: Loop and growth | Months 5-10 | ESCO extraction; ~500-course catalogue; paths and re-match; Pro with WhatsApp; verified employers and featured roles; referral; campus scholars; NYSC campaigns | 4%+ conversion; published quarterly shortlist rate; 20 paying employers; affiliate above 5% |
 | 3: Scale and institutions | Months 10-18 | Board data partnership; LSETF-type pilot; 3MTT import; cohort paths; women-in-tech track; zero-rating application; Ghana/Kenya evaluation | B2G or B2B2C above 25%; churn under 7%; CAC payback within 3 months |
@@ -589,8 +592,8 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 
 | Gate | Go criteria (all required) | No-go response |
 |---|---|---|
-| Phase 0 to 1 | (1) At least 10% of the waitlist pre-pays the ₦1,999 pass; (2) 40%+ of hand-served users open 3 of 4 digests; (3) CAC coverage confirmed or product entity registered; (4) brand name checks passed; (5) Labour Act opinion commissioned | Pivot to the B2G and employer-paid version of the engine; no consumer acquisition spend (PLAN.md, Conclusion) |
-| Phase 1 to 2 | (1) 60%+ activation; (2) open rate 35%+; (3) free-to-paid 2%+; (4) churn under 10%; (5) NDPC registration on file before the 200th CV; (6) spam rate under 0.1%; (7) zero paid-digest listings requesting fees; (8) variable cost per active user under ₦400 | Hold at Phase 1 and fix the failing metric |
+| Phase 0 to 1 | (1) At least 10% of the waitlist pre-pays the ₦1,999 pass; (2) 40%+ of hand-served users open 3 of 4 digests; (3) SoundTechWorks confirmed as a CAC limited company whose objects cover the product (ADR-0002); (4) brand name checks passed; (5) Labour Act opinion commissioned | Pivot to the B2G and employer-paid version of the engine; no consumer acquisition spend (PLAN.md, Conclusion) |
+| Phase 1 to 2 | (1) 60%+ activation; (2) open rate 35%+; (3) free-to-paid 2%+; (4) churn under 10%; (5) NDPC registration on file before the 200th data subject; (6) spam rate under 0.1%; (7) zero paid-digest listings requesting fees; (8) variable cost per active user under ₦400 | Hold at Phase 1 and fix the failing metric |
 | Phase 2 to 3 | (1) 4%+ conversion; (2) shortlist rate published; (3) 20 paying employers; (4) affiliate above 5%; (5) path completion and fit-score lift measured | Continue Phase 2; defer institutional build |
 | Phase 3 completion | (1) B2G or B2B2C above 25%; (2) churn under 7%; (3) CAC payback within 3 months; (4) native-app and expansion decisions documented | Re-plan with sponsor |
 
@@ -600,7 +603,7 @@ A requirement is accepted when its criterion in Sections 8 to 10 is demonstrated
 
 ## 19. Open questions and items requiring verification
 
-Condensed from the plan's verification table (PLAN.md, Verification) to the twelve most decision-critical items.
+Condensed from the plan's verification table (PLAN.md, Verification) to the thirteen most decision-critical items.
 
 | # | Item | Why it matters | How to verify | Owner |
 |---|---|---|---|---|
@@ -616,17 +619,18 @@ Condensed from the plan's verification table (PLAN.md, Verification) to the twel
 | 10 | Current LLM and embedding prices, batch discounts, measured tokens per CV and per job | Cost model assumes 3,000/2,500 and 600 tokens | Official pricing; Phase 1 instrumentation | Engineering |
 | 11 | Email open rates and email-checking frequency among young Nigerians | Email-first delivery is an assumption | Phase 0 tracked digests | Product |
 | 12 | Startup Act incentive terms in 2026; small-company CIT threshold under the Nigeria Tax Act 2025 | Tax planning and incorporation | NITDA portal; Nigeria Revenue Service | Finance |
+| 13 | Whether an Ordinary High Level controller must file the annual Compliance Audit Return (PLAN.md says higher tiers only; TOOLING.md says every controller of major importance, within 15 months then annually) | Compliance calendar and cost | GAID 2025 text and NDPC guidance; counsel | Counsel |
 
 Inconsistencies between PLAN.md and the research notes, to resolve in version 0.2:
 
 | # | Inconsistency | Resolution |
 |---|---|---|
 | I-1 | LinkedIn users: ~14 million (PLAN.md, Market) versus 11.6-12.1 million (nigeria_job_seeker_market.md). | Use 12 million until confirmed. |
-| I-2 | Cost at 1k/10k/100k users: ≈ $100-200 / $500-900 / $3,500-6,000 (PLAN.md) versus ~$150-250 / $700-1,500 / $6,000-15,000 (technical_architecture.md). | Reconcile the two models. |
-| I-3 | FX anchor: ₦1,380-1,400/$ (PLAN.md) versus ₦1,556/$ (monetization_payments_compliance.md). | Adopt one dated anchor. |
+| I-2 | Cost at 1k/10k/100k users: ≈ $100-200 / $500-900 / $3,500-6,000 (PLAN.md) versus ~$150-250 / $700-1,500 / $6,000-15,000 (technical_architecture.md). | Resolved: §14.3 is the reconciled table and PLAN.md points to it; the technical note's higher top end stays recorded there as a caveat. |
+| I-3 | FX anchor: ₦1,380-1,400/$ (PLAN.md) versus ₦1,556/$ (monetization_payments_compliance.md). | Resolved: ₦1,400 per US dollar (October 2026), stated once in §14.2; ₦1,380 remains only where quoted as the observed market rate. |
 | I-4 | Variable cost: $0.10-0.30 per registered user and ₦400 ceiling (PLAN.md) versus ₦300-1,100 per active user (monetization_payments_compliance.md). | Instrument in Phase 1; treat ₦400 as a target. |
-| I-5 | Entity: business name under SoundTechWorks (PLAN.md, Naming) versus Ltd for Startup Act eligibility (PLAN.md, Compliance; monetization note). | Decide in Phase 0 after item 1. |
-| I-6 | WhatsApp billing dated 1 July 2025 (PLAN.md) versus press reports of charges from 1 October 2026 (technical_architecture.md). | Confirm against Meta's rate card. |
+| I-5 | Entity: business name under SoundTechWorks (PLAN.md, Naming) versus Ltd for Startup Act eligibility (PLAN.md, Compliance; monetization note). | Resolved by ADR-0002: SoundTechWorks builds and owns the product and the brand is its trading name; Phase 0 confirms it is a Ltd whose objects cover the product. |
+| I-6 | WhatsApp billing dated 1 July 2025 (PLAN.md) versus press reports of charges from 1 October 2026 (technical_architecture.md). | Resolved: both dates are right about different charges. Per-message billing began 1 July 2025; a separate charge on service replies after 1,000 free per number began 1 October 2026 (single vendor source). Confirm both against Meta's rate card. |
 
 ---
 
@@ -638,7 +642,7 @@ Inconsistencies between PLAN.md and the research notes, to resolve in version 0.
 | ATS | Applicant tracking system used by employers to parse and screen CVs |
 | ARPU | Average revenue per user per month |
 | CAC | Corporate Affairs Commission, Nigeria's company and business-name registry |
-| CAR | Compliance Audit Return filed annually with the NDPC by higher-tier controllers |
+| CAR | Compliance Audit Return filed annually with the NDPC; whether Ordinary High Level controllers must file is open (Section 19, item 13) |
 | Dunning | Retries and reminders after a failed subscription payment |
 | ESCO | European Skills, Competences, Qualifications and Occupations taxonomy; free for commercial use |
 | FIRS / NRS | Federal Inland Revenue Service, succeeded by the Nigeria Revenue Service under the 2025 reform |
@@ -669,7 +673,7 @@ Inconsistencies between PLAN.md and the research notes, to resolve in version 0.
 | BO-02 Prove the digest | BR-008, BR-020, BR-021, BR-022 (Phase 0 manual equivalents) |
 | BO-03 Activation 60%+ | BR-009 to BR-012, BR-055 |
 | BO-04 Digest open 35%+ | BR-008, BR-018, BR-020, BR-021, BR-023, BR-056 |
-| BO-05 Free-to-paid 2%+ then 4%+ | BR-015, BR-021, BR-033, BR-035, BR-039, BR-040, BR-058 |
+| BO-05 Free-to-paid 2%+ then 4%+ | BR-015, BR-021, BR-033, BR-035, BR-039, BR-040, BR-058, BR-061 |
 | BO-06 Churn under 10% then 7% | BR-030, BR-036, BR-037, BR-040, BR-041, BR-058 |
 | BO-07 Published shortlist rate | BR-023, BR-030, BR-032, BR-060 |
 | BO-08 Variable cost under ₦400 | BR-016, BR-020, BR-025, BR-059 |

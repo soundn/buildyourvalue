@@ -3,7 +3,7 @@
 - Status: Accepted
 - Date: 2026-10-24
 - Deciders: Founders
-- Related: PLAN.md §Naming, §Compliance; BRD §1 Document control, §11 CR-05, §19 Open question 1; ADR-0001
+- Related: PLAN.md §Naming, §Compliance; BRD §1 Document control, §11 CR-07 and CR-10, §19 Open question 1; ADR-0001
 
 ## Context
 The plan assumed a new limited company would be incorporated for the product, and the BRD
@@ -43,5 +43,5 @@ the SoundTechWorks framing; the repository and all product documents do.
 Decided by the founder in this session. Still unverified: whether SoundTechWorks is a CAC
 limited company or a business name; whether its registered objects cover recruitment,
 training and software services; whether a Labour Act private-employment-agency licence is
-required for an AI matching service (BRD CR-05). These three items stay on the Phase 0
+required for an AI matching service (BRD CR-10). These three items stay on the Phase 0
 checklist in PLAN.md and BRD §19.

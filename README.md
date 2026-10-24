@@ -23,7 +23,7 @@ move to its own repository (`buildyourvalue-core`, `-api`, `-frontend`, `-admin`
 |---|---|---|
 | `core/` | Shared domain logic and types (`@byv/core`): scoring, scam screen, matching, learning paths, rewrite rules, sample data. Unit tests live here. | library |
 | `api/` | HTTP API (Node + Hono). Only service that scores, matches or calls Claude. | 4000 |
-| `frontend/` | Job-seeker PWA (Next.js): onboarding, dashboard, CV, digest preview, pricing. | 3000 |
+| `frontend/` | Job-seeker PWA (Next.js; manifest today, service worker and Web Push arrive in Phase 1 via Serwist, Turbopack compatibility unverified): onboarding, dashboard, CV, digest preview, pricing. | 3000 |
 | `admin/` | Staff console (Next.js): listing review queue. | 3001 |
 
 ## Run it
@@ -61,7 +61,7 @@ overrides the default model.
 |---|---|
 | [docs/TOOLING.md](docs/TOOLING.md) | State-of-the-art stack and tooling report: feature bar set by leading career products, AI capability stack with per-user costs, application stack layer by layer, developer tooling (plugins, skills, MCP, hooks), adoption plan and run-rate, unverified items. |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Service boundaries, the plan for splitting into separate repositories, API endpoints, and what is stubbed in the prototype versus the MVP. |
-| [docs/BRD.md](docs/BRD.md) | Business Requirements Document: objectives and KPIs, scope by phase, stakeholders and RACI, 60 numbered business requirements, functional and non-functional requirements, compliance, integrations, business rules, financials, risks, milestones, go/no-go gates, open questions and traceability matrix. |
+| [docs/BRD.md](docs/BRD.md) | Business Requirements Document: objectives and KPIs, scope by phase, stakeholders and RACI, 61 numbered business requirements, functional and non-functional requirements, compliance, integrations, business rules, financials, risks, milestones, go/no-go gates, open questions and traceability matrix. |
 | [docs/PLAN.md](docs/PLAN.md) | The research-backed product, business and launch plan (positioning, name, pricing, MVP scope, phased roadmap, architecture, learning-path design, go-to-market, compliance, risks, metrics, and a list of what still needs verifying). |
 | [docs/research/nigeria_job_seeker_market.md](docs/research/nigeria_job_seeker_market.md) | Labour-market data, job-seeker segments, channels, pain points, device and data access, willingness to pay. |
 | [docs/research/competitor_landscape.md](docs/research/competitor_landscape.md) | Nigerian and global job boards, AI CV tools, learning products, alert channels, user complaints, and the gap to own. |
@@ -76,7 +76,7 @@ overrides the default model.
 - **Price the core tier at ₦1,999/month**, under Paystack's ₦2,500 fee cliff and inside the band Spotify and YouTube have proven Nigerians pay. Offer a ₦1,999 one-off 7-day "Finished CV" pass, a ₦4,999 Pro tier, and employer and course-affiliate revenue from day one.
 - **Ship a mobile PWA, not a native app**, on Next.js + Supabase/pgvector, fed by Google-for-Jobs aggregators and Remotive. Do not scrape LinkedIn or Indeed.
 - **Validate before building.** Phase 0 is an eight-week paid pilot: hand-served CVs, manually curated email digests, and Paystack pre-orders. Proceed to the MVP only if 10%+ pre-pay and 40%+ open the digests.
-- **Register with the NDPC before the 200th CV**, confirm SoundTechWorks is (or the product sits under) a CAC-registered limited company whose objects cover the product, and display both as trust signals.
+- **Register with the NDPC before the 200th data subject**, confirm SoundTechWorks, which builds and owns the product ([ADR-0002](docs/adr/0002-soundtechworks-builds-and-owns-the-product.md)), is a CAC-registered limited company whose objects cover it, and display both as trust signals.
 
 ## Caveat on sources
 

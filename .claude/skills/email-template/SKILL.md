@@ -66,5 +66,5 @@ new template. It is the reference for voice: direct, concrete, no exclamation ma
 
 Report: the template name and trigger, the subject line, the input fields, where the preview
 files are, and the test results. If the email is marketing rather than transactional, say so,
-because marketing requires consent under GAID 2025 and must honour unsubscribes within two
-days.
+because marketing requires consent under GAID 2025 and must honour unsubscribes immediately
+(NFR-013); two days is only Gmail's floor.
