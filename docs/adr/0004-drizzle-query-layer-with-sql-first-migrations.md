@@ -1,8 +1,8 @@
 # ADR-0004: Use Drizzle as the typed query layer with hand-written SQL migrations applied by the Supabase CLI
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-24
-- Deciders: Founders (proposed by Claude from the tooling research; not yet accepted)
+- Deciders: Founders
 - Related: ARCHITECTURE.md §What is real and what is stubbed; BRD INT-10, NFR-007; TOOLING.md §The application stack; `.claude/skills/new-migration/SKILL.md`; CLAUDE.md §Rules that keep the split clean
 
 ## Context

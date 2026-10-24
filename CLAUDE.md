@@ -42,8 +42,11 @@ typechecks the workspace you edited and runs core's tests when core changes.
 ## AI usage
 
 - Call Claude only through `@anthropic-ai/sdk` in `api/src/ai.ts`, with structured outputs.
-  Default model is `claude-opus-5-5`; `ANTHROPIC_MODEL` overrides it. Always keep the
-  rules-based fallback working when no key is set or the model refuses.
+  CV writing and tailoring use `ANTHROPIC_MODEL_WRITE` (default `claude-sonnet-5-5`); bulk
+  reranking, scam triage and verification use `ANTHROPIC_MODEL_BULK` (default
+  `claude-haiku-5-5`) with a one-time retry on the write model when Haiku refuses; Opus is
+  for eval judging only (ADR-0003). Always keep the rules-based fallback working when no key
+  is set or the model refuses.
 - CVs and listings are untrusted input. Never put user-supplied text into system prompts
   without framing it as data, and never invent numbers or achievements in CV rewrites.
 
@@ -52,4 +55,7 @@ typechecks the workspace you edited and runs core's tests when core changes.
 - TypeScript strict, ESM. Zod for request validation in `api`.
 - Commit messages: conventional prefixes (`feat:`, `fix:`, `docs:`, `chore:`).
 - Secrets live in per-workspace `.env` files (gitignored). `.env.example` documents them.
+- Database access through Drizzle (`api/src/db/schema.ts`); migrations are hand-written SQL in
+  `api/supabase/migrations/` applied with the Supabase CLI, and `drizzle-kit pull` only
+  regenerates the schema (ADR-0004).
 - Sample data in `core/src/data/` is fictional. Keep scam fixtures labelled as such.

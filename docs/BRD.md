@@ -215,7 +215,7 @@ flowchart TB
     subgraph External
         X1[JSearch / SerpApi / Remotive]
         X2[LLM and embedding providers]
-        X3[Resend email, proposed ADR-0005]
+        X3[Resend email, ADR-0005]
         X4[WhatsApp Cloud API: Pro only]
         X5[Course affiliates: Impact / Awin]
     end
@@ -245,7 +245,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-002 | The platform shall state prominently that it never charges users to apply and that no employer may charge candidates. | "Pay to apply" is the recognised scam pattern (Launch) | M | 1 | Statement on landing, pricing and every job page |
 | BR-003 | The platform shall screen every listing with a rules layer (fee requests, webmail-only contact, WhatsApp-only application, missing company domain, "no experience" with high pay), with LLM classification and human review of borderline cases. | Scam listings slip through even at Jobberman (Architecture; Competitors) | M | 1 | 100% of listings carry a screen result; none flagged "fee" is sent |
 | BR-004 | The platform shall publish an employer-verification policy and award a verified badge only after corporate-domain and CAC checks. | Trust cues belong in the MVP (Launch) | M | 1 policy, 2 badge | Policy live; badge requires logged verification |
-| BR-005 | The platform shall let any user report a listing and suppress it from digests pending review within one business day. | User reporting is part of the filter (Architecture; one report suppresses, proposed, ADR-0010) | M | 1 | Report control on every listing; SLA logged |
+| BR-005 | The platform shall let any user report a listing and suppress it from digests pending review within one business day. | User reporting is part of the filter (Architecture; one report suppresses, ADR-0010) | M | 1 | Report control on every listing; SLA logged |
 | BR-006 | The platform shall operate a public scam watch of confirmed fraudulent postings and impersonated employers. | One fake listing in a paid digest could be fatal (Risks and metrics) | S | 2 | Page updated at least weekly |
 | BR-007 | The platform shall publish a named, photographed team page, use a corporate email domain and honour a 7-day refund. | Nigerian caution reflects fraud experience (Launch) | M | 1 | All three present before first paid checkout |
 | BR-008 | The platform shall exclude listings older than the freshness threshold and report the share expired at send time. | Stale roles are the top MyJobMag complaint (Competitors) | M | 1 | Freshness metric per digest run; BRL-003 enforced |
@@ -261,7 +261,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-013 | The platform shall flex thresholds by seniority so fresh graduates are not penalised for missing leadership signals. | Seniority-adaptive rubric (Weakness score) | M | 1 | Same content scores differently by documented seniority rules |
 | BR-014 | The platform shall apply Nigeria-specific checks: NYSC status, ICAN/ACCA for accounting targets, recognised certificates for cybersecurity targets, Pidgin role synonyms. | Discharge certificate and Big Four preferences (Weakness score) | M | 1 | Checks documented in the rubric and visible to users |
 | BR-015 | The platform shall offer posting-specific tailoring metered by tier (Free none; Pass and Pro unlimited; Core 5 per month) and cover letters on Core and above. | Tier definitions (Pricing) | M | 1; Pro 2 | Quotas enforced; counter visible |
-| BR-016 | The platform shall route CV writing to a stronger model and all other tasks to a cheaper model, with cached profile prefixes. | CV writing dominates LLM cost (Architecture; Sonnet 5.5 and Haiku 5.5 proposed, ADR-0003) | S | 1 | Routing configurable; per-task cost logged |
+| BR-016 | The platform shall route CV writing to a stronger model and all other tasks to a cheaper model, with cached profile prefixes. | CV writing dominates LLM cost (Architecture; Sonnet 5.5 and Haiku 5.5, ADR-0003) | S | 1 | Routing configurable; per-task cost logged |
 
 ### 8.3 Job matching and digest
 
@@ -392,7 +392,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | NFR-004 | Installability | PWA installable and push-capable on Android Chrome (manifest today; service worker and Web Push arrive in Phase 1 via Serwist, Turbopack compatibility unverified). | Lighthouse PWA checks pass | PLAN.md, Phases |
 | NFR-005 | Availability | User-facing services available monthly; nightly pipeline completes before 06:00 WAT. | 99.5%; SLA met 95% of nights, TBD (verify in Phase 1) | Derived |
 | NFR-006 | Latency | Database in London (eu-west-2) by default, Frankfurt only if measured Lagos round trips say so (Cape Town is not a Supabase region, per an unverified snippet); CDN with Lagos point of presence. | Region decision documented with measurements | PLAN.md, Architecture |
-| NFR-007 | Security: transport and storage | TLS 1.2+ in transit; CVs and personal data encrypted at rest, with phone, email and any national ID or bank detail also encrypted at the application level with AES-GCM (proposed, ADR-0009); secrets in a managed vault. | Configuration audit | Standard practice |
+| NFR-007 | Security: transport and storage | TLS 1.2+ in transit; CVs and personal data encrypted at rest, with phone, email and any national ID or bank detail also encrypted at the application level with AES-GCM (ADR-0009); secrets in a managed vault. | Configuration audit | Standard practice |
 | NFR-008 | Security: authentication | 5-minute OTP expiry; rate limits; Google OAuth; session revocation. | No high-severity auth finding | gtm_and_naming.md |
 | NFR-009 | Security: application | Assessed against OWASP Top 10 before each gate. | No open high or critical findings | Standard practice |
 | NFR-010 | Privacy: minimisation | Collect only what CV building, matching and billing need; no recruiter personal data from listings. | DPO sign-off | PLAN.md, Compliance |
@@ -401,7 +401,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | NFR-013 | Email deliverability | Dedicated sending subdomain with SPF, DKIM and aligned DMARC; RFC 8058 one-click unsubscribe honoured immediately; gradual warm-up; Postmaster Tools monitored. | Spam rate under 0.1%; bounce under 2% | PLAN.md, Architecture |
 | NFR-014 | Accessibility | WCAG 2.1 AA for onboarding, CV, digest settings and checkout. | Audit passes | Standard practice |
 | NFR-015 | Localisation | English first in standard Nigerian English; documented Pidgin tone guide for creator content and optional hints; ₦ formatting. | Tone guide approved | PLAN.md, Launch |
-| NFR-016 | Scalability | Serve 1,000, 10,000 and 100,000 registered users within the plan's envelope on Supabase Pro, Vercel for the web apps and Fly.io for the API (proposed, ADR-0008), and a durable job runner (pg_cron plus pgmq, then Inngest; proposed, ADR-0006). | ≈ $100-200, $500-900 and $3,500-6,000 per month (cheap-model variant) | PLAN.md, Architecture |
+| NFR-016 | Scalability | Serve 1,000, 10,000 and 100,000 registered users within the plan's envelope on Supabase Pro, Vercel for the web apps and Fly.io for the API (ADR-0008), and a durable job runner (pg_cron plus pgmq, then Inngest; ADR-0006). | ≈ $100-200, $500-900 and $3,500-6,000 per month (cheap-model variant) | PLAN.md, Architecture |
 | NFR-017 | Cost ceiling: variable | Variable cost per active user per month without WhatsApp; "per active user" is the unit for every per-user cost figure in this document. | Under ₦400 per active user (PLAN.md quotes $0.10-0.30 per registered user at 60% weekly active) | PLAN.md, Architecture; Risks and metrics |
 | NFR-018 | Cost ceiling: free tier | Free users receive the throttled pipeline (weekly digest, 20-50 scored jobs). | ≈ $0.03 per user per month | PLAN.md, Pricing; Architecture |
 | NFR-019 | Observability | Pipeline runs, tokens per CV and per job, API quotas, delivery and payment events logged and alertable. | Dashboards and alerts live | PLAN.md, Verification |
@@ -440,14 +440,14 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | INT-01 | JSearch, SerpApi Google Jobs or DataForSEO | Nigerian postings via Google-for-Jobs data | 1 | JSearch ~$30/month per 10,000 requests; SerpApi from $50/month; DataForSEO $0.0006 per page; 50-100 daily queries cost $30-130/month (Architecture) | Switch vendor; TheirStack at scale |
 | INT-02 | Remotive public API | Remote roles | 1 | Free; 24-hour delay; ~4 requests per day; attribution and link-back; no sign-up collection (Architecture) | Remotive paid private API |
 | INT-03 | Jobberman or MyJobMag feed | Replace aggregator spend | 3 | No public API or RSS found; partnership required (Architecture) | Aggregators; TheirStack |
-| INT-04 | LLM provider (Haiku 5.5 for rerank and classification; Sonnet 5.5 for CV writing; proposed, ADR-0003) | Rerank, scam classification, CV generation, path assembly | 1 | Indicative $0.10/$0.50 per million tokens; batch 50% off; verify (Architecture; Verification) | Second provider behind an abstraction |
-| INT-05 | voyage-4-lite at 1,024 dimensions (proposed, ADR-0007; text-embedding-3-small at 1,536 as alternative) and pgvector | Recall; course retrieval | 1 | $0.02 per million tokens; HNSW with halfvec (Architecture) | Alternative embedding model |
-| INT-06 | Resend (proposed, ADR-0005; Amazon SES at scale) | Digest and transactional email | 1 | SES ~$0.10 per 1,000; Resend Pro 50,000 for $20; SPF/DKIM/DMARC (Architecture) | Switch provider; dedicated IPs at scale |
+| INT-04 | LLM provider (Haiku 5.5 for rerank and classification; Sonnet 5.5 for CV writing; ADR-0003) | Rerank, scam classification, CV generation, path assembly | 1 | Indicative $0.10/$0.50 per million tokens; batch 50% off; verify (Architecture; Verification) | Second provider behind an abstraction |
+| INT-05 | voyage-4-lite at 1,024 dimensions (ADR-0007; text-embedding-3-small at 1,536 as alternative) and pgvector | Recall; course retrieval | 1 | $0.02 per million tokens; HNSW with halfvec (Architecture) | Alternative embedding model |
+| INT-06 | Resend (ADR-0005; Amazon SES at scale) | Digest and transactional email | 1 | SES ~$0.10 per 1,000; Resend Pro 50,000 for $20; SPF/DKIM/DMARC (Architecture) | Switch provider; dedicated IPs at scale |
 | INT-07 | WhatsApp Cloud API via Meta or a BSP | Pro digest and utility notifications | 2 | Per-message billing since 1 July 2025; a separate charge on service replies after 1,000 free per number from 1 October 2026 (single vendor source); utility ~₦14, marketing $0.03-0.062 (₦84 upper bound), unverified (Architecture; Verification) | Email only; SMS for critical notices |
 | INT-08 | Termii | SMS OTP with WhatsApp and voice fallback | 1 | Prepaid naira wallet; SMS ₦5.62-7.00 per page; unit prices dashboard-only (Architecture) | Second OTP provider; Google sign-in |
 | INT-09 | Paystack | Checkout, recurring charges, direct debit, transfer, USSD, refunds | 1 | 1.5% + ₦100 capped at ₦2,000; ₦100 waived under ₦2,500 (Pricing) | Flutterwave or Monnify (rates disputed) |
 | INT-10 | Supabase | Postgres, pgvector, Auth, Storage | 1 | Pro $25/month to ~100,000 MAU (Architecture) | Self-hosted Postgres on Hetzner |
-| INT-11 | pg_cron plus pgmq in Supabase, then Inngest from Phase 2 (proposed, ADR-0006) | Nightly ingestion, embedding, matching, fan-out | 1 | $0-25/month at 1,000 users (Architecture) | pg-boss on VPS |
+| INT-11 | pg_cron plus pgmq in Supabase, then Inngest from Phase 2 (ADR-0006) | Nightly ingestion, embedding, matching, fan-out | 1 | $0-25/month at 1,000 users (Architecture) | pg-boss on VPS |
 | INT-12 | Impact (Coursera), Awin (Alison), Udemy affiliates | Commissions | 2 | Coursera up to 45%; Udemy 10% base, 7-day cookie, app sales excluded; catalogue APIs gated (Pricing; Architecture) | Curated CSV without tracking |
 | INT-13 | ESCO v1.2.1 | Skills taxonomy | 2 | Free for commercial use; CSV/JSON-LD; API under EUPL 1.2 (Weakness score) | LLM output constrained to ESCO labels |
 | INT-14 | 3MTT and LSETF systems | Credential import; cohort and placement reporting | 3 | Terms TBD (verify in Phase 3) | Manual CSV import |

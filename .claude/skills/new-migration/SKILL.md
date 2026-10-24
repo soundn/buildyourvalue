@@ -32,8 +32,9 @@ are never edited after merge. Forward-only: a mistake gets a new migration, neve
 because the file may already have run on someone's database.
 
 Pair every migration with a Drizzle schema update in `api/src/db/schema.ts` (create it on
-first use) so the API has typed access. Drizzle is the proposed query layer (ADR-0004): `drizzle-kit pull` regenerates the schema
-after a migration has run, and drizzle-kit never generates or applies migrations.
+first use) so the API has typed access. Drizzle is the query layer (ADR-0004): `drizzle-kit pull`
+regenerates the schema after a migration has run, and drizzle-kit never generates or applies
+migrations.
 
 ## Rules for the SQL
 
@@ -44,11 +45,12 @@ after a migration has run, and drizzle-kit never generates or applies migrations
   `create policy "owner reads own profile" on profiles for select to authenticated using (user_id = auth.uid());`
   Admin and service access goes through the service role in the API, never through a
   permissive policy.
-- Sensitive text (phone, email, CV body) is encrypted in the API before insert and stored
-  in `bytea` or `text` columns named `*_enc` (ADR-0009, proposed, narrows this to phone, email
-  and any national ID or bank detail with a keyed `*_hash` column for lookups, and keeps the
-  CV body in plaintext under RLS so the `tsvector` rule below can hold). Supabase is
-  deprecating pgsodium, so do not rely on column encryption in the database.
+- Direct identifiers (phone, email, and any national ID or bank detail) are encrypted in the
+  API with AES-GCM before insert and stored in `bytea` or `text` columns named `*_enc`, each
+  paired with a keyed-hash `*_hash` column for equality lookups such as login and dedup
+  (ADR-0009). CV body, work history and skills stay in plaintext columns protected by RLS and
+  Supabase's encryption at rest, so the `tsvector` rule below and the embedding pipeline work.
+  Supabase is deprecating pgsodium, so do not rely on column encryption in the database.
 - Every foreign key gets an index. Every column used in a `where` by the digest job gets an
   index. State the expected query beside the index in a comment.
 - Vectors: `halfvec(<dims>)` with an HNSW index, dims matching the embedding model in

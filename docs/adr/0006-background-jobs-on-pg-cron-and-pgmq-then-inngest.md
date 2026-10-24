@@ -1,8 +1,8 @@
 # ADR-0006: Run background jobs on pg_cron and pgmq inside Supabase in Phase 1, adopt Inngest in Phase 2
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-24
-- Deciders: Founders (proposed by Claude from the tooling research; not yet accepted)
+- Deciders: Founders
 - Related: PLAN.md §Run matching (lean stack paragraph, "Background jobs" cost row); BRD INT-11, NFR-005, NFR-016, NFR-020; TOOLING.md §The application stack (Jobs/queues row); `.claude/skills/new-migration/SKILL.md`
 
 ## Context

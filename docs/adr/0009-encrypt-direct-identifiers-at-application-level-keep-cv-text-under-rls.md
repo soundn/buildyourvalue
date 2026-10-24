@@ -1,8 +1,8 @@
 # ADR-0009: Encrypt direct identifiers at the application level and keep CV text in RLS-protected plaintext
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-24
-- Deciders: Founders (proposed by Claude from the tooling research; not yet accepted)
+- Deciders: Founders
 - Related: BRD NFR-007, NFR-010, CR-01, CR-06, CR-15; PLAN.md §Register with NDPC (compliance table); TOOLING.md §The application stack (compliance paragraph); `.claude/skills/new-migration/SKILL.md` (sensitive text rule); `api/src/ai.ts`; ADR-0004; ADR-0007
 
 ## Context

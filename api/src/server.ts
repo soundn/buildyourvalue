@@ -88,10 +88,15 @@ app.post("/v1/cv/improve", async (c) => {
   return c.json({ engine: "rules", profile: improved, changes, before: scoreProfile(profile, role).total, after: scoreProfile(improved, role).total });
 });
 
+// One report suppresses a listing pending human review (ADR-0010). The MVP requires a session
+// and uses the user id; the prototype takes an x-reporter-id header or falls back to the
+// client address so the three-per-day cap has something to count against.
 app.post("/v1/jobs/:id/report", async (c) => {
   const body = (await c.req.json().catch(() => ({}))) as { reason?: string };
-  const r = reportJob(c.req.param("id"), body.reason ?? "unspecified");
-  return c.json({ ok: true, reports: r.count });
+  const reporterId =
+    c.req.header("x-reporter-id") ?? c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
+  const r = reportJob(c.req.param("id"), body.reason ?? "unspecified", reporterId);
+  return c.json({ ok: true, accepted: r.accepted, reports: r.count });
 });
 
 // Admin surface. The MVP puts this behind staff authentication; the prototype keeps it open on localhost.

@@ -1,8 +1,8 @@
 # ADR-0010: Suppress a listing on one signed-in user report, pending human review within one business day
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-24
-- Deciders: Founders (proposed by Claude from the tooling research; not yet accepted)
+- Deciders: Founders
 - Related: BRD BR-003, BR-005, BR-004, BRL-004, FR-011, FR-026; PLAN.md §Run matching (scam filter), §Compliance (consumer trust row); ARCHITECTURE.md §API endpoints; CLAUDE.md §Product rules; `api/src/review.ts`; `frontend/src/components/TrustFooter.tsx`
 
 ## Context

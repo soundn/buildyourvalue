@@ -22,12 +22,12 @@ Rules that keep the split clean:
 
 ## How to split later
 
-We split when the first of these happens: a second regular contributor joins, or the first production deploy is set up ([ADR-0001](adr/0001-keep-one-npm-workspace-until-split-trigger.md)). The first production deploy is planned together with the split, and "second regular contributor" means one beyond the two founders (proposed, [ADR-0008](adr/0008-host-api-on-fly-london-web-on-vercel-and-plan-the-split-with-the-first-deploy.md)).
+We split when the first of these happens: a second regular contributor joins, or the first production deploy is set up ([ADR-0001](adr/0001-keep-one-npm-workspace-until-split-trigger.md)). The first production deploy is planned together with the split, and "second regular contributor" means one beyond the two founders ([ADR-0008](adr/0008-host-api-on-fly-london-web-on-vercel-and-plan-the-split-with-the-first-deploy.md)).
 
 1. Publish `core` to a private registry (GitHub Packages or npm) as `@byv/core` and pin a version.
 2. Create the three service repositories and move each folder's contents to the root of its repository.
 3. Replace the workspace reference `"@byv/core": "0.1.0"` with the published version.
-4. Give each repository its own CI (typecheck, tests, build) and deploy target (API on Fly.io London with Railway as fallback, web apps on Vercel behind Cloudflare; proposed, ADR-0008).
+4. Give each repository its own CI (typecheck, tests, build) and deploy target (API on Fly.io London with Railway as fallback, web apps on Vercel behind Cloudflare; ADR-0008).
 
 ## Request flow in the prototype
 
@@ -52,7 +52,7 @@ flowchart LR
 | `GET /v1/jobs` | Publishable listings (automatic pass or human approved) |
 | `POST /v1/evaluate` | Profile in; role, weakness report, top matches and learning path out |
 | `POST /v1/cv/improve` | Profile in; improved profile, change list, before and after scores out |
-| `POST /v1/jobs/:id/report` | User report; two reports suppress a listing pending review (one report proposed, ADR-0010) |
+| `POST /v1/jobs/:id/report` | User report with a reporter id; one report suppresses a listing pending human review, a verified employer's listing needs two, and each reporter is capped at three reports a day (ADR-0010) |
 | `GET /v1/admin/review` | Review queue: every listing that did not pass cleanly or was reported |
 | `POST /v1/admin/review/:id` | Approve or reject with reviewer identity and note |
 
@@ -60,11 +60,11 @@ flowchart LR
 
 | Area | Prototype | MVP replacement (docs/PLAN.md, Phase 1) |
 |---|---|---|
-| Profile storage | Browser localStorage | Supabase Postgres behind phone-OTP and Google auth, accessed through Drizzle with SQL-first migrations (proposed, ADR-0004); phone and email encrypted at the application level (proposed, ADR-0009) |
+| Profile storage | Browser localStorage | Supabase Postgres behind phone-OTP and Google auth, accessed through Drizzle with SQL-first migrations (ADR-0004); phone and email encrypted at the application level (ADR-0009) |
 | Job listings | 28 fictional sample listings, 4 of them scam fixtures (ids s001–s004) | Nightly ingestion from JSearch/SerpApi and Remotive with dedup |
-| Matching | Deterministic skill coverage, role alignment, experience, location | pgvector recall (voyage-4-lite `halfvec(1024)` plus tsvector; proposed, ADR-0007) then LLM rerank of the top 30 (Haiku 5.5; proposed, ADR-0003), scheduled by pg_cron and pgmq (proposed, ADR-0006) |
+| Matching | Deterministic skill coverage, role alignment, experience, location | pgvector recall (voyage-4-lite `halfvec(1024)` plus tsvector; ADR-0007) then LLM rerank of the top 30 (Haiku 5.5; ADR-0003), scheduled by pg_cron and pgmq (ADR-0006) |
 | CV improvement | Rules by default; Claude structured output when `ANTHROPIC_API_KEY` is set | Same, with cost telemetry and model selection per tier |
-| Digest | On-screen preview | Resend send (proposed, ADR-0005) with SPF, DKIM, DMARC and one-click unsubscribe |
+| Digest | On-screen preview | Resend send (ADR-0005) with SPF, DKIM, DMARC and one-click unsubscribe |
 | Payments | Pricing page only | Paystack one-off pass and Core plan with dunning |
 | Admin auth | None, localhost only | Staff SSO |
 | Review decisions and user reports | In-memory | Postgres tables with audit log |

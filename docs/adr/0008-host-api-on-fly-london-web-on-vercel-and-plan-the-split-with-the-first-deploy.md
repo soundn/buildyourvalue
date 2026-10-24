@@ -1,8 +1,8 @@
 # ADR-0008: Host the Hono API on Fly.io London and the web apps on Vercel behind Cloudflare; the first production deploy fires the repository split
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-24
-- Deciders: Founders (proposed by Claude from the tooling research; not yet accepted)
+- Deciders: Founders
 - Related: PLAN.md §Run matching (lean stack paragraph, "Hosting" cost row), §Ship a PWA (no app store); BRD NFR-006, NFR-016, INT-15, CR-15; ARCHITECTURE.md §How to split later; TOOLING.md §The application stack (Hosting row); ADR-0001; ADR-0002
 
 ## Context

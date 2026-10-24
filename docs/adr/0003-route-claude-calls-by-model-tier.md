@@ -1,8 +1,8 @@
 # ADR-0003: Route Claude calls by tier: Sonnet 5.5 for writing, Haiku 5.5 for bulk, Opus 5.5 only for evals
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-24
-- Deciders: Founders (proposed by Claude from the tooling research; not yet accepted)
+- Deciders: Founders
 - Related: PLAN.md §Run matching on pgvector (model split, cost rows); BRD BR-016, INT-04, NFR-017; TOOLING.md §Three Claude tiers; CLAUDE.md §AI usage; `api/src/ai.ts`
 
 ## Context
