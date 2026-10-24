@@ -680,7 +680,7 @@ Inconsistencies between PLAN.md and the research notes, to resolve in version 0.
 | Business objective | Supporting business requirements |
 |---|---|
 | BO-01 Prove demand | BR-009, BR-033, BR-034, BR-038 (Phase 0 manual equivalents) |
-| BO-02 Prove the digest | BR-008, BR-020, BR-021, BR-022 (Phase 0 manual equivalents) |
+| BO-02 Prove the digest | BR-008, BR-020, BR-021, BR-022, BR-062, BR-063 (Phase 0 manual equivalents) |
 | BO-03 Activation 60%+ | BR-009 to BR-012, BR-055 |
 | BO-04 Digest open 35%+ | BR-008, BR-018, BR-020, BR-021, BR-023, BR-056 |
 | BO-05 Free-to-paid 2%+ then 4%+ | BR-015, BR-021, BR-033, BR-035, BR-039, BR-040, BR-058, BR-061 |
@@ -689,6 +689,6 @@ Inconsistencies between PLAN.md and the research notes, to resolve in version 0.
 | BO-08 Variable cost under ₦400 | BR-016, BR-020, BR-025, BR-059 |
 | BO-09 Employer, affiliate and institutional revenue | BR-042 to BR-049 |
 | BO-10 CAC ₦700-1,500 and payback | BR-050 to BR-054 |
-| BO-11 Lawful and safe operation | BR-001 to BR-008, BR-019, BR-024, BR-044, BR-045, BR-057 |
+| BO-11 Lawful and safe operation | BR-001 to BR-008, BR-019, BR-024, BR-044, BR-045, BR-057, BR-062 |
 
 End of document.
