@@ -5,4 +5,5 @@ export * from "./scam.js";
 export * from "./match.js";
 export * from "./path.js";
 export * from "./improve.js";
+export * from "./remote.js";
 export { roles, jobs, courses, sampleProfile } from "./data/index.js";
