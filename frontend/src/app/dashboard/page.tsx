@@ -117,6 +117,14 @@ export default function Dashboard() {
               <Link href="/digest" className="text-sm underline">Preview the email digest</Link>
             </div>
             <p className="text-sm text-[var(--muted)]">Fresh listings only, screened for scams, ranked by fit. {evaluation.matches.length} shown.</p>
+            {profile?.preferences && (
+              <p className="text-sm text-[var(--muted)]">
+                Your answers: {profile.preferences.targetRoles.length ? profile.preferences.targetRoles.map((id) => evaluation.role.id === id ? evaluation.role.title : id).join(", ") : "any role"} ·{" "}
+                {{ onsite: "on-site", hybrid: "hybrid", remote: profile.preferences.remoteAbroad ? "remote, abroad too" : "remote in Nigeria", any: "anywhere" }[profile.preferences.workPreference]}
+                {profile.preferences.minSalaryNgn ? ` · at least \u20a6${profile.preferences.minSalaryNgn.toLocaleString("en-NG")}` : ""}
+                {profile.preferences.wantsDollarPay ? " · paid in dollars" : ""}. <Link href="/onboard?step=1" className="underline">Change answers</Link>
+              </p>
+            )}
             {profile && (
               <HiddenNotice
                 hidden={evaluation.hidden}

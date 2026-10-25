@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { classifyRemoteEligibility, stripHtml } from "../src/remote.js";
+import { classifyRemoteEligibility, jobEligibility, stripHtml } from "../src/remote.js";
+import { jobs, matchJobs, roles, sampleProfile } from "../src/index.js";
 
 const d = "We are a remote team. Apply with your CV.";
 
@@ -48,5 +49,18 @@ describe("classifyRemoteEligibility", () => {
   });
   it("strips HTML before matching", () => {
     expect(stripHtml("<p>Hello&nbsp;<b>world</b></p><br>Next")).toBe("Hello world\nNext");
+  });
+});
+
+describe("jobEligibility in matching", () => {
+  it("classifies only remote listings and keeps EU-only ones out of the match list", () => {
+    expect(jobEligibility(jobs.find((j) => j.id === "j001")!)).toBeNull();
+    expect(jobEligibility(jobs.find((j) => j.id === "j011")!)?.verdict).toBe("restricted");
+    expect(jobEligibility(jobs.find((j) => j.id === "j004")!)?.verdict).toBe("open");
+    const role = roles.find((r) => r.id === "frontend_developer")!;
+    const ids = matchJobs(sampleProfile, role, jobs, { now: new Date("2026-10-20T00:00:00Z"), limit: 50 }).map((m) => m.job.id);
+    expect(ids).not.toContain("j011");
+    const va = matchJobs(sampleProfile, roles.find((r) => r.id === "virtual_assistant")!, jobs, { now: new Date("2026-10-20T00:00:00Z"), limit: 50 }).find((m) => m.job.id === "j004");
+    expect(va?.eligibility?.verdict).toBe("open");
   });
 });

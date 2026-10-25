@@ -17,10 +17,11 @@ import {
   intakeProgress,
   nextIntakeQuestion,
   normalizeIntakeAnswers,
+  jobEligibility,
   type Profile,
 } from "@byv/core";
 import { aiEnabled, improveWithClaude, applyAiImprovement, phraseIntakeQuestion } from "./ai.js";
-import { decide, listReviewItems, publishableJobs, reportJob, reportsFor } from "./review.js";
+import { corpusStats, decide, listReviewItems, publishableJobs, reportJob, reportsFor } from "./review.js";
 
 const ProfileSchema = z.object({
   basics: z.object({ name: z.string(), email: z.string(), phone: z.string(), location: z.string(), summary: z.string() }),
@@ -72,7 +73,7 @@ app.get("/v1/courses", (c) => c.json(courses));
 app.get("/v1/sample-profile", (c) => c.json(sampleProfile));
 
 app.get("/v1/jobs", (c) => {
-  const items = publishableJobs().map((job) => ({ ...job, reports: reportsFor(job.id).count }));
+  const items = publishableJobs().map((job) => ({ ...job, reports: reportsFor(job.id).count, eligibility: jobEligibility(job) ?? undefined }));
   return c.json({ count: items.length, items });
 });
 
@@ -151,6 +152,8 @@ app.post("/v1/intake/next", async (c) => {
   return c.json({ done: false, engine, question: { ...question, ...phrased }, progress, preferences });
 });
 
+// Admin routes are open on localhost in the prototype and sit behind staff auth in the MVP.
+app.get("/v1/admin/stats", (c) => c.json(corpusStats()));
 app.get("/v1/admin/review", (c) => c.json(listReviewItems()));
 app.post("/v1/admin/review/:id", async (c) => {
   const body = z.object({ decision: z.enum(["approved", "rejected"]), decidedBy: z.string().default("admin"), note: z.string().optional() }).safeParse(await c.req.json());

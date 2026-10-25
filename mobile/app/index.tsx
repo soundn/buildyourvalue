@@ -12,9 +12,14 @@ export default function WelcomeScreen() {
         Nigerian job seekers.
       </Text>
       <Text style={styles.trust}>We never charge you to apply.</Text>
-      <Link href="/jobs" asChild>
+      <Link href="/intake" asChild>
         <Pressable style={styles.button} accessibilityRole="button">
-          <Text style={styles.buttonText}>Browse jobs</Text>
+          <Text style={styles.buttonText}>Tell us what you want</Text>
+        </Pressable>
+      </Link>
+      <Link href="/jobs" asChild>
+        <Pressable style={styles.buttonSecondary} accessibilityRole="button">
+          <Text style={styles.buttonSecondaryText}>Browse jobs</Text>
         </Pressable>
       </Link>
     </View>
@@ -54,6 +59,19 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 28,
     borderRadius: 8,
+  },
+  buttonSecondary: {
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#DDE5E0",
+    backgroundColor: "#FFFFFF",
+  },
+  buttonSecondaryText: {
+    color: "#14211B",
+    fontSize: 16,
+    fontWeight: "600",
   },
   buttonText: {
     color: "#FFFFFF",

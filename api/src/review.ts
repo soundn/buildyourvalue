@@ -1,13 +1,17 @@
-import type { Job, ScamVerdict } from "@byv/core";
-import { screenJob, jobs } from "@byv/core";
+import type { Job, RemoteEligibility, ScamVerdict } from "@byv/core";
+import { jobEligibility, screenJob, jobs } from "@byv/core";
 
 // In-memory admin review queue. The MVP replaces this with a Postgres table; the shape
 // (automatic verdict + optional human decision + audit trail) is what carries over.
 
 export type Decision = "approved" | "rejected";
+export type ReviewReason = "scam" | "eligibility" | "report";
 export type ReviewItem = {
   job: Job;
   automatic: ScamVerdict;
+  eligibility?: RemoteEligibility; // remote listings only (BR-062)
+  reasons: ReviewReason[]; // why the listing is in the queue
+  reportCount: number;
   decision?: Decision;
   decidedBy?: string;
   decidedAt?: string;
@@ -37,18 +41,44 @@ function suppressionThreshold(job: Job): number {
   return domain && verifiedEmployerDomains.has(domain) ? VERIFIED_EMPLOYER_REPORT_THRESHOLD : REPORT_THRESHOLD;
 }
 
+function toItem(job: Job): ReviewItem {
+  const automatic = screenJob(job);
+  const eligibility = jobEligibility(job) ?? undefined;
+  const reasons: ReviewReason[] = [];
+  if (automatic.status !== "pass") reasons.push("scam");
+  if (eligibility && eligibility.verdict !== "open") reasons.push("eligibility");
+  if (reports.has(job.id)) reasons.push("report");
+  return { job, automatic, eligibility, reasons, reportCount: reportsFor(job.id).count, ...decisions.get(job.id) };
+}
+
+/** Every listing that did not pass both screens cleanly, was reported, or carries a human decision. */
 export function listReviewItems(): ReviewItem[] {
   return jobs
-    .map((job) => ({ job, automatic: screenJob(job), ...decisions.get(job.id) }))
-    .filter((i) => i.automatic.status !== "pass" || i.decision || reports.has(i.job.id))
+    .map(toItem)
+    .filter((i) => i.reasons.length > 0 || i.decision)
     .sort((a, b) => (a.decision ? 1 : 0) - (b.decision ? 1 : 0));
+}
+
+/** Counts for the admin header: how the corpus splits between published, queued and excluded. */
+export function corpusStats() {
+  const items = jobs.map(toItem);
+  const published = new Set(publishableJobs().map((j) => j.id));
+  return {
+    total: jobs.length,
+    published: published.size,
+    awaitingReview: items.filter((i) => !i.decision && i.reasons.length > 0 && !published.has(i.job.id) && i.automatic.status !== "fail" && i.eligibility?.verdict !== "restricted").length,
+    scamFail: items.filter((i) => i.automatic.status === "fail").length,
+    remoteRestricted: items.filter((i) => i.eligibility?.verdict === "restricted").length,
+    remoteUnclear: items.filter((i) => i.eligibility?.verdict === "unclear" && !i.decision).length,
+    reported: items.filter((i) => i.reportCount > 0).length,
+  };
 }
 
 export function decide(jobId: string, decision: Decision, decidedBy: string, note?: string): ReviewItem | null {
   const job = jobs.find((j) => j.id === jobId);
   if (!job) return null;
   decisions.set(jobId, { decision, decidedBy, decidedAt: new Date().toISOString(), note });
-  return { job, automatic: screenJob(job), ...decisions.get(jobId) };
+  return toItem(job);
 }
 
 /**
@@ -83,8 +113,13 @@ export function publishableJobs(): Job[] {
   return jobs.filter((j) => {
     const d = decisions.get(j.id);
     if (d?.decision === "rejected") return false;
+    if (jobEligibility(j)?.verdict === "restricted") return false;
     if ((reports.get(j.id)?.count ?? 0) >= suppressionThreshold(j) && d?.decision !== "approved") return false;
     if (d?.decision === "approved") return true;
+    // A remote listing that excludes Nigeria is never published, even by approval (BRL-017);
+    // an "unclear" one waits for a human (BR-062).
+    const eligibility = jobEligibility(j);
+    if (eligibility && eligibility.verdict !== "open") return false;
     return screenJob(j).status === "pass";
   });
 }

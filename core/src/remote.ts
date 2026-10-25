@@ -1,3 +1,4 @@
+import type { Job } from "./types.js";
 /**
  * Remote-eligibility classifier: can someone living in Nigeria apply to this remote listing?
  *
@@ -150,4 +151,14 @@ export function classifyRemoteEligibility(input: RemoteListingInput): RemoteElig
   }
   reasons.push(labelVerdict ? "text does not say who may apply" : "no location information and the text does not say who may apply");
   return { verdict: "unclear", basis: input.locationLabel ? "location-label" : "none", reasons };
+}
+
+/**
+ * Eligibility of a listing for a user in Nigeria (BR-062, BRL-017). Only remote listings are
+ * classified: an on-site or hybrid job in Nigeria is open by definition, so null is returned
+ * for them. The location field is the label; the title and description are the text.
+ */
+export function jobEligibility(job: Pick<Job, "workType" | "location" | "title" | "description">): RemoteEligibility | null {
+  if (job.workType !== "remote") return null;
+  return classifyRemoteEligibility({ title: job.title, description: job.description, locationLabel: job.location, isRemote: true });
 }

@@ -11,8 +11,8 @@ pieces can be developed and run together today and split without rewrites later.
 | `core/` | `buildyourvalue-core` (published as a private package `@byv/core`) | Shared domain logic and types: six-component CV weakness score, scam screen, Nigeria remote-eligibility classifier (`remote.ts`, ADR-0017), guided intake questions and preference mapping (`intake.ts`, BR-064), listing attributes for deal-breakers and must-haves (`attributes.ts`), matching, learning-path builder, deterministic CV rewrite rules, sample data. No framework dependencies. | Node library (ESM) |
 | `api/` | `buildyourvalue-api` | HTTP API: evaluate a profile (score + matches + path), improve a CV (Claude with rules fallback), job listings, user reports, admin review queue. | Node + Hono |
 | `frontend/` | `buildyourvalue-frontend` | Job-seeker progressive web app: onboarding, dashboard, CV preview and print, digest preview, pricing. Mobile-first, installable. | Next.js |
-| `admin/` | `buildyourvalue-admin` | Staff console: listing review queue with approve and reject, audit trail. Employer verification joins it in Phase 2. | Next.js |
-| `mobile/` | `buildyourvalue-mobile` | Job-seeker mobile app (Phase 2, Android first): push notifications, share-sheet CV capture, Play Store presence. Talks to `api` over HTTP and imports `@byv/core` for types only ([ADR-0014](adr/0014-build-the-job-seeker-mobile-app-with-expo-in-a-mobile-workspace-shipping-in-phase-2.md)). | Expo (React Native) |
+| `admin/` | `buildyourvalue-admin` | Staff console: listing review queue (scam screen, Nigeria eligibility, user reports) with approve and reject, corpus stats, audit trail. Employer verification joins it in Phase 2. | Next.js |
+| `mobile/` | `buildyourvalue-mobile` | Job-seeker mobile app (Phase 2, Android first): guided intake and job list today; push notifications, share-sheet CV capture, Play Store presence. Talks to `api` over HTTP and imports `@byv/core` for types only ([ADR-0014](adr/0014-build-the-job-seeker-mobile-app-with-expo-in-a-mobile-workspace-shipping-in-phase-2.md)). | Expo (React Native) |
 
 Rules that keep the split clean:
 
@@ -50,13 +50,14 @@ flowchart LR
 |---|---|
 | `GET /health` | Liveness plus whether the AI engine is configured |
 | `GET /v1/roles`, `GET /v1/courses`, `GET /v1/sample-profile` | Reference data |
-| `GET /v1/jobs` | Publishable listings (automatic pass or human approved) |
+| `GET /v1/jobs` | Publishable listings (scam screen passed or human approved; remote listings only when open to Nigeria), each with its eligibility verdict |
 | `POST /v1/evaluate` | Profile in; role, weakness report, top matches, learning path and a summary of what the user's own deal-breakers and salary floor hid out |
 | `POST /v1/intake/next` | Guided intake: answers so far in, next of up to seven fixed questions out (rephrased by Claude on the bulk model when a key is set), with progress and the structured preferences the answers map to (BR-064) |
 | `POST /v1/cv/improve` | Profile in; improved profile, change list, before and after scores out |
 | `POST /v1/jobs/:id/report` | User report with a reporter id; one report suppresses a listing pending human review, a verified employer's listing needs two, and each reporter is capped at three reports a day (ADR-0010) |
-| `GET /v1/admin/review` | Review queue: every listing that did not pass cleanly or was reported |
-| `POST /v1/admin/review/:id` | Approve or reject with reviewer identity and note |
+| `GET /v1/admin/stats` | Corpus counts for the admin header: published, awaiting review, scam fails, remote listings that exclude Nigeria, reported |
+| `GET /v1/admin/review` | Review queue: every listing that failed the scam screen or the Nigeria-eligibility check, was reported, or carries a decision, with the reasons |
+| `POST /v1/admin/review/:id` | Approve or reject with reviewer identity and note; approval publishes an "unclear" remote listing but never a "restricted" one (BRL-017) |
 
 ## What is real and what is stubbed
 

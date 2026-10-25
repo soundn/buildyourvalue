@@ -25,6 +25,9 @@ export default function Onboard() {
       setSkillsText(saved.skills.join(", "));
       setCertsText(saved.certifications.join(", "));
     }
+    // /onboard?step=1 reopens the guided questions from the dashboard's "Change answers".
+    const wanted = Number(new URLSearchParams(window.location.search).get("step"));
+    if (wanted >= 0 && wanted <= 3) setStep(wanted);
   }, []);
 
   const update = (patch: Partial<Profile>) => setP((prev) => ({ ...prev, ...patch }));

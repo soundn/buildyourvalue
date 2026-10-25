@@ -16,6 +16,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" options={{ title: "Build Your Value" }} />
+        <Stack.Screen name="intake" options={{ title: "What you want" }} />
         <Stack.Screen name="jobs" options={{ title: "Jobs" }} />
       </Stack>
     </>

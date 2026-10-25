@@ -1,4 +1,5 @@
-import type { Job } from "@byv/core";
+import type { Job, RemoteEligibility } from "@byv/core";
+import { getPreferences } from "../lib/prefs";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 
@@ -8,12 +9,13 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-nativ
 // styling layer per the mobile ADR.
 const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:4000";
 
-type JobsResponse = { count: number; items: Array<Job & { reports: number }> };
+type Listing = Job & { reports: number; eligibility?: RemoteEligibility };
+type JobsResponse = { count: number; items: Listing[] };
 
 type State =
   | { status: "loading" }
   | { status: "error"; message: string }
-  | { status: "ready"; jobs: Job[] };
+  | { status: "ready"; jobs: Listing[] };
 
 export default function JobsScreen() {
   const [state, setState] = useState<State>({ status: "loading" });
@@ -25,7 +27,9 @@ export default function JobsScreen() {
         const res = await fetch(`${API_URL}/v1/jobs`, { signal: controller.signal });
         if (!res.ok) throw new Error(`API responded ${res.status}`);
         const body = (await res.json()) as JobsResponse;
-        setState({ status: "ready", jobs: body.items });
+        // The salary floor from the guided intake applies here too; the API will own this in Phase 2.
+        const floor = getPreferences()?.minSalaryNgn ?? 0;
+        setState({ status: "ready", jobs: body.items.filter((j) => !floor || j.salaryMax === undefined || j.salaryMax >= floor) });
       } catch (err) {
         if (controller.signal.aborted) return;
         const message = err instanceof Error ? err.message : "Unknown error";
@@ -63,6 +67,7 @@ export default function JobsScreen() {
           <Text style={styles.meta}>
             {item.company} · {item.location} · {item.workType}
           </Text>
+          {item.eligibility?.verdict === "open" ? <Text style={styles.badge}>Hires in Nigeria</Text> : null}
         </View>
       )}
     />
@@ -70,6 +75,7 @@ export default function JobsScreen() {
 }
 
 const styles = StyleSheet.create({
+  badge: { marginTop: 4, fontSize: 12, fontWeight: "600", color: "#0F6B3A" },
   center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, backgroundColor: "#FFFFFF" },
   list: { padding: 16, gap: 12, backgroundColor: "#FFFFFF", flexGrow: 1 },
   card: {

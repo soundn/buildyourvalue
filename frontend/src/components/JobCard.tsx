@@ -22,6 +22,9 @@ export function JobCard({ match }: { match: Match }) {
         </div>
         <span className={`shrink-0 text-sm font-semibold px-2 py-1 rounded ${fitColor}`}>{fit}% fit</span>
       </div>
+      {match.eligibility?.verdict === "open" && (
+        <p className="text-xs font-medium text-[var(--brand)]">Hires in Nigeria</p>
+      )}
 
       {scam.status === "review" && (
         <div className="text-sm rounded bg-amber-50 border border-amber-200 text-amber-900 p-2">

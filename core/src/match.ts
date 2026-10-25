@@ -1,3 +1,4 @@
+import { jobEligibility } from "./remote.js";
 import { DEAL_BREAKER_LABELS, MUST_HAVE_LABELS, listingAttributes, type DealBreakerId, type MustHaveId } from "./attributes.js";
 import type { Job, Match, Profile, Role } from "./types.js";
 import { hasSkill, normalizeSkills } from "./skills.js";
@@ -27,6 +28,10 @@ export function matchJobs(profile: Profile, role: Role, jobs: Job[], opts: Match
     const scam = screenJob(job);
     if (scam.status === "fail") continue;
     if (scam.status === "review" && !includeFlagged) continue;
+    // A remote listing that excludes Nigeria is never shown (BR-062, BRL-017). "Unclear" ones are
+    // held for human review upstream; if one reaches here it was approved, and it is shown.
+    const eligibility = jobEligibility(job) ?? undefined;
+    if (eligibility?.verdict === "restricted") continue;
     // Guided-intake salary floor: a listing that states a maximum below the floor is not shown (BR-064).
     const floor = profile.preferences?.minSalaryNgn;
     if (floor && job.salaryMax !== undefined && job.salaryMax < floor) continue;
@@ -65,11 +70,11 @@ export function matchJobs(profile: Profile, role: Role, jobs: Job[], opts: Match
     if (expOk) reasons.push(`You meet the ${job.experienceYears}+ year experience requirement.`);
     else if (expPartial) reasons.push(`You are within a year of the ${job.experienceYears}-year requirement; apply if the rest fits.`);
     if (metMustHaves.length) reasons.push(`Offers what you asked for: ${metMustHaves.map((m) => MUST_HAVE_LABELS[m]).join(", ")}.`);
-    if (job.workType === "remote") reasons.push("Remote role, so location is not a barrier.");
+    if (job.workType === "remote") reasons.push(eligibility?.verdict === "open" ? "Remote role that hires in Nigeria." : "Remote role, so location is not a barrier.");
     else if (sameCity) reasons.push(`Located in ${job.location}, near you.`);
     if (!reasons.length) reasons.push("Partial match on the role family; review the listing before applying.");
 
-    out.push({ job, fit, reasons, gaps, scam });
+    out.push({ job, fit, reasons, gaps, scam, ...(eligibility ? { eligibility: { verdict: eligibility.verdict, reasons: eligibility.reasons } } : {}) });
   }
 
   return out.sort((a, b) => b.fit - a.fit || a.job.postedAt.localeCompare(b.job.postedAt)).slice(0, limit);

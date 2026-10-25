@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { decide, fetchQueue, type ReviewItem } from "@/lib/api";
+import { decide, fetchQueue, fetchStats, type CorpusStats, type ReviewItem } from "@/lib/api";
 
 const badge: Record<string, string> = { fail: "bg-red-100 text-red-800", review: "bg-amber-100 text-amber-800", pass: "bg-green-100 text-green-800" };
 
 export default function ReviewQueue() {
   const [items, setItems] = useState<ReviewItem[]>([]);
+  const [stats, setStats] = useState<CorpusStats | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const load = () => fetchQueue().then(setItems).catch((e) => setError(e.message));
+  const load = () => Promise.all([fetchQueue().then(setItems), fetchStats().then(setStats)]).catch((e) => setError(e.message));
   useEffect(() => { void load(); }, []);
 
   async function act(id: string, decision: "approved" | "rejected") {
@@ -26,8 +27,18 @@ export default function ReviewQueue() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Listing review queue</h1>
-        <p className="text-sm text-gray-600">Automatic screen results for every listing that did not pass cleanly. Approve to publish, reject to suppress. Decisions are audited.</p>
+        <p className="text-sm text-gray-600">Every listing that did not pass the scam screen or the Nigeria-eligibility check cleanly, or was reported. Approve to publish, reject to suppress. Decisions are audited.</p>
       </div>
+      {stats && (
+        <dl className="grid grid-cols-2 md:grid-cols-6 gap-3 text-sm">
+          {[
+            ["In corpus", stats.total], ["Published", stats.published], ["Awaiting review", stats.awaitingReview],
+            ["Scam fails", stats.scamFail], ["Remote, excludes Nigeria", stats.remoteRestricted], ["Reported", stats.reported],
+          ].map(([k, v]) => (
+            <div key={String(k)} className="bg-white border border-gray-200 rounded-lg p-3"><dt className="text-gray-600">{k}</dt><dd className="text-xl font-semibold">{v}</dd></div>
+          ))}
+        </dl>
+      )}
       {error && <div className="rounded bg-red-50 border border-red-200 text-red-800 p-3 text-sm">{error}. Is the API running on the configured URL?</div>}
 
       <section className="space-y-3">
@@ -49,13 +60,22 @@ function Row({ item, onAct }: { item: ReviewItem; onAct: (id: string, d: "approv
     <div className="bg-white border border-gray-200 rounded-lg p-4 grid md:grid-cols-[1fr_auto] gap-3">
       <div className="space-y-1">
         <div className="flex flex-wrap items-center gap-2">
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${badge[automatic.status]}`}>auto: {automatic.status}</span>
+          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${badge[automatic.status]}`}>scam screen: {automatic.status}</span>
+          {item.eligibility && (
+            <span className={`text-xs font-semibold px-2 py-0.5 rounded ${item.eligibility.verdict === "open" ? badge.pass : item.eligibility.verdict === "unclear" ? badge.review : badge.fail}`}>
+              Nigeria eligibility: {item.eligibility.verdict}
+            </span>
+          )}
+          {item.reportCount > 0 && <span className="text-xs font-semibold px-2 py-0.5 rounded bg-purple-100 text-purple-800">{item.reportCount} user report{item.reportCount === 1 ? "" : "s"}</span>}
           {item.decision && <span className="text-xs font-semibold px-2 py-0.5 rounded bg-gray-800 text-white">human: {item.decision} by {item.decidedBy}</span>}
           <span className="text-xs text-gray-500">{job.source} · posted {job.postedAt}</span>
         </div>
         <h3 className="font-semibold">{job.title} <span className="font-normal text-gray-600">· {job.company}{job.companyDomain ? ` (${job.companyDomain})` : " (no domain)"}</span></h3>
         <p className="text-sm text-gray-700">{job.description}</p>
-        <ul className="text-sm text-amber-900 list-disc pl-5">{automatic.flags.map((f) => <li key={f}>{f}</li>)}</ul>
+        <ul className="text-sm text-amber-900 list-disc pl-5">
+          {automatic.flags.map((f) => <li key={f}>{f}</li>)}
+          {item.eligibility && item.eligibility.verdict !== "open" && item.eligibility.reasons.map((r) => <li key={r}>Eligibility: {r}{item.eligibility!.verdict === "restricted" ? " (excluded; approval cannot publish it)" : " (held until approved)"}</li>)}
+        </ul>
         <p className="text-xs text-gray-500">Contact: {job.contactEmail ?? "none"} · Apply: {job.applyUrl}</p>
       </div>
       <div className="flex md:flex-col gap-2 self-start">

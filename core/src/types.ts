@@ -124,6 +124,7 @@ export type Match = {
   reasons: string[]; // "why you fit"
   gaps: string[]; // skills the job wants that the CV lacks
   scam: ScamVerdict;
+  eligibility?: { verdict: "open" | "restricted" | "unclear"; reasons: string[] }; // remote listings only (BR-062)
 };
 
 export type LearningStep = {
