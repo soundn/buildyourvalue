@@ -27,8 +27,8 @@ const EMBED_PER_LISTING_USD = 0.000012;
 const LISTINGS_PER_MONTH = 9000;
 const INTAKE_QUESTIONS = 10;
 
-const PRICE = { pass: 1999, core: 1999, remote: 4999 }; // §5, BRD 14.1, ADR-0017
-const FEE = { pass: 30, core: 30, remote: 175 }; // §5 Paystack
+const PRICE = { pass: 1999, core: 1999, remote: 9999 }; // §5, BRD 14.1, ADR-0018 (Remote ₦9,999 a month; the ₦24,999 quarter is not modelled separately)
+const FEE = { pass: 30, core: 30, remote: 250 }; // §5 Paystack: 1.5% under ₦2,500; 1.5% + ₦100 above
 const VAT_RATE = 0.075;
 const VAT_THRESHOLD_PER_MONTH = 100_000_000 / 12; // §5
 const EMAIL_USD = 0.0004; // Resend Pro blended (§6); SES later $0.0001
@@ -152,7 +152,7 @@ if (process.argv.includes("--json")) {
     `| Free | ${ngn(base.perTierNgn.free)} | 4.3 batched five-job digests |`,
     `| ₦1,999 pass (per purchase) | ${ngn(base.perTierNgn.pass)} | 7 daily 30-job digests, 5 tailorings, 1 cover letter |`,
     `| Core ₦1,999 | ${ngn(base.perTierNgn.core)} | 13 digests, 3.5 tailorings, 2 cover letters |`,
-    `| Remote ₦4,999 | ${ngn(base.perTierNgn.remote)} | 17 digests, 8 tailorings, 4 cover letters, 1 mock interview (WhatsApp ₦350 is separate) |`,
+    `| Remote ₦9,999 | ${ngn(base.perTierNgn.remote)} | 17 digests, 8 tailorings, 4 cover letters, 1 mock interview (WhatsApp ₦350 is separate) |`,
     `| Onboarding, once per activated user | ${ngn(base.onboardingNgn)} | CV parse and rewrite on Sonnet plus ten phrased intake questions |`, "");
   out.push("### Three scenarios", "", "| Scenario | 6-month revenue (net of fees) | 6-month AI spend | 6-month total cost | 6-month result | 12-month revenue (net) | 12-month AI spend | 12-month total cost | 12-month result | Payers at month 12 | Registered at month 12 | First profitable month | Cash low point |", "|---|---|---|---|---|---|---|---|---|---|---|---|---|");
   for (const key of Object.keys(SCENARIOS)) {

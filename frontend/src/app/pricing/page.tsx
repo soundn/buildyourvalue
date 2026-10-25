@@ -2,7 +2,7 @@ const tiers = [
   { name: "Free", price: "₦0", period: "", items: ["CV draft and weakness score", "Weekly digest of 5 screened jobs", "One explanation per score component"], cta: "Start free", highlight: false },
   { name: "Finished CV pass", price: "₦1,999", period: "one-off, 7 days", items: ["Unlimited CV tailoring and export", "Daily digest for a week", "Learning path preview"], cta: "Buy a pass", highlight: false },
   { name: "Core", price: "₦1,999", period: "per month", items: ["Digest 3x weekly with fit scores and reasons", "5 tailored CVs per month", "Full learning path and re-match", "Cover letters"], cta: "Subscribe", highlight: true },
-  { name: "Remote", price: "₦4,999", period: "per month, or ₦12,999 a quarter", items: ["Everything in Core", "Remote roles abroad, only those that hire in Nigeria, with time-zone overlap shown", "CV in global conventions and unlimited tailoring", "Getting-paid module, WhatsApp digest, mock interview"], cta: "Go Remote", highlight: false, phase2: true },
+  { name: "Remote", price: "₦9,999", period: "per month, or ₦24,999 a quarter", items: ["Everything in Core", "Remote roles abroad, only those that hire in Nigeria, with time-zone overlap shown", "CV in global conventions and unlimited tailoring", "Getting-paid module, WhatsApp digest, mock interview"], cta: "Go Remote", highlight: false, phase2: true },
 ];
 
 export default function Pricing() {

@@ -156,7 +156,7 @@ KQ4 and KQ6. Every non-Anthropic vendor price is a search snippet ([unverified])
 | Campus ambassadors | about 20 awards of ₦100,000 a year | ₦ | BRD BR-051 | Phase 2 |
 | NYSC timing | sign-up uplift of 1.5x / 2x / 3x in mobilisation months | multiplier | BRD BR-052; multiplier is an assumption | |
 | Share of payers choosing Remote | 10% / 15% / 25% | % of payers | assumption | 7% of fresh remote listings are open to Nigeria, mostly engineering (remote_eligibility_audit.md); COST_ANALYSIS assumed 20% on Pro |
-| Blended monthly ARPU | ₦2,299 / ₦2,449 / ₦2,749 | ₦ per payer | derived from the Remote share | BRD §14.2 uses ₦2,500; the quarterly ₦12,999 is ₦4,333 a month |
+| Blended monthly ARPU | ₦2,299 / ₦2,449 / ₦2,749 at Remote ₦4,999; ₦2,799 / ₦3,199 / ₦3,999 at Remote ₦9,999 (ADR-0018) | ₦ per payer | derived from the Remote share | BRD §14.2 used ₦2,500 before ADR-0018; the quarterly ₦24,999 is ₦8,333 a month |
 | Pass buyers | 1 / 2 / 3 per 100 new activated users | % | assumption | One-off ₦1,999; 20–40% upgrade (§4) |
 
 ## 8. Other revenue

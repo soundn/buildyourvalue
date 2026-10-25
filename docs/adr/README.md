@@ -18,4 +18,5 @@
 | [0014](0014-build-the-job-seeker-mobile-app-with-expo-in-a-mobile-workspace-shipping-in-phase-2.md) | Build the job-seeker mobile app with Expo (React Native) in a `mobile/` workspace, shipping Android first in Phase 2 while the PWA stays primary | Accepted | 2026-10-24 |
 | [0015](0015-use-useladda-com-as-the-first-production-and-email-domain.md) | Use useladda.com as the first production and email domain; ladda.ng becomes primary after the CAC and trademark searches | Accepted | 2026-10-24 |
 | [0016](0016-lead-with-a-developer-first-remote-tier-over-a-free-domestic-base.md) | Lead with a developer-first Remote tier at ₦4,999 over a free domestic base | Rejected; superseded by ADR-0017 | 2026-10-24 |
-| [0017](0017-keep-the-board-open-to-every-job-seeker-with-remote-eligibility-as-a-filter.md) | Keep the board open to every job seeker and every role; remote eligibility is a filter, not a segment | Accepted | 2026-10-24 |
+| [0017](0017-keep-the-board-open-to-every-job-seeker-with-remote-eligibility-as-a-filter.md) | Keep the board open to every job seeker and every role; remote eligibility is a filter, not a segment | Accepted; amended by ADR-0018 | 2026-10-24 |
+| [0018](0018-price-remote-at-9999-and-hold-core-at-1999.md) | Price the Remote tier at ₦9,999 a month (₦24,999 a quarter) and hold Core at ₦1,999 with a ₦2,499 test | Accepted | 2026-10-25 |

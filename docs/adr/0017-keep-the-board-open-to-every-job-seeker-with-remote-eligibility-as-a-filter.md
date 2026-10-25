@@ -1,6 +1,6 @@
 # ADR-0017: Keep the board open to every job seeker and every role; remote eligibility is a filter, not a segment
 
-- Status: Accepted
+- Status: Accepted; amended by ADR-0018 (Remote price)
 - Date: 2026-10-24
 - Deciders: Founders
 - Related: PLAN.md §Price at ₦1,999, §Phases; BRD BR-017, BR-031, pricing table; docs/research/remote_eligibility_audit.md; ADR-0010, ADR-0015, ADR-0016
