@@ -1,3 +1,4 @@
+import { DEAL_BREAKER_LABELS, MUST_HAVE_LABELS, listingAttributes, type DealBreakerId, type MustHaveId } from "./attributes.js";
 import type { Job, Match, Profile, Role } from "./types.js";
 import { hasSkill, normalizeSkills } from "./skills.js";
 import { screenJob, isFresh } from "./scam.js";
@@ -29,6 +30,12 @@ export function matchJobs(profile: Profile, role: Role, jobs: Job[], opts: Match
     // Guided-intake salary floor: a listing that states a maximum below the floor is not shown (BR-064).
     const floor = profile.preferences?.minSalaryNgn;
     if (floor && job.salaryMax !== undefined && job.salaryMax < floor) continue;
+    // Deal-breakers exclude a listing that states the thing; must-haves lift one that states it.
+    const attrs = listingAttributes(job);
+    const dealBreakers = (profile.preferences?.dealBreakers ?? []) as DealBreakerId[];
+    if (attrs.dealBreakers.some((d) => dealBreakers.includes(d))) continue;
+    const mustHaves = (profile.preferences?.mustHaves ?? []) as MustHaveId[];
+    const metMustHaves = attrs.mustHaves.filter((m) => mustHaves.includes(m));
 
     const wanted = normalizeSkills(job.skills);
     const have = wanted.filter((s) => hasSkill(cvSkills, s));
@@ -48,6 +55,7 @@ export function matchJobs(profile: Profile, role: Role, jobs: Job[], opts: Match
     const sameCity = job.workType === "remote" || (loc && job.location.toLowerCase().includes(loc.split(",")[0].trim()));
 
     let fit = skillCoverage * 55 + (roleAligned ? 20 : 0) + (expOk ? 15 : expPartial ? 7 : 0) + (workTypeOk ? 5 : 0) + (sameCity ? 5 : 0);
+    fit += Math.min(6, metMustHaves.length * 3);
     if (scam.status === "review") fit -= 10;
     fit = Math.max(0, Math.min(100, Math.round(fit)));
 
@@ -56,6 +64,7 @@ export function matchJobs(profile: Profile, role: Role, jobs: Job[], opts: Match
     if (roleAligned) reasons.push(`This is a ${role.title} role, your target.`);
     if (expOk) reasons.push(`You meet the ${job.experienceYears}+ year experience requirement.`);
     else if (expPartial) reasons.push(`You are within a year of the ${job.experienceYears}-year requirement; apply if the rest fits.`);
+    if (metMustHaves.length) reasons.push(`Offers what you asked for: ${metMustHaves.map((m) => MUST_HAVE_LABELS[m]).join(", ")}.`);
     if (job.workType === "remote") reasons.push("Remote role, so location is not a barrier.");
     else if (sameCity) reasons.push(`Located in ${job.location}, near you.`);
     if (!reasons.length) reasons.push("Partial match on the role family; review the listing before applying.");
@@ -71,4 +80,10 @@ export function aggregateGaps(matches: Match[]): { skill: string; count: number 
   const counts = new Map<string, number>();
   for (const m of matches) for (const g of m.gaps) counts.set(g, (counts.get(g) ?? 0) + 1);
   return [...counts.entries()].map(([skill, count]) => ({ skill, count })).sort((a, b) => b.count - a.count);
+}
+
+/** Which of the user's deal-breakers a listing states, as labels; empty when it is not hidden for that reason. */
+export function hiddenByDealBreakers(profile: Profile, job: Job): string[] {
+  const chosen = (profile.preferences?.dealBreakers ?? []) as DealBreakerId[];
+  return listingAttributes(job).dealBreakers.filter((d) => chosen.includes(d)).map((d) => DEAL_BREAKER_LABELS[d]);
 }

@@ -8,7 +8,7 @@ pieces can be developed and run together today and split without rewrites later.
 
 | Folder | Future repository | What it is | Runtime |
 |---|---|---|---|
-| `core/` | `buildyourvalue-core` (published as a private package `@byv/core`) | Shared domain logic and types: six-component CV weakness score, scam screen, Nigeria remote-eligibility classifier (`remote.ts`, ADR-0017), guided intake questions and preference mapping (`intake.ts`, BR-064), matching, learning-path builder, deterministic CV rewrite rules, sample data. No framework dependencies. | Node library (ESM) |
+| `core/` | `buildyourvalue-core` (published as a private package `@byv/core`) | Shared domain logic and types: six-component CV weakness score, scam screen, Nigeria remote-eligibility classifier (`remote.ts`, ADR-0017), guided intake questions and preference mapping (`intake.ts`, BR-064), listing attributes for deal-breakers and must-haves (`attributes.ts`), matching, learning-path builder, deterministic CV rewrite rules, sample data. No framework dependencies. | Node library (ESM) |
 | `api/` | `buildyourvalue-api` | HTTP API: evaluate a profile (score + matches + path), improve a CV (Claude with rules fallback), job listings, user reports, admin review queue. | Node + Hono |
 | `frontend/` | `buildyourvalue-frontend` | Job-seeker progressive web app: onboarding, dashboard, CV preview and print, digest preview, pricing. Mobile-first, installable. | Next.js |
 | `admin/` | `buildyourvalue-admin` | Staff console: listing review queue with approve and reject, audit trail. Employer verification joins it in Phase 2. | Next.js |

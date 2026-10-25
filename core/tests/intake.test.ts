@@ -38,3 +38,27 @@ describe("guided intake", () => {
     expect(after.every((m) => m.job.salaryMax === undefined || m.job.salaryMax >= 800000)).toBe(true);
   });
 });
+
+describe("deal-breakers and must-haves in matching", () => {
+  const role = roles.find((r) => r.id === "customer_support")!;
+  const now = new Date("2026-10-20T00:00:00Z");
+  const base = jobs.find((j) => j.id === "j001")!;
+  const prefs = intakePreferences({ roles: ["customer_support"], remote: ["any"], experience: ["1_3"], minSalary: ["0"], dealBreakers: ["night_shifts", "sales"], mustHaves: ["health_insurance", "laptop"], start: ["now"] });
+  const profile = applyIntake(sampleProfile, prefs);
+  it("hides a listing that states a deal-breaker", () => {
+    const nightJob = { ...base, id: "t-night", description: base.description + " The role involves rotating shifts including nights." };
+    const commissionJob = { ...base, id: "t-comm", description: base.description + " Pay is commission-only with no basic salary." };
+    const ids = matchJobs(profile, role, [base, nightJob, commissionJob], { now, limit: 10 }).map((m) => m.job.id);
+    expect(ids).toContain("j001");
+    expect(ids).not.toContain("t-night");
+    expect(ids).not.toContain("t-comm");
+    expect(matchJobs(sampleProfile, role, [nightJob], { now }).map((m) => m.job.id)).toContain("t-night");
+  });
+  it("lifts a listing that states a must-have and says so", () => {
+    const hmoJob = { ...base, id: "t-hmo", description: base.description + " Benefits include HMO cover and a company laptop." };
+    const [withBenefit, plain] = [matchJobs(profile, role, [hmoJob], { now })[0], matchJobs(profile, role, [base], { now })[0]];
+    expect(withBenefit.fit).toBeGreaterThan(plain.fit);
+    expect(withBenefit.reasons.join(" ")).toMatch(/health insurance, a laptop provided/);
+    expect(plain.reasons.join(" ")).not.toMatch(/Offers what you asked for/);
+  });
+});

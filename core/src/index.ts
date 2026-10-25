@@ -7,4 +7,5 @@ export * from "./path.js";
 export * from "./improve.js";
 export * from "./remote.js";
 export * from "./intake.js";
+export * from "./attributes.js";
 export { roles, jobs, courses, sampleProfile } from "./data/index.js";
