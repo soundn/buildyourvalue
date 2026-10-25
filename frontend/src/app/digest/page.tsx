@@ -42,6 +42,16 @@ export default function DigestPreview() {
                   <a href={m.job.applyUrl} className="text-sm underline">Apply on employer site</a>
                 </div>
               ))}
+              {ev.hidden.total > 0 && (
+                <p className="border-t border-[var(--line)] pt-3 text-sm text-[var(--muted)]">
+                  We left out {ev.hidden.total} {ev.hidden.total === 1 ? "role" : "roles"} because of your answers:{" "}
+                  {[
+                    ...ev.hidden.dealBreakers.map((d) => `${d.count} for ${d.label}`),
+                    ...(ev.hidden.salaryFloor && ev.hidden.salaryFloor.count ? [`${ev.hidden.salaryFloor.count} paying under \u20a6${ev.hidden.salaryFloor.floor.toLocaleString("en-NG")}`] : []),
+                  ].join(", ")}
+                  . <Link href="/dashboard" className="underline">Show them or change your answers</Link>
+                </p>
+              )}
               {ev.path.steps[0] && (
                 <div className="border-t border-[var(--line)] pt-3 text-sm">
                   <strong>Next step on your path:</strong> {ev.path.steps[0].course.title} ({ev.path.steps[0].course.provider}, {ev.path.steps[0].course.hours}h, {ev.path.steps[0].course.cost === "paid" ? "paid" : "free"}). Finish it and we re-match you.
