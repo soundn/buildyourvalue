@@ -6,6 +6,7 @@ import { api, type Evaluation, type Improvement } from "@/lib/api";
 import { loadProfile, saveProfile } from "@/lib/storage";
 import { ScoreRing } from "@/components/ScoreRing";
 import { JobCard } from "@/components/JobCard";
+import { HiddenNotice } from "@/components/HiddenNotice";
 
 export default function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -14,6 +15,7 @@ export default function Dashboard() {
   const [busy, setBusy] = useState<"evaluate" | "improve" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [noProfile, setNoProfile] = useState(false);
+  const [undone, setUndone] = useState<{ dealBreakers: string[]; salaryFloor: number | null }>({ dealBreakers: [], salaryFloor: null });
 
   async function evaluate(p: Profile) {
     setBusy("evaluate");
@@ -115,6 +117,19 @@ export default function Dashboard() {
               <Link href="/digest" className="text-sm underline">Preview the email digest</Link>
             </div>
             <p className="text-sm text-[var(--muted)]">Fresh listings only, screened for scams, ranked by fit. {evaluation.matches.length} shown.</p>
+            {profile && (
+              <HiddenNotice
+                hidden={evaluation.hidden}
+                profile={profile}
+                undone={undone}
+                onChange={(next, nextUndone) => {
+                  setProfile(next);
+                  saveProfile(next);
+                  setUndone(nextUndone);
+                  void evaluate(next);
+                }}
+              />
+            )}
             <div className="space-y-3">{evaluation.matches.map((m) => <JobCard key={m.job.id} match={m} />)}</div>
           </section>
 

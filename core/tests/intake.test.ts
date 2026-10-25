@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { HELP_ME_CHOOSE, INTAKE_QUESTIONS, applyIntake, intakePreferences, intakeProgress, jobs, matchJobs, nextIntakeQuestion, normalizeIntakeAnswers, roles, sampleProfile } from "../src/index.js";
+import { HELP_ME_CHOOSE, hiddenByPreferences, INTAKE_QUESTIONS, applyIntake, intakePreferences, intakeProgress, jobs, matchJobs, nextIntakeQuestion, normalizeIntakeAnswers, roles, sampleProfile } from "../src/index.js";
 
 describe("guided intake", () => {
   it("asks at most seven questions in order and skips the interests question unless asked for help", () => {
@@ -60,5 +60,21 @@ describe("deal-breakers and must-haves in matching", () => {
     expect(withBenefit.fit).toBeGreaterThan(plain.fit);
     expect(withBenefit.reasons.join(" ")).toMatch(/health insurance, a laptop provided/);
     expect(plain.reasons.join(" ")).not.toMatch(/Offers what you asked for/);
+  });
+});
+
+describe("hidden-by-preferences summary", () => {
+  it("counts what the deal-breakers and the salary floor removed, once per listing", () => {
+    const role = roles.find((r) => r.id === "customer_support")!;
+    const now = new Date("2026-10-20T00:00:00Z");
+    const prefs = intakePreferences({ roles: ["customer_support"], remote: ["any"], experience: ["1_3"], minSalary: ["800000"], dealBreakers: ["night_shifts", "field_work"], mustHaves: ["none"], start: ["now"] });
+    const profile = applyIntake(sampleProfile, prefs);
+    const hidden = hiddenByPreferences(profile, jobs, { now, includeFlagged: false });
+    const shown = matchJobs(profile, role, jobs, { now, limit: 100, includeFlagged: false }).length;
+    const eligible = matchJobs(sampleProfile, role, jobs, { now, limit: 100, includeFlagged: false }).length;
+    expect(hidden.dealBreakers.map((d) => d.id).sort()).toEqual(["field_work", "night_shifts"]);
+    expect(hidden.salaryFloor?.floor).toBe(800000);
+    expect(hidden.total).toBe(eligible - shown);
+    expect(hiddenByPreferences(sampleProfile, jobs, { now }).total).toBe(0);
   });
 });

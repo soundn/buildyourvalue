@@ -9,6 +9,7 @@ import {
   sampleProfile,
   scoreProfile,
   matchJobs,
+  hiddenByPreferences,
   buildLearningPath,
   improveProfile,
   totalExperienceYears,
@@ -87,7 +88,9 @@ app.post("/v1/evaluate", async (c) => {
   // Listings awaiting human review never reach users (BR-005): includeFlagged stays false.
   const matches = matchJobs(profile, role, publishableJobs(), { limit: 10, includeFlagged: false });
   const path = buildLearningPath(report, matches, role, courses);
-  return c.json({ role, report, matches, path, years: totalExperienceYears(profile) });
+  // What the user's own deal-breakers and salary floor hid, so the dashboard can offer an undo (BR-064).
+  const hidden = hiddenByPreferences(profile, publishableJobs(), { includeFlagged: false });
+  return c.json({ role, report, matches, path, hidden, years: totalExperienceYears(profile) });
 });
 
 app.post("/v1/cv/improve", async (c) => {

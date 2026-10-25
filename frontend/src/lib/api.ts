@@ -1,8 +1,8 @@
-import type { Profile, Role, WeaknessReport, Match, LearningPath, IntakeQuestion, IntakePreferences } from "@byv/core";
+import type { Profile, Role, WeaknessReport, Match, LearningPath, IntakeQuestion, IntakePreferences, HiddenSummary } from "@byv/core";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
-export type Evaluation = { role: Role; report: WeaknessReport; matches: Match[]; path: LearningPath; years: number };
+export type Evaluation = { role: Role; report: WeaknessReport; matches: Match[]; path: LearningPath; hidden: HiddenSummary; years: number };
 export type IntakeStep = { done: boolean; engine: "claude" | "rules"; question: IntakeQuestion | null; progress: { answered: number; total: number }; preferences: IntakePreferences };
 export type Improvement = { engine: "claude" | "rules"; profile: Profile; changes: string[]; before: number; after: number };
 

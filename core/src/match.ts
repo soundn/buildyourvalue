@@ -87,3 +87,37 @@ export function hiddenByDealBreakers(profile: Profile, job: Job): string[] {
   const chosen = (profile.preferences?.dealBreakers ?? []) as DealBreakerId[];
   return listingAttributes(job).dealBreakers.filter((d) => chosen.includes(d)).map((d) => DEAL_BREAKER_LABELS[d]);
 }
+
+export type HiddenSummary = {
+  total: number;
+  dealBreakers: { id: DealBreakerId; label: string; count: number }[];
+  salaryFloor: { floor: number; count: number } | null;
+};
+
+/**
+ * What the user's own preferences hid from an otherwise eligible list (fresh, not a scam
+ * fail, not awaiting review), so the dashboard can say "we hid 3 roles" and offer an undo
+ * (BR-064). A listing hidden by both a deal-breaker and the salary floor counts once, under
+ * the deal-breaker.
+ */
+export function hiddenByPreferences(profile: Profile, jobs: Job[], opts: MatchOptions = {}): HiddenSummary {
+  const { maxAgeDays = 30, includeFlagged = true, now = new Date() } = opts;
+  const chosen = (profile.preferences?.dealBreakers ?? []) as DealBreakerId[];
+  const floor = profile.preferences?.minSalaryNgn ?? null;
+  const counts = new Map<DealBreakerId, number>();
+  let belowFloor = 0;
+  for (const job of jobs) {
+    if (!isFresh(job, maxAgeDays, now)) continue;
+    const scam = screenJob(job);
+    if (scam.status === "fail" || (scam.status === "review" && !includeFlagged)) continue;
+    const hits = listingAttributes(job).dealBreakers.filter((d) => chosen.includes(d));
+    if (hits.length) {
+      for (const h of hits) counts.set(h, (counts.get(h) ?? 0) + 1);
+      continue;
+    }
+    if (floor && job.salaryMax !== undefined && job.salaryMax < floor) belowFloor++;
+  }
+  const dealBreakers = [...counts.entries()].map(([id, count]) => ({ id, label: DEAL_BREAKER_LABELS[id], count })).sort((a, b) => b.count - a.count);
+  const hiddenByBreakers = jobs.filter((j) => isFresh(j, maxAgeDays, now) && listingAttributes(j).dealBreakers.some((d) => chosen.includes(d)) && screenJob(j).status !== "fail").length;
+  return { total: hiddenByBreakers + belowFloor, dealBreakers, salaryFloor: floor ? { floor, count: belowFloor } : null };
+}

@@ -51,7 +51,7 @@ flowchart LR
 | `GET /health` | Liveness plus whether the AI engine is configured |
 | `GET /v1/roles`, `GET /v1/courses`, `GET /v1/sample-profile` | Reference data |
 | `GET /v1/jobs` | Publishable listings (automatic pass or human approved) |
-| `POST /v1/evaluate` | Profile in; role, weakness report, top matches and learning path out |
+| `POST /v1/evaluate` | Profile in; role, weakness report, top matches, learning path and a summary of what the user's own deal-breakers and salary floor hid out |
 | `POST /v1/intake/next` | Guided intake: answers so far in, next of up to seven fixed questions out (rephrased by Claude on the bulk model when a key is set), with progress and the structured preferences the answers map to (BR-064) |
 | `POST /v1/cv/improve` | Profile in; improved profile, change list, before and after scores out |
 | `POST /v1/jobs/:id/report` | User report with a reporter id; one report suppresses a listing pending human review, a verified employer's listing needs two, and each reporter is capped at three reports a day (ADR-0010) |
