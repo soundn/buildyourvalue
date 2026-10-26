@@ -1,6 +1,6 @@
 # ADR-0018: Price the Remote tier at ₦9,999 a month (₦24,999 a quarter) and hold Core at ₦1,999 with a ₦2,499 test
 
-- Status: Accepted
+- Status: Accepted; amended by ADR-0019 (the tier is named Pro and defined by service, not by kind of job)
 - Date: 2026-10-25
 - Deciders: Founders
 - Related: PLAN.md §Price at ₦1,999, BRD §14.1 and BR-033, docs/REVENUE_MODEL.md, docs/research/revenue_model_inputs.md, ADR-0017

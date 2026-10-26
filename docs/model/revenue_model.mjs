@@ -27,7 +27,7 @@ const EMBED_PER_LISTING_USD = 0.000012;
 const LISTINGS_PER_MONTH = 9000;
 const INTAKE_QUESTIONS = 10;
 
-const PRICE = { pass: 1999, core: 1999, remote: 9999 }; // §5, BRD 14.1, ADR-0018 (Remote ₦9,999 a month; the ₦24,999 quarter is not modelled separately)
+const PRICE = { pass: 1999, core: 1999, remote: 9999 }; // §5, BRD 14.1, ADR-0018 and ADR-0019 (Pro ₦9,999 a month; the ₦24,999 quarter is not modelled separately)
 const FEE = { pass: 30, core: 30, remote: 250 }; // §5 Paystack: 1.5% under ₦2,500; 1.5% + ₦100 above
 const VAT_RATE = 0.075;
 const VAT_THRESHOLD_PER_MONTH = 100_000_000 / 12; // §5
@@ -87,7 +87,7 @@ export function run(key, overrides = {}) {
     registered += signups;
     const mau = Math.round(older * s.mauShare + activated);
     const live = m >= 3;
-    // Subscriptions: conversion of newly activated users, split Remote / Core; pass buyers separately; a share of last month's pass buyers upgrade to Core
+    // Subscriptions: conversion of newly activated users, split Pro / Core (remoteShare is the Pro share); pass buyers separately; a share of last month's pass buyers upgrade to Core
     const newSubs = live ? activated * s.conversion : activated * s.conversion * 0.5; // the pilot sells pre-orders by hand
     const newRemote = newSubs * s.remoteShare;
     const newCore = newSubs * (1 - s.remoteShare) + prevPass * s.passUpgrade;
@@ -152,7 +152,7 @@ if (process.argv.includes("--json")) {
     `| Free | ${ngn(base.perTierNgn.free)} | 4.3 batched five-job digests |`,
     `| ₦1,999 pass (per purchase) | ${ngn(base.perTierNgn.pass)} | 7 daily 30-job digests, 5 tailorings, 1 cover letter |`,
     `| Core ₦1,999 | ${ngn(base.perTierNgn.core)} | 13 digests, 3.5 tailorings, 2 cover letters |`,
-    `| Remote ₦9,999 | ${ngn(base.perTierNgn.remote)} | 17 digests, 8 tailorings, 4 cover letters, 1 mock interview (WhatsApp ₦350 is separate) |`,
+    `| Pro ₦9,999 | ${ngn(base.perTierNgn.remote)} | 17 digests, 8 tailorings, 4 cover letters, 1 mock interview (WhatsApp ₦350 is separate) |`,
     `| Onboarding, once per activated user | ${ngn(base.onboardingNgn)} | CV parse and rewrite on Sonnet plus ten phrased intake questions |`, "");
   out.push("### Three scenarios", "", "| Scenario | 6-month revenue (net of fees) | 6-month AI spend | 6-month total cost | 6-month result | 12-month revenue (net) | 12-month AI spend | 12-month total cost | 12-month result | Payers at month 12 | Registered at month 12 | First profitable month | Cash low point |", "|---|---|---|---|---|---|---|---|---|---|---|---|---|");
   for (const key of Object.keys(SCENARIOS)) {
@@ -170,7 +170,7 @@ if (process.argv.includes("--json")) {
   }
   for (const key of Object.keys(SCENARIOS)) {
     const r = run(key);
-    out.push("", `### ${r.scenario} case by month`, "", "| Month | New sign-ups | Registered | Active | Pass buyers | Core | Remote | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |", "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
+    out.push("", `### ${r.scenario} case by month`, "", "| Month | New sign-ups | Registered | Active | Pass buyers | Core | Pro | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |", "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
     for (const x of r.rows) out.push(`| ${x.month} | ${x.signups.toLocaleString()} | ${x.registered.toLocaleString()} | ${x.mau.toLocaleString()} | ${x.pass} | ${x.core} | ${x.remote} | ${k(x.grossNgn)} | ${k(x.netRevenueNgn)} | ${k(x.aiNgn)} | ${k(x.deliveryNgn)} | ${k(x.fixedNgn)} | ${k(x.adsNgn)} | ${k(x.oneOffNgn)} | ${k(x.resultNgn)} | ${k(x.cash)} | ${ngn(x.aiPerMauNgn)} |`);
   }
   console.log(out.join("\n"));

@@ -49,7 +49,7 @@ Corpus-level triage and embedding of 9,000 listings a month is under $10 (`docs/
 
 ## 3. Usage frequencies per user per month by tier
 
-Tier definitions from `docs/BRD.md` §14.1 as updated by `docs/adr/0017-...md` (Remote at ₦4,999
+Tier definitions from `docs/BRD.md` §14.1 as updated by `docs/adr/0017-...md` (the top tier is now Pro at ₦9,999 under ADR-0018 and ADR-0019; the usage figures below stand, the label changed from Remote at ₦4,999
 replaces Pro). Frequencies are assumptions; the cap on Core tailorings is a product rule.
 
 | Input | Free | ₦1,999 pass (7 days, one-off) | Core ₦1,999 | Remote ₦4,999 | Source and note |

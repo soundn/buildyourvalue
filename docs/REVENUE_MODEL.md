@@ -1,6 +1,6 @@
 # Revenue model: the first six and twelve months
 
-*25 October 2026, at the prices in ADR-0018 (Core ₦1,999, Remote ₦9,999). Every number below
+*25 October 2026, at the prices in ADR-0018 (Core ₦1,999, Pro ₦9,999; ADR-0019 names the tier). Every number below
 comes from `docs/model/revenue_model.mjs`, a deterministic script whose inputs are listed with
 their sources in `docs/research/revenue_model_inputs.md`. Re-run with
 `node docs/model/revenue_model.mjs`. Months count from the start of Phase 0; the MVP launches in
@@ -18,12 +18,12 @@ row says otherwise.*
   the low point of ₦4 million in month 8. Drop paid media and the year is ₦1.7 million positive;
   leave the founders' own Claude subscriptions off the company's books and it is ₦2.1 million
   positive.
-- The high case (twice the sign-ups, 4% conversion, 5% churn, a quarter of payers on Remote) makes
+- The high case (twice the sign-ups, 4% conversion, 5% churn, a quarter of payers on Pro) makes
   about ₦38 million over the year on ₦65 million of revenue, is profitable monthly from month 5 and
   cash-positive from month 7. The low case (half the sign-ups, 2% conversion, 10% churn, a weak
   naira and heavy AI use) loses about ₦9.2 million and never breaks even inside the year.
 - AI credits are not the problem. They are ₦3 a month for a free user, ₦236 for a Core payer and
-  ₦636 for a Remote payer, about 21% of revenue in the base year and under 20% of total cost. The
+  ₦636 for a Pro payer, about 21% of revenue in the base year and under 20% of total cost. The
   numbers that decide the outcome are sign-ups, conversion, and the roughly ₦650,000 to ₦1 million
   a month of fixed cost and media that a two-person company carries before it has payers.
 
@@ -31,11 +31,11 @@ row says otherwise.*
 
 Each month new sign-ups arrive (base: 50 and 200 in the pilot, then 1,500 rising to 9,000 by month
 12, for about 48,000 registered users at year end). A share activates by finishing a CV (60% base).
-Of the activated, 3% buy a subscription within the month (Core at ₦1,999 or Remote at ₦9,999, 15%
-of them Remote), and a further 2 in 100 buy the one-off ₦1,999 pass, 30% of whom upgrade to Core
+Of the activated, 3% buy a subscription within the month (Core at ₦1,999 or Pro at ₦9,999, 15%
+of them Pro), and a further 2 in 100 buy the one-off ₦1,999 pass, 30% of whom upgrade to Core
 the month after. Subscribers churn at 7.5% a month. Active users are 45% of the older registered
 base plus this month's activations; free active users receive the throttled weekly five-job digest.
-The ₦24,999 Remote quarter is not modelled separately; it improves cash timing and fees slightly.
+The ₦24,999 Pro quarter is not modelled separately; it improves cash timing and fees slightly.
 
 Revenue is subscriptions plus the pass, plus employer featured roles from month 5 (5 a month at
 ₦20,000, then 10) and course-affiliate commissions (0.2% of active users at $5), less Paystack fees
@@ -46,7 +46,7 @@ Cost is five lines. AI: every event priced from token budgets at Anthropic's lis
 5.5 for CV generation, tailoring, cover letters and mock interviews, Haiku 5.5 in batch for the
 digest rerank and scam triage, Haiku standard for the intake questions, plus embeddings. Delivery:
 email at Resend's blended rate, one OTP SMS per active user at ₦7 scaled by the scenario, and
-₦350 of WhatsApp per Remote payer. Fixed: the two founders' Claude Max subscriptions ($200),
+₦350 of WhatsApp per Pro payer. Fixed: the two founders' Claude Max subscriptions ($200),
 hosting on Vercel and Fly.io, Supabase, background jobs, Resend's plan, job-data APIs and
 observability, each stepping up from Phase 1 to Phase 2 levels as the registered base grows toward
 100,000. Paid media: ₦300,000 a month from launch in the base case, nothing in the low case and
@@ -62,7 +62,7 @@ placeholder, about ₦550,000 across months 1 and 2.
 | Free | ₦3 | 4.3 batched five-job digests |
 | ₦1,999 pass (per purchase) | ₦270 | 7 daily 30-job digests, 5 tailorings, 1 cover letter |
 | Core ₦1,999 | ₦236 | 13 digests, 3.5 tailorings, 2 cover letters |
-| Remote ₦9,999 | ₦636 | 17 digests, 8 tailorings, 4 cover letters, 1 mock interview (WhatsApp ₦350 is separate) |
+| Pro ₦9,999 | ₦636 | 17 digests, 8 tailorings, 4 cover letters, 1 mock interview (WhatsApp ₦350 is separate) |
 | Onboarding, once per activated user | ₦50 | CV parse and rewrite on Sonnet plus ten phrased intake questions |
 
 ### Three scenarios
@@ -88,7 +88,7 @@ placeholder, about ₦550,000 across months 1 and 2.
 
 ### Low case by month
 
-| Month | New sign-ups | Registered | Active | Pass buyers | Core | Remote | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |
+| Month | New sign-ups | Registered | Active | Pass buyers | Core | Pro | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 25 | 25 | 13 | 0 | 0 | 0 | ₦624 | ₦613 | ₦1,597 | ₦144 | ₦423,000 | ₦0 | ₦325,000 | ₦-749,128 | ₦-749,128 | ₦123 |
 | 2 | 100 | 125 | 58 | 1 | 1 | 0 | ₦2,778 | ₦2,731 | ₦6,277 | ₦642 | ₦423,000 | ₦0 | ₦225,000 | ₦-652,189 | ₦-1.4m | ₦108 |
@@ -105,7 +105,7 @@ placeholder, about ₦550,000 across months 1 and 2.
 
 ### Base case by month
 
-| Month | New sign-ups | Registered | Active | Pass buyers | Core | Remote | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |
+| Month | New sign-ups | Registered | Active | Pass buyers | Core | Pro | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 50 | 50 | 30 | 1 | 0 | 0 | ₦2,639 | ₦2,593 | ₦1,873 | ₦237 | ₦329,000 | ₦0 | ₦325,000 | ₦-653,518 | ₦-653,518 | ₦62 |
 | 2 | 200 | 250 | 143 | 2 | 2 | 0 | ₦12,247 | ₦12,030 | ₦7,719 | ₦1,136 | ₦329,000 | ₦0 | ₦225,000 | ₦-550,825 | ₦-1.2m | ₦54 |
@@ -122,7 +122,7 @@ placeholder, about ₦550,000 across months 1 and 2.
 
 ### High case by month
 
-| Month | New sign-ups | Registered | Active | Pass buyers | Core | Remote | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |
+| Month | New sign-ups | Registered | Active | Pass buyers | Core | Pro | Gross revenue | Net revenue | AI | Delivery (email, SMS, WhatsApp) | Fixed | Paid media | One-off | Result | Cumulative cash | AI per active user |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 100 | 100 | 65 | 2 | 1 | 0 | ₦9,097 | ₦8,928 | ₦2,952 | ₦444 | ₦329,000 | ₦0 | ₦325,000 | ₦-648,469 | ₦-648,469 | ₦45 |
 | 2 | 400 | 500 | 320 | 8 | 6 | 2 | ₦42,885 | ₦42,081 | ₦12,210 | ₦2,189 | ₦329,000 | ₦0 | ₦225,000 | ₦-526,318 | ₦-1.2m | ₦38 |
@@ -151,25 +151,25 @@ from 3% to 4% conversion adds ₦2.7 million to the year; going to 2% removes �
 sign-ups turns a near break-even year into a ₦5 million loss. Churn from 7.5% to 5% is worth only
 ₦0.5 million in year one because the subscriber base is still small; it matters from year two.
 
-**The price change did what it was meant to.** Moving Remote from ₦4,999 to ₦9,999 at constant
+**The price change did what it was meant to.** Moving the top tier from ₦4,999 to ₦9,999 at constant
 conversion adds ₦2.2 million of net revenue to the base year and ₦10 million to the high case, and
 takes the base case from a ₦3.5 million loss to ₦1.3 million. The model holds conversion constant,
 which flatters the higher price; the Phase 0 pre-order page shows ₦7,500 to half the visitors so
-the real elasticity is measured. Remote can lose a third of its buyers at ₦9,999 and still earn
+the real elasticity is measured. Pro can lose a third of its buyers at ₦9,999 and still earn
 more than at ₦4,999.
 
 **The AI cost per payer leaves room.** A Core payer costs ₦236 in AI, ₦30 in Paystack and a few
-naira in delivery against ₦1,999 of revenue, a gross margin above 85%. A Remote payer costs ₦636
+naira in delivery against ₦1,999 of revenue, a gross margin above 85%. A Pro payer costs ₦636
 in AI plus ₦350 of WhatsApp and ₦250 of fees against ₦9,999, about 88%. The free tier costs ₦3 a
 month per active user because the digest runs on batched Haiku, which is what makes a genuine
-free tier affordable. The danger case is heavy use: with high token budgets and every Remote payer
+free tier affordable. The danger case is heavy use: with high token budgets and every Pro payer
 using fifteen tailorings and three mock interviews a month, the year's AI bill doubles to about
 ₦6 million and the base case loses ₦3.7 million. The fair-use cap of 20 tailorings a month in
 ADR-0018 is the insurance.
 
 **The naira matters more than any vendor choice.** At ₦1,800 to the dollar the base case loses
 ₦4.1 million instead of ₦1.3 million. Every cost line except Paystack, SMS and WhatsApp is in
-dollars; every revenue line is in naira. A dollar-priced Remote subscription for diaspora users is
+dollars; every revenue line is in naira. A dollar-priced Pro subscription for diaspora users is
 the natural hedge and the next pricing decision.
 
 **Six months is too early to judge.** No scenario is profitable at month 6 because months 1 to 6
@@ -206,7 +206,7 @@ anchor and should be re-checked quarterly.
 2. Keep paid media at zero until the Phase 1 gate is cleared. The base case without media is
    ₦1.7 million positive for the year; with it, the loss is ₦1.3 million for roughly 4,800 extra
    activated users, which is a decision about speed, not survival.
-3. Enforce the Remote fair-use cap (20 tailorings a month) and a monthly mock-interview allowance,
+3. Enforce the Pro fair-use cap (20 tailorings a month) and a monthly mock-interview allowance,
    so the heavy-use case cannot double the AI bill.
 4. Instrument token counts per event from the first week of Phase 1, so the AI line becomes a
    measurement rather than an estimate.

@@ -25,6 +25,7 @@ Citation convention: figures taken from the plan are cited by short section name
 |---|---|---|---|
 | 0.1 | 2026-10-20 | Product team | Initial draft derived from PLAN.md and research notes |
 | 0.2 | 2026-10-24 | Product team | Consistency pass after tooling research; ADR-0001 and ADR-0002 recorded |
+| 1.0 | 2026-10-26 | Founders | Baseline for Phase 0. Tiers are defined by service level, never by kind of job: Pro (₦9,999 a month or ₦24,999 a quarter) replaces the Remote tier and every tier shows every eligible job, local and remote (ADR-0019) |
 | 0.4 | 2026-10-25 | Product team | Remote priced at ₦9,999 a month or ₦24,999 a quarter, Core held at ₦1,999 with a ₦2,499 test (ADR-0018); revenue model added (docs/REVENUE_MODEL.md) |
 | 0.3 | 2026-10-24 | Product team | Guided intake (BR-064); open board for every job seeker; Nigeria remote-eligibility filter (BR-062, BR-063, BRL-017, BRL-018, INT-11); Remote tier replaces Pro; new tagline; first domain registered (ADR-0015, ADR-0017; the developer-only narrowing in ADR-0016 rejected) |
 
@@ -42,7 +43,7 @@ Citation convention: figures taken from the plan are cited by short section name
 
 ## 2. Executive summary
 
-SoundTechWorks intends to build and operate "Build Your Value", an AI-assisted career platform for Nigerian job seekers, under the recommended consumer brand **Ladda**, tagline "Build a higher value from the very place you are", parent line "a SoundTechWorks solution" (PLAN.md, Naming). The platform shall build or improve a job seeker's CV with an LLM, score the CV's weakness on six measurable components, match the seeker against a deduplicated, scam-screened corpus of Nigerian and remote postings, and email a curated digest of fit-scored jobs with a one-line explanation each. When the CV is weak for the target role, the platform recommends a curated three-step learning path whose completion triggers a re-match. Revenue comes from three lines from launch: a naira subscription (Free, a ₦1,999 one-off 7-day pass, Core at ₦1,999/month, Remote at ₦9,999/month replacing Pro; ADR-0017, ADR-0018), employer fees of ₦15,000-30,000 per featured role or shortlist, and course-affiliate commissions, with institutional (B2G/B2B2C) contracts targeted in Phase 3 (PLAN.md, Pricing; Phases). The board is open to every job seeker in every role and sector. Remote listings pass a Nigeria-eligibility classifier before they can reach a digest, because the audit of 24 October 2026 found only 7% of 601 fresh remote listings open to someone in Nigeria, and the digest shows the real count of eligible remote roles per sector rather than padding it (ADR-0017; docs/research/remote_eligibility_audit.md). The first domain, useladda.com, is registered (ADR-0015).
+SoundTechWorks intends to build and operate "Build Your Value", an AI-assisted career platform for Nigerian job seekers, under the recommended consumer brand **Ladda**, tagline "Build a higher value from the very place you are", parent line "a SoundTechWorks solution" (PLAN.md, Naming). The platform shall build or improve a job seeker's CV with an LLM, score the CV's weakness on six measurable components, match the seeker against a deduplicated, scam-screened corpus of Nigerian and remote postings, and email a curated digest of fit-scored jobs with a one-line explanation each. When the CV is weak for the target role, the platform recommends a curated three-step learning path whose completion triggers a re-match. Revenue comes from three lines from launch: a naira subscription (Free, a ₦1,999 one-off 7-day pass, Core at ₦1,999/month, Pro at ₦9,999/month; ADR-0018, ADR-0019), employer fees of ₦15,000-30,000 per featured role or shortlist, and course-affiliate commissions, with institutional (B2G/B2B2C) contracts targeted in Phase 3 (PLAN.md, Pricing; Phases). The board is open to every job seeker in every role and sector. Remote listings pass a Nigeria-eligibility classifier before they can reach a digest, because the audit of 24 October 2026 found only 7% of 601 fresh remote listings open to someone in Nigeria, and the digest shows the real count of eligible remote roles per sector rather than padding it (ADR-0017; docs/research/remote_eligibility_audit.md). The first domain, useladda.com, is registered (ADR-0015).
 
 The research concludes that the product sells trust and relevance rather than the CV document: a reputable Nigerian vacancy draws 200-2,400 applications, 84% of adults met a scam in the past year, and no incumbent closes the CV-to-match-to-learn loop under a transparent naira price (PLAN.md, Summary; Competitors). The largest unverified assumption is that unemployed Nigerians will pay anything for job help. Delivery is therefore sequenced into four phases, beginning with an eight-week paid pilot gated on 10%+ waitlist pre-payment and 40%+ of hand-served users opening three of four digests. This BRD specifies 11 business objectives, 61 business requirements, 30 functional requirements, 22 non-functional requirements, 15 compliance requirements, 15 integrations and 16 business rules, plus financial framing, risks, milestones, gate criteria and the items to verify before money is committed.
 
@@ -107,7 +108,7 @@ Targets are drawn from the plan's exit criteria and metrics (PLAN.md, Phases; Ri
 |---|---|---|
 | 0: Validate | Months 0-2 | CAC status confirmation; name, domain, trademark and handle checks; 300-respondent willingness-to-pay survey; landing page and waitlist; 50 CVs rebuilt by hand with an LLM; manually curated weekly email digests with tracking, sent from a separate digest subdomain with SPF, DKIM, DMARC and RFC 8058 headers from the first send; Paystack pre-orders of the ₦1,999 pass; Termii sender-ID registration (telco whitelisting takes weeks); Transfer Impact Assessment for offshore hosting and inference (CR-15); hand-labelling of 300-500 Nigerian listings for the scam classifier and 200 profile/job pairs for matching evals; remote-eligibility audit of the public feeds (done 24 October 2026) and a worldwide-employer list curated by sector with weekly open-role counts |
 | 1: MVP | Months 2-5 | Next.js mobile PWA; Supabase Auth with Termii phone OTP and Google sign-in; CV builder on JSON Resume with PDF/DOCX export; six-component weakness score; nightly ingestion from JSearch/SerpApi for Nigeria and from public employer job boards (Greenhouse, Lever, Ashby) and remote feeds for remote roles, with dedup, rules-based scam filter and the Nigeria-eligibility classifier; pgvector recall plus cheap-LLM rerank; email digest with one-click unsubscribe; Paystack pass and Core with dunning; NDPC registration; privacy notice disclosing automated profiling; trust cues |
-| 2: Loop and growth | Months 5-10 | ESCO skill extraction; demand weights from own corpus; ~500-course curated catalogue with Impact/Awin links; three-step learning paths; re-match on completion; Remote tier (replaces Pro, ADR-0017) with WhatsApp utility notifications and opt-in digest; verified-employer badge and ₦15,000-30,000 featured roles; referral rewards in premium months; campus scholar-ambassadors; NYSC batch campaigns |
+| 2: Loop and growth | Months 5-10 | ESCO skill extraction; demand weights from own corpus; ~500-course curated catalogue with Impact/Awin links; three-step learning paths; re-match on completion; Pro tier (ADR-0019) with WhatsApp utility notifications and opt-in digest; verified-employer badge and ₦15,000-30,000 featured roles; referral rewards in premium months; campus scholar-ambassadors; NYSC batch campaigns |
 | 3: Scale and institutions | Months 10-18 | Jobberman or MyJobMag data partnership; LSETF-type B2G pilot; 3MTT credential import; cohort-dated paths with reviewer feedback; women-in-tech track; NCC zero-rating application; Ghana/Kenya and native-app evaluation |
 
 ### 5.2 Out of scope (explicitly not built)
@@ -117,7 +118,7 @@ Targets are drawn from the plan's exit criteria and metrics (PLAN.md, Phases; Ri
 | Native app before Phase 3 | Android ~82% of traffic; PWA is installable and push-capable; app stores take 15% (Phases; Pricing) |
 | Scraping LinkedIn, Indeed or Glassdoor | hiQ v. LinkedIn: $500,000 and a permanent injunction on contract grounds (Phases; Compliance) |
 | App-store billing for Nigerian subscriptions | 15% versus Paystack's 1.5% (Pricing) |
-| WhatsApp marketing digests below Remote | $0.03-0.062 per message (₦84 upper bound), ~₦340-370 per user per month at the upper bound, erases Core margin (Pricing; Architecture; INT-07) |
+| WhatsApp marketing digests below Pro | $0.03-0.062 per message (₦84 upper bound), ~₦340-370 per user per month at the upper bound, erases Core margin (Pricing; Architecture; INT-07) |
 | Showing a remote listing the user cannot legally take from their country | 85% of fresh remote listings are country-limited; an ineligible role in a paid digest is a refund and a bad review (remote_eligibility_audit.md; ADR-0017) |
 | Charging users to apply or access a specific job | Charge for tools, never access; "pay to apply" is the recognised scam pattern (Launch; Compliance) |
 | Storing recruiter personal data from third-party listings | Metadata only (Compliance) |
@@ -219,7 +220,7 @@ flowchart TB
         X1[JSearch / SerpApi / Remotive]
         X2[LLM and embedding providers]
         X3[Resend email, ADR-0005]
-        X4[WhatsApp Cloud API: Remote only]
+        X4[WhatsApp Cloud API: Pro only]
         X5[Course affiliates: Impact / Awin]
     end
     U1 --> P1 --> P2 --> P4 --> P7
@@ -263,7 +264,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-012 | The platform shall compute a six-component weakness score (skill coverage, achievement quality, completeness, tenure and gaps, parse-ability, missing credentials) with one explanation per component. | Weakness must be measurable (Weakness score) | M | 1 | Six scores and six explanations on every CV |
 | BR-013 | The platform shall flex thresholds by seniority so fresh graduates are not penalised for missing leadership signals. | Seniority-adaptive rubric (Weakness score) | M | 1 | Same content scores differently by documented seniority rules |
 | BR-014 | The platform shall apply Nigeria-specific checks: NYSC status, ICAN/ACCA for accounting targets, recognised certificates for cybersecurity targets, Pidgin role synonyms. | Discharge certificate and Big Four preferences (Weakness score) | M | 1 | Checks documented in the rubric and visible to users |
-| BR-015 | The platform shall offer posting-specific tailoring metered by tier (Free none; Pass and Remote unlimited; Core 5 per month) and cover letters on Core and above. | Tier definitions (Pricing) | M | 1; Remote 2 | Quotas enforced; counter visible |
+| BR-015 | The platform shall offer posting-specific tailoring metered by tier (Free none; Pass unlimited for the week; Core 5 per month; Pro unlimited with a fair-use cap of 20) and cover letters on Core and above. | Tier definitions (Pricing; ADR-0019) | M | 1; Pro 2 | Quotas enforced; counter visible |
 | BR-064 | The platform shall run a guided intake of at most seven tappable questions (roles or "help me choose", where to work from and whether abroad, experience, salary floor, deal-breakers, must-haves, start date) whose answers populate the structured preferences the matcher uses; the model may rephrase a question but never adds options, ranks jobs or decides what a user sees, and the fixed copy serves when no model is available. | A short conversation beats a blank form on a low-end Android and makes the first digest personal; keeps matching deterministic and explainable (ADR-0003; GAID profiling disclosure) | M | 1 | `core/src/intake.ts` with tests; `POST /v1/intake/next`; onboarding step live with form fallback; the matcher hides listings that state a chosen deal-breaker, lifts and explains those that state a chosen must-have, honours the salary floor (`core/src/attributes.ts`), and the dashboard says how many roles were hidden and why with a one-tap show and undo |
 | BR-016 | The platform shall route CV writing to a stronger model and all other tasks to a cheaper model, with cached profile prefixes. | CV writing dominates LLM cost (Architecture; Sonnet 5.5 and Haiku 5.5, ADR-0003) | S | 1 | Routing configurable; per-task cost logged |
 
@@ -275,7 +276,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-018 | The platform shall deduplicate with MinHash/LSH recall, embedding and field-agreement confirmation, and clustering that keeps the earliest complete record with all source URLs. | True duplicates may share only 37% text (Architecture) | M | 1 | Duplicate rate in sampled digests under 5% |
 | BR-019 | The platform shall show Remotive and Remote OK listings attributed and linked per their terms, outside any sign-up wall, and never use them to collect sign-ups. | Board terms (Architecture; Compliance) | M | 1 | Public attributed page; compliance sign-off |
 | BR-020 | The platform shall match in two stages: hard filters and pgvector recall of 300, then LLM rerank of 30 in batches of ten against a rubric yielding a 0-100 score and one-line explanation. | Explainability at one tenth the cost (Architecture) | M | 1 | Every digest job has score and "why"; rerank cost logged |
-| BR-021 | The platform shall send digests by tier: Free weekly (5 jobs), Pass daily, Core three times weekly (30 reranked per week), Remote as Core plus the eligible remote shelf and WhatsApp. | Tier definitions and free throttle (Pricing; Architecture) | M | 1; Remote 2 | Scheduler enforces cadence and counts |
+| BR-021 | The platform shall send digests by tier: Free weekly (5 jobs), Pass daily, Core three times weekly (30 reranked per week), Pro as Core plus WhatsApp; every tier's digest holds local and eligible remote roles. | Tier definitions and free throttle (Pricing; Architecture; ADR-0019) | M | 1; Pro 2 | Scheduler enforces cadence and counts |
 | BR-022 | The platform shall link every job to its original posting with provenance and shall not host applications. | Metadata only; link out (Compliance) | M | 1 | Outbound link and source label on every card |
 | BR-023 | The platform shall let users mark jobs relevant or not and record applied, interviewed or shortlisted. | Precision and shortlist rate depend on it (Risks and metrics) | M | 1 | Feedback stored per job per user |
 | BR-024 | The platform shall offer human review of any match decision on request. | GAID profiling disclosure (Compliance) | M | 1 | Response within 5 business days logged |
@@ -294,13 +295,13 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BR-030 | The platform shall re-match on module completion and show the fit-score change. | The loop must visibly close (Weakness score) | M | 2 | Delta shown within 24 hours |
 | BR-031 | The platform shall pair remote, BPO and virtual-assistant paths with a "getting paid" module. | PayPal unusable; 2025 tax reform (Weakness score) | S | 2 | Module on all remote-track paths |
 | BR-032 | The platform shall support cohort-dated paths with reviewer feedback and a women-in-tech track. | Cohorts and mentorship lift completion (Weakness score; Launch) | C | 3 | One cohort path and the track live |
-| BR-061 | The platform shall offer Remote subscribers a text mock interview generated from a target posting, graded against a STAR rubric with written feedback; voice mode is future scope. | Remote tier sells a mock interview (Pricing; ADR-0017); text first, voice after a Nigerian-English STT test (TOOLING.md) | S | 2 | Eight-question session with per-answer feedback; no fabricated facts about the candidate |
+| BR-061 | The platform shall offer Pro subscribers a text mock interview generated from a target posting, graded against a STAR rubric with written feedback; voice mode is future scope. | Pro tier sells a mock interview (Pricing; ADR-0019); text first, voice after a Nigerian-English STT test (TOOLING.md) | S | 2 | Eight-question session with per-answer feedback; no fabricated facts about the candidate |
 
 ### 8.5 Subscription and payments
 
 | ID | Requirement | Rationale | Pri. | Phase | Acceptance criterion |
 |---|---|---|---|---|---|
-| BR-033 | The platform shall offer Free (₦0), Finished CV pass (₦1,999, 7 days), Core (₦1,999/month) and Remote (₦9,999/month or ₦24,999/quarter; replaces Pro, ADR-0017, priced by ADR-0018), VAT-inclusive. | Pricing table (Pricing; Compliance) | M | 1; Remote 2 | Checkout matches the table |
+| BR-033 | The platform shall offer Free (₦0), Finished CV pass (₦1,999, 7 days), Core (₦1,999/month) and Pro (₦9,999/month or ₦24,999/quarter; ADR-0018, ADR-0019), VAT-inclusive, every tier open to every role and showing every eligible job. | Pricing table (Pricing; Compliance) | M | 1; Pro 2 | Checkout matches the table |
 | BR-034 | The platform shall take all Nigerian payments through Paystack web checkout and never app-store billing. | 1.5% versus 15% (Pricing) | M | 1 | No app-store SKU exists |
 | BR-035 | The platform shall accept cards, bank transfer, USSD and OPay/PalmPay wallet top-ups. | Volatile balances (Pricing) | M | 1 | Each method completes a test purchase |
 | BR-036 | The platform shall let subscribers choose their charge date and run 3-5 dunning retries over 7-10 days with SMS or WhatsApp reminders. | 8-14% involuntary failure per cycle (Pricing) | M | 1 | Schedule configurable; recovery rate reported |
@@ -450,7 +451,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | INT-04 | LLM provider (Haiku 5.5 for rerank and classification; Sonnet 5.5 for CV writing; ADR-0003) | Rerank, scam classification, CV generation, path assembly | 1 | Indicative $0.10/$0.50 per million tokens; batch 50% off; verify (Architecture; Verification) | Second provider behind an abstraction |
 | INT-05 | voyage-4-lite at 1,024 dimensions (ADR-0007; text-embedding-3-small at 1,536 as alternative) and pgvector | Recall; course retrieval | 1 | $0.02 per million tokens; HNSW with halfvec (Architecture) | Alternative embedding model |
 | INT-06 | Resend (ADR-0005; Amazon SES at scale) | Digest and transactional email | 1 | SES ~$0.10 per 1,000; Resend Pro 50,000 for $20; SPF/DKIM/DMARC (Architecture) | Switch provider; dedicated IPs at scale |
-| INT-07 | WhatsApp Cloud API via Meta or a BSP | Remote digest and utility notifications | 2 | Per-message billing since 1 July 2025; a separate charge on service replies after 1,000 free per number from 1 October 2026 (single vendor source); utility ~₦14, marketing $0.03-0.062 (₦84 upper bound), unverified (Architecture; Verification) | Email only; SMS for critical notices |
+| INT-07 | WhatsApp Cloud API via Meta or a BSP | Pro digest and utility notifications | 2 | Per-message billing since 1 July 2025; a separate charge on service replies after 1,000 free per number from 1 October 2026 (single vendor source); utility ~₦14, marketing $0.03-0.062 (₦84 upper bound), unverified (Architecture; Verification) | Email only; SMS for critical notices |
 | INT-08 | Termii | SMS OTP with WhatsApp and voice fallback | 1 | Prepaid naira wallet; SMS ₦5.62-7.00 per page; unit prices dashboard-only (Architecture) | Second OTP provider; Google sign-in |
 | INT-09 | Paystack | Checkout, recurring charges, direct debit, transfer, USSD, refunds | 1 | 1.5% + ₦100 capped at ₦2,000; ₦100 waived under ₦2,500 (Pricing) | Flutterwave or Monnify (rates disputed) |
 | INT-10 | Supabase | Postgres, pgvector, Auth, Storage | 1 | Pro $25/month to ~100,000 MAU (Architecture) | Self-hosted Postgres on Hetzner |
@@ -475,7 +476,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BRL-007 | A first purchase is refundable in full within 7 days. | Launch |
 | BRL-008 | A failed renewal triggers 3-5 retries over 7-10 days with reminders; the account then downgrades to Free, not deletion. | Pricing |
 | BRL-009 | Free users receive one weekly digest of 5 jobs drawn from 20-50 scored candidates. | Pricing; Architecture |
-| BRL-010 | WhatsApp marketing digests are Remote-only; utility notifications may go to Remote and, on opt-in, Core. | Pricing; Architecture |
+| BRL-010 | WhatsApp marketing digests are Pro-only; utility notifications may go to Pro and, on opt-in, Core. | Pricing; Architecture |
 | BRL-011 | Learning paths recommend free sources before paid courses when a free course covers the gap skill. | Weakness score |
 | BRL-012 | Every affiliate link is disclosed adjacent to the link. | Pricing |
 | BRL-013 | A learning path is triggered at skill coverage below 50% or a missing role credential. | Weakness score |
@@ -484,6 +485,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | BRL-016 | All displayed prices are VAT-inclusive; naira prices are reviewed at least annually. | Compliance; Risks and metrics |
 | BRL-017 | A remote listing is never shown to a user whose country of residence it does not cover; an "unclear" listing is held for human review and shown only after approval. | ADR-0017; remote_eligibility_audit.md |
 | BRL-018 | A digest states the number of eligible remote roles found per sector and never fills a shortfall with ineligible roles or with local roles presented as remote. | ADR-0017 |
+| BRL-019 | Tiers are defined by the amount of service, never by the kind of job: every tier, Free included, shows every eligible job, local and remote, and no feature is gated on a job's location. | ADR-0019 |
 
 ---
 
@@ -496,7 +498,7 @@ Priority uses MoSCoW: M (Must), S (Should), C (Could), W (Won't this release). P
 | Free | ₦0 | CV draft, weakness score with one explanation per component, weekly digest of 5 jobs, scam-checked listings | n/a |
 | Finished CV pass | ₦1,999 one-off, 7 days | Unlimited tailoring and PDF/DOCX export for a week, daily digest, learning-path preview | ₦30 (1.5%) |
 | Core | ₦1,999/month | Digest three times weekly, 30 reranked jobs per week with "why you fit", 5 tailorings per month, full learning path, cover letters | ₦30 (1.5%) |
-| Remote (replaces Pro; ADR-0017, ADR-0018) | ₦9,999/month or ₦24,999/quarter | Core plus the eligible remote shelf with time-zone overlap shown, global-convention CV, unlimited tailoring (fair-use cap of 20 a month), getting-paid module, WhatsApp digest, mock interview, priority re-match | ₦250 at ₦9,999 (2.5%); ₦475 on the quarter (1.9%) |
+| Pro (ADR-0018, ADR-0019) | ₦9,999/month or ₦24,999/quarter | Everything in Core plus unlimited tailoring (fair-use cap of 20 a month), tailoring to the user's career path, mock interviews, WhatsApp digest, priority re-match, and the global-CV and getting-paid modules whenever the user's targets are abroad | ₦250 at ₦9,999 (2.5%); ₦475 on the quarter (1.9%) |
 | Employer | ₦15,000-30,000 per featured role or 10-candidate shortlist | Verified badge, structured posting, pre-scored applicants | Standard |
 
 ### 14.2 Illustrative revenue scenario
@@ -547,7 +549,7 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 | C-02 | Web checkout only; no app-store billing. |
 | C-03 | First-session budget of a few megabytes; initial JavaScript under 150 KB gzipped, enforced by a CI budget file. |
 | C-04 | NDPC registration before the 200th data subject. |
-| C-05 | WhatsApp marketing confined to Remote. |
+| C-05 | WhatsApp marketing confined to Pro. |
 | C-06 | Permissive open-source licences only for embedded components. |
 | C-07 | VAT-inclusive naira pricing with annual review. |
 
@@ -570,7 +572,7 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 | R-01 | Nigerians will not pay for job help | High | Critical | Phase 0 paid pilot; one-off purchase first; pivot to B2G if the gate fails | Risks and metrics |
 | R-02 | Jobberman (2.65 million users, AI tool, newsletter, Telegram) bundles a digest | Medium | High | Ship the loop and trust layer incumbents lack; court Jobberman as supplier | Risks and metrics |
 | R-03 | Data-source fragility: API terms, Remotive gating, scraping temptation | Medium | High | Source-agnostic schema; early direct feed; no-scraping policy | Risks and metrics |
-| R-04 | WhatsApp marketing at ~₦84 per message erases Core margin | High if bundled | High | Remote and utility-only; email-first | Risks and metrics |
+| R-04 | WhatsApp marketing at ~₦84 per message erases Core margin | High if bundled | High | Pro and utility-only; email-first | Risks and metrics |
 | R-05 | Payment failure: 8-14% involuntary churn per cycle | High | Medium | Dunning, transfer and wallet fallbacks, prepaid passes, chosen charge date | Risks and metrics |
 | R-06 | Episodic retention: users leave when hired | High | Medium | Weekly value; NYSC and exam-cycle re-activation; 90-day re-subscription metric | Risks and metrics |
 | R-07 | Macro: ~16% inflation; naira near ₦1,380/$ when observed, against the §14 anchor of ₦1,400/$ | Medium | Medium | Annual price review | Risks and metrics |
@@ -594,7 +596,7 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 |---|---|---|---|
 | 0: Validate | Months 0-2 | CAC confirmation; name checks; 300-respondent survey; landing page and waitlist; 50 hand-built CVs; four curated weekly digests from a separate digest subdomain with SPF/DKIM/DMARC and RFC 8058 headers from the first send; Paystack pre-orders; Termii sender-ID registration (telco whitelisting takes weeks); Transfer Impact Assessment (CR-15); hand-labelling of 300-500 listings and 200 profile/job pairs. The survey and pilot may themselves cross 200 data subjects, so NDPC registration is assessed at Phase 0 start | 40%+ of hand-served users open 3 of 4 digests; at least 10% of waitlist pre-pays |
 | 1: MVP | Months 2-5 | PWA live; OTP and Google auth; CV builder and score; nightly ingestion; matcher; email digest; pass and Core billing; NDPC registration; privacy notice | 60% finish a CV and set preferences; open rate 35%+; free-to-paid 2%+; churn under 10% |
-| 2: Loop and growth | Months 5-10 | ESCO extraction; ~500-course catalogue; paths and re-match; Remote with WhatsApp; verified employers and featured roles; referral; campus scholars; NYSC campaigns | 4%+ conversion; published quarterly shortlist rate; 20 paying employers; affiliate above 5% |
+| 2: Loop and growth | Months 5-10 | ESCO extraction; ~500-course catalogue; paths and re-match; Pro with WhatsApp; verified employers and featured roles; referral; campus scholars; NYSC campaigns | 4%+ conversion; published quarterly shortlist rate; 20 paying employers; affiliate above 5% |
 | 3: Scale and institutions | Months 10-18 | Board data partnership; LSETF-type pilot; 3MTT import; cohort paths; women-in-tech track; zero-rating application; Ghana/Kenya evaluation | B2G or B2B2C above 25%; churn under 7%; CAC payback within 3 months |
 
 ---
@@ -603,7 +605,7 @@ At ₦1,999 (≈ $1.43) against $0.10-0.30 variable cost, a paying user is gross
 
 | Gate | Go criteria (all required) | No-go response |
 |---|---|---|
-| Phase 0 to 1 | (1) At least 10% of the waitlist pre-pays the ₦1,999 pass or a Remote month (₦9,999, with ₦7,500 shown to half the visitors); (2) 40%+ of hand-served users open 3 of 4 digests; (3) SoundTechWorks confirmed as a CAC limited company whose objects cover the product (ADR-0002); (4) brand name checks passed; (5) Labour Act opinion commissioned; (6) weekly per-sector counts of eligible remote roles reported from the curated employer list (informs Phase 1 scope, does not gate) | Pivot to the B2G and employer-paid version of the engine; no consumer acquisition spend (PLAN.md, Conclusion) |
+| Phase 0 to 1 | (1) At least 10% of the waitlist pre-pays the ₦1,999 pass or a Pro month (₦9,999, with ₦7,500 shown to half the visitors); (2) 40%+ of hand-served users open 3 of 4 digests; (3) SoundTechWorks confirmed as a CAC limited company whose objects cover the product (ADR-0002); (4) brand name checks passed; (5) Labour Act opinion commissioned; (6) weekly per-sector counts of eligible remote roles reported from the curated employer list (informs Phase 1 scope, does not gate) | Pivot to the B2G and employer-paid version of the engine; no consumer acquisition spend (PLAN.md, Conclusion) |
 | Phase 1 to 2 | (1) 60%+ activation; (2) open rate 35%+; (3) free-to-paid 2%+; (4) churn under 10%; (5) NDPC registration on file before the 200th data subject; (6) spam rate under 0.1%; (7) zero paid-digest listings requesting fees; (8) variable cost per active user under ₦400 | Hold at Phase 1 and fix the failing metric |
 | Phase 2 to 3 | (1) 4%+ conversion; (2) shortlist rate published; (3) 20 paying employers; (4) affiliate above 5%; (5) path completion and fit-score lift measured | Continue Phase 2; defer institutional build |
 | Phase 3 completion | (1) B2G or B2B2C above 25%; (2) churn under 7%; (3) CAC payback within 3 months; (4) native-app and expansion decisions documented | Re-plan with sponsor |
@@ -624,7 +626,7 @@ Condensed from the plan's verification table (PLAN.md, Verification) to the thir
 | 4 | NDPC thresholds (200 vs 1,000 vs 5,000 subjects), fees, CAR fees, DPO and AI provisions of GAID 2025 | Registration tier and cost | NDPC Guidance Notice and GAID text; counsel | DPO |
 | 5 | Whether an AI matching marketplace is a Labour Act "private employment agency" | Licensing exposure | Written opinion; Ministry of Labour state office | Counsel |
 | 6 | Paystack transfer, USSD and direct-debit fees; Flutterwave's current rate | Price points and rail choice | Vendor pricing pages | Finance |
-| 7 | Meta's official WhatsApp Nigeria rate card | Whether any WhatsApp digest can sit below Remote | Meta rate-card download | Product |
+| 7 | Meta's official WhatsApp Nigeria rate card | Whether any WhatsApp digest can sit below Pro | Meta rate-card download | Product |
 | 8 | JSearch, SerpApi, DataForSEO, TheirStack tiers and Nigerian yield per query | Largest non-AI variable cost | Pricing pages; two-week trial | Engineering |
 | 9 | Whether Jobberman, MyJobMag or Hot Nigerian Jobs offer RSS or a partner feed | Replaces aggregator spend; reduces legal risk | Site footers; partnerships teams | Product |
 | 10 | Current LLM and embedding prices, batch discounts, measured tokens per CV and per job | Cost model assumes 3,000/2,500 and 600 tokens | Official pricing; Phase 1 instrumentation | Engineering |
